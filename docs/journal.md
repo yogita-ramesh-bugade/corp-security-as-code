@@ -51,3 +51,11 @@ Each entry: what I did, what broke, how I fixed it. Newest at the bottom.
 - **Broke:** Nothing.
 - **Decided:** Kept Lumen's customer-facing product out of scope. A customer token vault would have created a top threat that none of my corporate security projects fixes, so scoping it out keeps every threat mapped to a project.
 - **Learned:** Each weakness in "Current security state" maps to one project. In the sketch, agents and OAuth apps reach core systems directly, bypassing the SSO gate, which is the reason for Project 4.
+
+---
+
+## 2026-10-23 — Project 0, Step 2: Asset inventory
+
+- **Did:** Listed Lumen AI's assets in four groups (identities, devices, data, control systems), with where each lives and who or what can reach it.
+- **Broke:** Nothing.
+- **Learned:** Listed Lumen's assets; biggest surprise was ___.
