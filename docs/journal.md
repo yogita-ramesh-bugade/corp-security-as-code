@@ -42,3 +42,12 @@ Each entry: what I did, what broke, how I fixed it. Newest at the bottom.
 - **Did:** Started this journal.
 - **Broke:** Nothing.
 - **Learned:** Write down exact error messages; they become real interview stories.
+
+---
+
+## 2026-10-23 — Project 0, Step 1: Company profile
+
+- **Did:** Wrote docs/company.md describing Lumen AI: 2,000 employees, 70% macOS fleet, Keycloak SSO, core systems, ~25 internal AI agents and ~300 connected OAuth apps. Chose its product (back-office AI agents) after comparing six real problem areas. [Personalized: changed ___ ] [Drew the environment sketch and saved it to docs/img/]
+- **Broke:** Nothing.
+- **Decided:** Kept Lumen's customer-facing product out of scope. A customer token vault would have created a top threat that none of my corporate security projects fixes, so scoping it out keeps every threat mapped to a project.
+- **Learned:** Each weakness in "Current security state" maps to one project. In the sketch, agents and OAuth apps reach core systems directly, bypassing the SSO gate, which is the reason for Project 4.
