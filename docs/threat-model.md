@@ -43,6 +43,7 @@ This is a living document: it is updated as projects are built and new risks are
 | Email, calendars, documents | Email and documents suite | All employees; ~300 connected OAuth apps; people with delegated access |
 | Chat history | Mattermost | All employees; bots; webhooks; integrations |
 | Employee personal data | HR system | HR; managers; systems connected to HR |
+| Backups of production data | Cloud storage | ~120 engineers with production admin roles; backup jobs |
 
 ### Control systems (crown jewels)
 
@@ -136,6 +137,11 @@ An attacker who **gets an employee to install a "productivity" chat bot or webho
 An attacker who **publishes a malicious package with a name similar to a popular one** can **run code on engineers' laptops and in CI pipelines when it's installed** because **any program can run on laptops, and nothing checks what engineers install.**
 - Asset: laptops; source code; CI/CD secrets
 - ATT&CK: T1195.001 Supply Chain Compromise: Compromise Software Dependencies and Development Tools
+
+### S14. Backups deleted before ransomware
+An attacker who **takes over an account with admin rights in the production cloud** can **delete or disable backups, then encrypt customer data and demand a ransom,** because **the same admin accounts that run production can also delete backups, and backups aren't protected from deletion.**
+- Asset: customer data; backups
+- ATT&CK: T1490 Inhibit System Recovery; T1486 Data Encrypted for Impact
 
 ---
 

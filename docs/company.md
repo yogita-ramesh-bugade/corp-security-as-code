@@ -69,6 +69,7 @@ Employees can approve outside apps that connect to email, documents and chat thr
 - Exceptions to security rules are granted over chat and never expire.
 - Nobody reviews OAuth apps, chat bots or browser extensions.
 - Logs from Keycloak and the chat platform go to a SIEM (Elastic), but few detections exist.
+- Backups of production data are managed by the same admin accounts that run production, and nothing stops an admin from deleting them.
 
 ## Security team
 
