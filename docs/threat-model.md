@@ -157,20 +157,26 @@ Score = likelihood × impact. Ties are ranked by impact.
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | 1 | S1 Consent phishing | 4 | 4 | 16 | Common attack; ~300 unreviewed apps already connected; exposes email and files | None | Project 4 |
 | 2 | S4 Unsigned tool from a script | 4 | 4 | 16 | Engineers run setup scripts daily; nothing blocks unknown programs | None | Project 1B |
-| 3 | S2 Stolen session replayed | 3 | 5 | 15 | Cookie theft is rising; bypasses MFA and reaches every app | MFA only | Project 2 |
-| 4 | S9 "Temporary" admin never removed | 3 | 5 | 15 | ~60 admins, never reviewed; leads to control systems | None | Projects 3 and 4 |
-| 5 | S13 Poisoned open-source package | 3 | 5 | 15 | Regular attacks on package registries; reaches CI secrets | None | Project 1B (partial) |
-| 6 | S3 Malicious browser extension | 3 | 4 | 12 | Extensions unrestricted; can read internal pages | None | Projects 1A and 4 |
-| 7 | S5 Unpatched laptop exploited | 3 | 4 | 12 | Updates not enforced; one device, but a foothold | None enforced | Projects 1A and 2 |
-| 8 | S7 Leaver's access still works | 3 | 4 | 12 | ~15 leavers a month; access lasts up to a week | Manual offboarding | Project 3 |
-| 9 | S8 Over-privileged AI agent | 3 | 4 | 12 | ~25 agents, no owner or scope review; broad access | None | Project 4 |
-| 10 | S11 Prompt injection into an agent | 3 | 4 | 12 | Agents read untrusted content; well-known AI risk | None | Project 4 (partial) |
-| 11 | S10 Device management console abused | 2 | 5 | 10 | Needs an admin phished first; reaches every laptop | MFA only | Projects 2 and 4 |
-| 12 | S14 Backups deleted before ransomware | 2 | 5 | 10 | Needs production admin access; could halt the company | None | None (see below) |
-| 13 | S12 Chat bot collecting messages | 3 | 3 | 9 | Bots unreviewed; exposes channels, not everything | None | Project 4 |
+| 3 | S7 Leaver's access still works | 4 | 4 | 16 | Orphaned accounts are a common access-review finding; ~15 leavers a month with access lasting up to a week | Manual offboarding | Project 3 |
+| 4 | S2 Stolen session replayed | 3 | 5 | 15 | Cookie theft is rising; bypasses MFA and reaches every app | MFA only | Project 2 |
+| 5 | S9 "Temporary" admin never removed | 3 | 5 | 15 | ~60 admins, never reviewed; leads to control systems | None | Projects 3 and 4 |
+| 6 | S13 Poisoned open-source package | 3 | 5 | 15 | Regular attacks on package registries; reaches CI secrets | None | Project 1B (partial) |
+| 7 | S10 Device management console abused | 3 | 5 | 15 | Attackers deliberately target IT admins; one console reaches every laptop | MFA only | Projects 2 and 4 |
+| 8 | S3 Malicious browser extension | 3 | 4 | 12 | Extensions unrestricted; can read internal pages | None | Projects 1A and 4 |
+| 9 | S5 Unpatched laptop exploited | 3 | 4 | 12 | Updates not enforced; one device, but a foothold | None enforced | Projects 1A and 2 |
+| 10 | S8 Over-privileged AI agent | 3 | 4 | 12 | ~25 agents, no owner or scope review; broad access | None | Project 4 |
+| 11 | S11 Prompt injection into an agent | 3 | 4 | 12 | Agents read untrusted content; well-known AI risk | None | Project 4 (partial) |
+| 12 | S12 Chat bot collecting messages | 3 | 4 | 12 | Bots unreviewed; people paste secrets and customer details into chat | None | Project 4 |
+| 13 | S14 Backups deleted before ransomware | 2 | 5 | 10 | Needs production admin access; could halt the company | None | None (see below) |
 | 14 | S6 Laptop imaged at a border | 2 | 4 | 8 | Few high-risk trips; copies one person's data and sessions | None | Project 2 (travel add-on) |
 
-Top-ranked means a score of 12 or more (ranks 1–10).
+Top-ranked means a score of 12 or more (ranks 1–12).
+
+#### Changes after review
+
+- **S7 likelihood 3 → 4:** orphaned accounts are among the most common access-review findings.
+- **S12 impact 3 → 4:** chat often contains secrets and customer details, not just conversation.
+- **S10 likelihood 2 → 3:** IT admins are deliberately targeted because of what they control.
 
 ### Coverage check
 
@@ -178,9 +184,9 @@ Top-ranked means a score of 12 or more (ranks 1–10).
 | --- | --- | --- |
 | 1A Fleet baseline as code | S3, S5 | Keep |
 | 1B Allowlisting rollout | S4, S13 | Keep; highest-ranked endpoint threat |
-| 2 Device-trust gate | S2, S5 | Keep |
-| 3 Joiner/mover/leaver and exceptions | S9, S7 | Keep |
-| 4 SaaS and agent governance | S1, S9, S8, S11, S3 | Keep; covers the top-ranked threat |
+| 2 Device-trust gate | S2, S10, S5 | Keep |
+| 3 Joiner/mover/leaver and exceptions | S7, S9 | Keep; now addresses a rank-3 threat |
+| 4 SaaS and agent governance | S1, S9, S10, S8, S11, S12, S3 | Keep; covers the top-ranked threat |
 
 Every project addresses at least one top-ranked threat.
 
