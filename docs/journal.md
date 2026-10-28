@@ -58,4 +58,39 @@ Each entry: what I did, what broke, how I fixed it. Newest at the bottom.
 
 - **Did:** Listed Lumen AI's assets in four groups (identities, devices, data, control systems), with where each lives and who or what can reach it.
 - **Broke:** Nothing.
-- **Learned:** Listed Lumen's assets; biggest surprise was ___.
+- **Learned:** Listed Lumen's assets; biggest surprise was that about 300 outside apps can read company email, and nobody picked or reviews them and a stolen session cookie skips both the password and MFA, so a personal laptop can be a way in..
+
+---
+
+## 2026-10-28 — Project 0, Step 3: Attacker stories
+
+- **Did:** Wrote 13 attacker stories in the form "an attacker who has X can do Y because Z," mapped to MITRE ATT&CK and ATLAS (AML.T0051 for prompt injection). Learned to navigate ATT&CK technique pages: description, procedure examples, mitigations, detection.
+- **Broke:** My README was saved as README.txt, so GitHub showed it as raw text with the # symbols visible.
+- **Fixed:** Renamed it with `git mv README.txt README.md`, because GitHub only formats Markdown files.
+- **Learned:** The "because" part of each story is the weakness a control must remove. ATT&CK IDs can be renamed between versions, so I record the version I used.
+
+---
+
+## 2026-10-28 — Project 0, Step 3 (continued): S14, my own story
+
+- **Did:** Researched and found T1490 Inhibit System Recovery on my own, and used it to write S14: backups deleted before ransomware, also tagged T1486 Data Encrypted for Impact. Added backups to the asset list.
+- **Broke:** S14's "because" didn't match anything in company.md, since the company file never mentioned backups.
+- **Fixed:** Added a backups weakness to company.md, so every story traces back to a stated weakness.
+- **Learned:** Ransomware is a chain (delete backups, then encrypt), so tagging both techniques shows the whole attack. Defense: immutable backups, and backup admin rights separate from production admin rights.
+
+---
+
+## 2026-10-28 — Project 0, Step 4: Scoring and ranking
+
+- **Did:** Scored 14 stories by likelihood × impact (1–5 each) using written definitions, ranked them, and checked that every project fixes at least one top-ranked threat (score 12 or more).
+- **Revised:** Raised S7 leaver access (likelihood 3 → 4), S12 chat bots (impact 3 → 4) and S10 device management console (likelihood 2 → 3), each with a written reason.
+- **Broke:** Nothing.
+- **Learned:** Some threats aren't fully covered (S13, S11, S14). Writing down the gap and handing it to the right owner is better than claiming a project solves everything.
+
+---
+
+## 2026-10-28 — Project 0, Step 5: Charters (Project 0 complete)
+
+- **Did:** Wrote one-page charters for Projects 1A, 1B, 2, 3 and 4 in docs/charters/, each linked to ranked threats, with yes/no "done" criteria, metrics, user impact and tooling trade-offs.
+- **Broke:** Nothing.
+- **Learned:** What's out of scope, and why, matters as much as what's in scope. "Done" has to be testable before the work starts.
