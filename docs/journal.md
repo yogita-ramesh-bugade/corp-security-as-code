@@ -94,3 +94,14 @@ Each entry: what I did, what broke, how I fixed it. Newest at the bottom.
 - **Did:** Wrote one-page charters for Projects 1A, 1B, 2, 3 and 4 in docs/charters/, each linked to ranked threats, with yes/no "done" criteria, metrics, user impact and tooling trade-offs.
 - **Broke:** Nothing.
 - **Learned:** What's out of scope, and why, matters as much as what's in scope. "Done" has to be testable before the work starts.
+
+---
+
+## 2026-10-28 — Project 1A, Step 1.1: Fleet server (in progress)
+
+- **Did:** Deployed Fleet with its official Docker Compose setup (Fleet, MySQL, Redis), free tier, in ~/fleet-server, outside the repo because .env holds secrets. Set FLEET_SERVER_TLS=false because Tailscale Funnel provides HTTPS. Saved the server private key in my password manager.
+- **Broke (1):** `docker compose up` failed: port 6379 already in use.
+- **Fixed (1):** `lsof -i :6379` showed a Homebrew Redis holding the port. Stopped it with `brew services stop redis`; all containers then started healthy.
+- **Broke (2):** The public address shows DNS_PROBE_FINISHED_NXDOMAIN.
+- **Status:** Still troubleshooting. Checking Tailscale connection, exact DNS name, and Funnel status.
+- **Learned:** Fleet listens on port 1337, not 8080. Two programs can't use the same port. The .ts.net address only exists publicly while Tailscale is connected and Funnel is on.
