@@ -105,3 +105,12 @@ Each entry: what I did, what broke, how I fixed it. Newest at the bottom.
 - **Broke (2):** The public address shows DNS_PROBE_FINISHED_NXDOMAIN.
 - **Status:** Still troubleshooting. Checking Tailscale connection, exact DNS name, and Funnel status.
 - **Learned:** Fleet listens on port 1337, not 8080. Two programs can't use the same port. The .ts.net address only exists publicly while Tailscale is connected and Funnel is on.
+
+---
+
+## 2026-10-28 — Project 1A, Step 1.2: Apple MDM (APNs)
+
+- **Did:** Downloaded a CSR from Fleet, created an APNs certificate at identity.apple.com, and uploaded it to Fleet. Apple MDM is on; certificate expires [date].
+- **Broke:** [Nothing / describe]
+- **Learned:** APNs only sends a "check in" ping; profiles travel directly between Fleet and the Mac. Renewal must use the same Apple ID, or every Mac must re-enroll.
+
