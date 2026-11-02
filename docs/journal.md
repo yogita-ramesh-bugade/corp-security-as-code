@@ -114,3 +114,15 @@ Each entry: what I did, what broke, how I fixed it. Newest at the bottom.
 - **Broke:** [Nothing / describe]
 - **Learned:** APNs only sends a "check in" ping; profiles travel directly between Fleet and the Mac. Renewal must use the same Apple ID, or every Mac must re-enroll.
 
+## 2026-10-30 — Project 1A, Step 1.3: Windows VM
+
+- **Did:** Built a Windows 11 Pro ARM64 VM in UTM with TPM 2.0, renamed it fleet-windows-lab, cloned a clean copy (windows-clean), built an arm64 fleetd MSI with scripts enabled, and installed it.
+- **Did:** Built a Windows 11 Pro ARM64 VM in UTM with TPM 2.0, renamed it fleet-windows-lab, cloned a clean copy (windows-clean), and installed the fleetd MSI downloaded from Fleet's Add hosts screen (Workstation).
+- **Broke (1):** Unsure whether to pick Workstation or Server in Fleet's Add hosts screen.
+- **Fixed (1):** Workstation is for Windows 10/11 laptops and desktops; Server is only for Windows Server. A company laptop is a workstation.
+- **Broke (2):** The Windows agent never enrolled (2026-11-02). Resolve-DnsName returned 100.113.48.55, my Mac's private Tailscale address, and Test-NetConnection to port 443 failed.
+- **Cause (2):** The VM uses my Mac for DNS, and my Mac's Tailscale DNS answered with the private tailnet address, which the VM can't reach.
+- **Fix attempted (2):** Turned off Tailscale DNS on the Mac (`tailscale set --accept-dns=false`) and flushed the DNS cache.
+- **Broke (3):** My Mac's browser now shows ERR_CONNECTION_CLOSED for the public address.
+- **Status:** In progress. Testing from my phone on cellular to tell "Mac can't loop back to its own Funnel" apart from "Funnel HTTPS not working."
+- **Learned:** Windows on Apple Silicon needs ARM64 images and agents (--arch=arm64). Pro edition is required for BitLocker and MDM. The MSI contains the enroll secret, so it stays out of Git. Resolve-DnsName and Test-NetConnection separate "can I find it?" from "can I reach it?".
