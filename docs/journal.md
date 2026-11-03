@@ -126,3 +126,18 @@ Each entry: what I did, what broke, how I fixed it. Newest at the bottom.
 - **Broke (3):** My Mac's browser now shows ERR_CONNECTION_CLOSED for the public address.
 - **Status:** In progress. Testing from my phone on cellular to tell "Mac can't loop back to its own Funnel" apart from "Funnel HTTPS not working."
 - **Learned:** Windows on Apple Silicon needs ARM64 images and agents (--arch=arm64). Pro edition is required for BitLocker and MDM. The MSI contains the enroll secret, so it stays out of Git. Resolve-DnsName and Test-NetConnection separate "can I find it?" from "can I reach it?".
+
+---
+
+## 2026-11-03 — Project 1A, Step 1.4: Fleet configuration in Git (GitOps)
+
+- **Did:** Backed up Fleet's config outside the repo, exported current settings with `fleetctl generate-gitops`, replaced the enroll secret with a placeholder (`$FLEET_GLOBAL_ENROLL_SECRET`, real value in ~/fleet-server/gitops.env, outside the repo), copied the files into fleet/, added a .gitignore for secrets and installers, and applied with `fleetctl gitops`.
+- **Broke (1):** Dry run failed: environment variable FLEET_GLOBAL_ENROLL_SECRET not set.
+- **Fixed (1):** Ran `source ~/fleet-server/gitops.env` in the same Terminal window. Each new window needs it.
+- **Broke (2):** "fleet/default.yml: no such file or directory."
+- **Fixed (2):** I was in ~/fleet-server instead of the repo; ran `cd ~/corp-security-as-code`.
+- **Broke (3):** `git add .gitignore` failed: the file had never been created.
+- **Fixed (3):** Created .gitignore (env files, installers, keys, backups), then confirmed with `git status` and `git diff --cached` that only YAML, logos and the placeholder secret were committed.
+- **Tested:** Renamed the org to "Lumen AI DRIFT TEST" in the UI, then applied GitOps. [The name reverted to "Lumen AI".]
+- **Learned:** GitOps resets anything missing from the YAML to defaults, so export and review before applying. Fleet's dry run validates files but doesn't show a field-by-field diff; compare with `fleetctl get config` to see drift. Secrets never live in Git: they're injected from the environment. The folder name in the prompt tells me where I am.
+
