@@ -1,0 +1,105 @@
+agent_options:
+  config:
+    decorators:
+      load:
+      - SELECT uuid AS host_uuid FROM system_info;
+      - SELECT hostname AS hostname FROM system_info;
+    options:
+      disable_distributed: false
+      distributed_interval: 10
+      distributed_plugin: tls
+      distributed_tls_max_attempts: 3
+      logger_tls_endpoint: /api/osquery/log
+      logger_tls_period: 10
+      pack_delimiter: /
+  overrides:
+controls:
+custom_host_vitals:
+labels:
+org_settings:
+  activity_expiry_settings:
+    activity_expiry_enabled: false
+    activity_expiry_window: 0
+    preserve_host_activities_on_reenrollment: false
+  certificate_authorities:
+    custom_est_proxy:
+    custom_scep_proxy:
+    digicert:
+    hydrant:
+    ndes_scep_proxy:
+    smallstep:
+  features:
+    enable_host_users: true
+    enable_software_inventory: true
+    historical_data:
+      uptime: true
+      vulnerabilities: true
+  fleet_desktop:
+    alternative_browser_host:
+    sso_enabled: false
+    transparency_url: https://fleetdm.com/transparency
+  host_expiry_settings:
+    host_expiry_enabled: false
+    host_expiry_window: 0
+  integrations:
+    certificates_disable_host_end_user_binding:
+    certificates_idp_client_ids:
+    certificates_idp_introspection_urls:
+    conditional_access_enabled:
+    google_calendar:
+    jira:
+    zendesk:
+  mdm:
+    apple_server_url:
+    end_user_authentication:
+      entity_id:
+      idp_name:
+      issuer_uri:
+      metadata:
+      metadata_url:
+  org_info:
+    contact_url: https://fleetdm.com/company/contact
+    org_logo_path_dark_mode: ./lib/org_logo/dark.jpg
+    org_logo_path_light_mode: ./lib/org_logo/light.jpg
+    org_name: Lumen AI
+  secrets:
+  - secret: $FLEET_GLOBAL_ENROLL_SECRET
+  server_settings:
+    ai_features_disabled: false
+    deferred_save_host: false
+    discard_reports_data: false
+    enable_analytics: true
+    live_reporting_disabled: false
+    report_cap: 0
+    scripts_disabled: false
+    server_url: https://corp-lab.tail832443.ts.net
+  sso_settings:
+    enable_sso: false
+    enable_sso_idp_login: false
+    entity_id:
+    idp_image_url:
+    idp_name:
+    metadata:
+    metadata_url:
+    sso_server_url:
+  webhook_settings:
+    activities_webhook:
+      destination_url:
+      enable_activities_webhook: false
+    failing_policies_webhook:
+      destination_url:
+      enable_failing_policies_webhook: false
+      host_batch_size: 0
+    host_status_webhook:
+      days_count: 0
+      destination_url:
+      enable_host_status_webhook: false
+      host_percentage: 0
+    interval: 24h0m0s
+    vulnerabilities_webhook:
+      destination_url:
+      enable_vulnerabilities_webhook: false
+      host_batch_size: 0
+  yara_rules:
+policies:
+reports:

@@ -1,0 +1,9 @@
+# Secrets and installers - never commit
+*.env
+*.msi
+*.deb
+*.pkg
+*.pem
+*.key
+config-backup.yaml
+
