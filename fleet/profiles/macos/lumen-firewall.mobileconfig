@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>PayloadContent</key>
+  <array>
+    <dict>
+      <key>PayloadType</key>
+      <string>com.apple.security.firewall</string>
+      <key>PayloadIdentifier</key>
+      <string>com.lumenai.firewall.settings</string>
+      <key>PayloadUUID</key>
+      <string>9B8A7DFB-2D2C-4D70-B33E-E013A68F08BE</string>
+      <key>PayloadVersion</key>
+      <integer>1</integer>
+      <key>PayloadDisplayName</key>
+      <string>Firewall settings</string>
+      <key>EnableFirewall</key>
+      <true/>
+      <key>EnableStealthMode</key>
+      <true/>
+      <key>BlockAllIncoming</key>
+      <false/>
+    </dict>
+  </array>
+  <key>PayloadDisplayName</key>
+  <string>Lumen AI - Firewall</string>
+  <key>PayloadDescription</key>
+  <string>Turns on the macOS firewall with stealth mode.</string>
+  <key>PayloadIdentifier</key>
+  <string>com.lumenai.firewall</string>
+  <key>PayloadOrganization</key>
+  <string>Lumen AI</string>
+  <key>PayloadScope</key>
+  <string>System</string>
+  <key>PayloadType</key>
+  <string>Configuration</string>
+  <key>PayloadUUID</key>
+  <string>89F9E3AE-8ABE-4C31-AC99-C7282C7F2DA6</string>
+  <key>PayloadVersion</key>
+  <integer>1</integer>
+</dict>
+</plist>

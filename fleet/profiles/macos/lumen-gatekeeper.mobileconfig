@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>PayloadContent</key>
+  <array>
+    <dict>
+      <key>PayloadType</key>
+      <string>com.apple.systempolicy.control</string>
+      <key>PayloadIdentifier</key>
+      <string>com.lumenai.gatekeeper.control</string>
+      <key>PayloadUUID</key>
+      <string>6161DA99-CDF9-4DE1-8FFB-FC7FA7444CAD</string>
+      <key>PayloadVersion</key>
+      <integer>1</integer>
+      <key>PayloadDisplayName</key>
+      <string>Gatekeeper</string>
+      <key>EnableAssessment</key>
+      <true/>
+      <key>AllowIdentifiedDevelopers</key>
+      <true/>
+    </dict>
+    <dict>
+      <key>PayloadType</key>
+      <string>com.apple.systempolicy.managed</string>
+      <key>PayloadIdentifier</key>
+      <string>com.lumenai.gatekeeper.managed</string>
+      <key>PayloadUUID</key>
+      <string>81D975EE-A662-4D93-84F5-A8FFA57A63E3</string>
+      <key>PayloadVersion</key>
+      <integer>1</integer>
+      <key>PayloadDisplayName</key>
+      <string>Gatekeeper override</string>
+      <key>DisableOverride</key>
+      <true/>
+    </dict>
+  </array>
+  <key>PayloadDisplayName</key>
+  <string>Lumen AI - Gatekeeper</string>
+  <key>PayloadDescription</key>
+  <string>Allows only App Store and identified developer apps; users cannot override.</string>
+  <key>PayloadIdentifier</key>
+  <string>com.lumenai.gatekeeper</string>
+  <key>PayloadOrganization</key>
+  <string>Lumen AI</string>
+  <key>PayloadScope</key>
+  <string>System</string>
+  <key>PayloadType</key>
+  <string>Configuration</string>
+  <key>PayloadUUID</key>
+  <string>1C7D1271-436E-4C40-A896-9BA7EDB26E7C</string>
+  <key>PayloadVersion</key>
+  <integer>1</integer>
+</dict>
+</plist>

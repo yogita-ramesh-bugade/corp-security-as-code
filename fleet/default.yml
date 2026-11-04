@@ -14,6 +14,12 @@ agent_options:
       pack_delimiter: /
   overrides:
 controls:
+  apple_settings:
+    configuration_profiles:
+      - path: ./profiles/macos/lumen-firewall.mobileconfig
+      - path: ./profiles/macos/lumen-screen-lock.mobileconfig
+      - path: ./profiles/macos/lumen-gatekeeper.mobileconfig
+      - path: ./profiles/macos/lumen-ddm-passcode.json
 custom_host_vitals:
 labels:
 org_settings:

@@ -1,0 +1,9 @@
+{
+  "Type": "com.apple.configuration.passcode.settings",
+  "Identifier": "com.lumenai.ddm.passcode",
+  "Payload": {
+    "RequirePasscode": true,
+    "RequireAlphanumericPasscode": true,
+    "MinimumLength": 8
+  }
+}
