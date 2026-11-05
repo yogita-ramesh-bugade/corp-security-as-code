@@ -135,4 +135,16 @@ policies:
     critical: false
     description: Checks Gatekeeper is turned on by profile.
     resolution: Install the Lumen AI - Gatekeeper profile.
+  - name: macOS - Nudge installed
+    query: SELECT 1 FROM apps WHERE bundle_identifier = 'com.github.macadmins.Nudge';
+    platform: darwin
+    critical: false
+    description: Checks the Nudge update reminder app is installed.
+    resolution: Install the Nudge Suite package.
+  - name: macOS - Nudge deadline configured
+    query: SELECT 1 FROM managed_policies WHERE domain = 'com.github.macadmins.Nudge' LIMIT 1;
+    platform: darwin
+    critical: false
+    description: Checks the Lumen AI Nudge settings profile is installed.
+    resolution: Install the Lumen AI - Nudge profile.
 reports:
