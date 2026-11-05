@@ -108,4 +108,28 @@ org_settings:
       host_batch_size: 0
   yara_rules:
 policies:
+  - name: macOS - Firewall enabled
+    query: SELECT 1 FROM managed_policies WHERE domain = 'com.apple.security.firewall' AND name = 'EnableFirewall' AND value = 1;
+    platform: darwin
+    critical: false
+    description: Checks the Lumen AI firewall profile turns the firewall on.
+    resolution: Install the Lumen AI - Firewall profile.
+  - name: macOS - Firewall stealth mode
+    query: SELECT 1 FROM managed_policies WHERE domain = 'com.apple.security.firewall' AND name = 'EnableStealthMode' AND value = 1;
+    platform: darwin
+    critical: false
+    description: Checks stealth mode is enforced.
+    resolution: Install the Lumen AI - Firewall profile.
+  - name: macOS - Screen lock password required
+    query: SELECT 1 FROM managed_policies WHERE domain = 'com.apple.screensaver' AND name = 'askForPassword' AND value = 1;
+    platform: darwin
+    critical: false
+    description: Checks a password is required after sleep or screensaver.
+    resolution: Install the Lumen AI - Screen lock profile.
+  - name: macOS - Gatekeeper enforced
+    query: SELECT 1 FROM managed_policies WHERE domain = 'com.apple.systempolicy.control' AND name = 'EnableAssessment' AND value = 1;
+    platform: darwin
+    critical: false
+    description: Checks Gatekeeper is turned on by profile.
+    resolution: Install the Lumen AI - Gatekeeper profile.
 reports:
