@@ -178,3 +178,17 @@ Each entry: what I did, what broke, how I fixed it. Newest at the bottom.
 - **Did:** Added Santa's system extension and Full Disk Access (PPPC) profiles from North Pole Security's official docs, with the network extension removed (verified with grep: 0 netd references; plutil OK). These payloads only take effect via MDM, so on the VM I'll approve Santa manually in Project 1B. [Six profiles now listed in Controls > OS settings.]
 - **Learned:** Read an MDM enrollment step by step (SCEP → Authenticate → TokenUpdate) and use server and device logs as evidence. Some payloads (DDM, system extensions, PPPC) only work via MDM. Premium-only settings make GitOps reject the whole config. Verify config with grep and plutil instead of trusting a copy-paste.
 
+---
+
+## 2026-11-05 — Project 1A, Step 1.6: macOS patching with Nudge
+
+- **Did:** Created a com.github.macadmins.Nudge profile (minimum macOS 27.3, deadline 2026-11-19) and added it to Git and GitOps. Installed Nudge Suite (app + LaunchAgent) on the Mac VM, downloaded the profile from GitHub and installed it manually (the VM can't receive MDM profiles).
+- **Broke (1):** Nudge didn't appear when launched, and its `-debug` flag printed nothing in Terminal.
+- **Fixed (1):** Nudge logs to the unified log, not the terminal. `log stream --predicate 'subsystem == "com.github.macadmins.Nudge"' --level debug` showed it had loaded my settings and was "Delaying initial run by: 421" seconds, a built-in random delay so a whole fleet isn't prompted at once. After the wait, the reminder appeared.
+- **Result (before deadline):** Polite reminder: Required OS 27.3, Current 27.2, 14 days remaining, Defer available, Deferred count 0.
+- **Broke (2):** `-simulate-date` failed ("Failed to parse -simulated-date, returning current date"), and `open` briefly failed with error -600 right after `killall Nudge`.
+- **Fixed (2):** Tested escalation by changing the VM clock instead; waited a few seconds before relaunching.
+- **Result (past deadline):** Aggressive mode: background blurred, -1 days remaining in red, Defer removed. Closed it with Force Quit, then restored automatic date and time.
+- **Proof in Fleet:** Added two policies: Nudge installed, and Nudge deadline configured. [Both passing on fleet-macos-lab.]
+- **Learned:** Good patching is clear deadlines plus escalating reminders, not surprise restarts. Read an app's unified log when it seems to do nothing. In production, the required version tracks Apple's latest security release, with the deadline days or weeks out depending on severity.
+
