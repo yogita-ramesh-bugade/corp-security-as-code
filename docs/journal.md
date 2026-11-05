@@ -163,3 +163,18 @@ Each entry: what I did, what broke, how I fixed it. Newest at the bottom.
 - **Learned:** Commit every working change immediately, and always read a dry run before applying.
 - **Did:** Added scripts/gitops.sh, which loads the secret and runs `fleetctl gitops`, so I don't hit "variable not set" in new Terminal windows.
 - **Did:** Updated deprecated keys: `controls.macos_settings.custom_settings` became `controls.apple_settings.configuration_profiles`. Tools change faster than guides, so read warnings.
+
+---
+
+## 2026-11-04 — Project 1A, Step 1.5: macOS baseline
+
+- **Did:** Created firewall (with stealth mode), screen lock, and Gatekeeper (no override) profiles, plus a DDM passcode declaration, in fleet/profiles/macos/, and referenced them in default.yml under `controls.apple_settings.configuration_profiles` (renamed from the deprecated `macos_settings.custom_settings`).
+- **Broke (1):** Profiles showed no status in Controls > OS settings (0 hosts).
+- **Investigation:** Fleet's live MDM log showed SCEP (200), certificate association, Authenticate and SetBootstrapToken, but never TokenUpdate, reproduced on two VMs. `fleetctl get host` showed `connected_to_fleet: false`. The Mac's mdmclient log showed "asked for publicToken, got (null)" and "connectionStatusChange from apsd: NO". Ruled out network/tunnel (curl /mdm/apple/mdm: 400; Apple push reachable), the APNs certificate (valid to Oct 2027) and the profile files.
+- **Root cause:** The macOS VM never obtains an APNs push token, so MDM enrollment can't complete and Fleet can't deliver profiles. A VM limitation, not a Fleet or configuration issue.
+- **Fixed:** Installed the three profiles manually in the VM and added four Fleet policies using osquery's `managed_policies` table (firewall on, stealth mode, screen lock password, Gatekeeper). Result: 4/4 policies passing on fleet-macos-lab. The DDM passcode declaration can only be delivered by MDM, so it stays in Git for physical hardware.
+- **Broke (2):** GitOps failed: "missing or invalid license."
+- **Fixed (2):** `enable_disk_encryption` is Fleet Premium-only; commented it out with a note. FileVault decision: no FileVault profile without recovery-key escrow, because it risks unrecoverable devices.
+- **Did:** Added Santa's system extension and Full Disk Access (PPPC) profiles from North Pole Security's official docs, with the network extension removed (verified with grep: 0 netd references; plutil OK). These payloads only take effect via MDM, so on the VM I'll approve Santa manually in Project 1B. [Six profiles now listed in Controls > OS settings.]
+- **Learned:** Read an MDM enrollment step by step (SCEP → Authenticate → TokenUpdate) and use server and device logs as evidence. Some payloads (DDM, system extensions, PPPC) only work via MDM. Premium-only settings make GitOps reject the whole config. Verify config with grep and plutil instead of trusting a copy-paste.
+
