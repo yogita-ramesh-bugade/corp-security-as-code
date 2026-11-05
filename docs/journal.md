@@ -191,4 +191,6 @@ Each entry: what I did, what broke, how I fixed it. Newest at the bottom.
 - **Result (past deadline):** Aggressive mode: background blurred, -1 days remaining in red, Defer removed. Closed it with Force Quit, then restored automatic date and time.
 - **Proof in Fleet:** Added two policies: Nudge installed, and Nudge deadline configured. [Both passing on fleet-macos-lab.]
 - **Learned:** Good patching is clear deadlines plus escalating reminders, not surprise restarts. Read an app's unified log when it seems to do nothing. In production, the required version tracks Apple's latest security release, with the deadline days or weeks out depending on severity.
+![Nudge reminder](images/nudge-reminder.png)
+![Nudge past deadline](images/nudge-past-deadline.png)
 
