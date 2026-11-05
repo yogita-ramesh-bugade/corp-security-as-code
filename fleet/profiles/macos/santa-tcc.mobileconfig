@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PayloadUUID</key>
+	<string>9622A065-8AA4-4294-BDA3-71AA5C15BD93</string>
+	<key>PayloadType</key>
+	<string>Configuration</string>
+	<key>PayloadOrganization</key>
+	<string>Lumen AI</string>
+	<key>PayloadIdentifier</key>
+	<string>com.lumenai.santa.tcc-policy.9622A065-8AA4-4294-BDA3-71AA5C15BD93</string>
+	<key>PayloadDisplayName</key>
+	<string>Santa: TCC</string>
+	<key>PayloadDescription</key>
+	<string>Grant Santa full-disk access</string>
+	<key>PayloadVersion</key>
+	<integer>1</integer>
+	<key>PayloadEnabled</key>
+	<true/>
+	<key>PayloadRemovalDisallowed</key>
+	<true/>
+	<key>PayloadScope</key>
+	<string>System</string>
+	<key>PayloadContent</key>
+	<array>
+		<dict>
+			<key>PayloadUUID</key>
+			<string>8339162A-75E7-4E07-91DC-45DC939A4764</string>
+			<key>PayloadType</key>
+			<string>com.apple.TCC.configuration-profile-policy</string>
+			<key>PayloadOrganization</key>
+			<string>Lumen AI</string>
+			<key>PayloadIdentifier</key>
+			<string>com.lumenai.santa.tcc-policy.8339162A-75E7-4E07-91DC-45DC939A4764</string>
+			<key>PayloadDisplayName</key>
+			<string>TCC</string>
+			<key>PayloadDescription</key>
+			<string>Allows full-disk access for Santa</string>
+			<key>PayloadVersion</key>
+			<integer>1</integer>
+ 			<!-- See https://developer.apple.com/documentation/devicemanagement/privacypreferencespolicycontrol for payload descriptions -->
+			<key>Services</key>
+			<dict>
+				<key>SystemPolicyAllFiles</key>
+				<array>
+					<dict>
+						<key>Allowed</key>
+						<true/>
+						<key>CodeRequirement</key>
+						<string>identifier "com.northpolesec.santa.daemon" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = ZMCG7MLDV9</string>
+						<key>Comment</key>
+						<string></string>
+						<key>Identifier</key>
+						<string>com.northpolesec.santa.daemon</string>
+						<key>IdentifierType</key>
+						<string>bundleID</string>
+						<key>StaticCode</key>
+						<false/>
+					</dict>
+					<dict>
+						<key>Allowed</key>
+						<true/>
+						<key>CodeRequirement</key>
+						<string>identifier "com.northpolesec.santa.bundleservice" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = ZMCG7MLDV9</string>
+						<key>Comment</key>
+						<string></string>
+						<key>Identifier</key>
+						<string>com.northpolesec.santa.bundleservice</string>
+						<key>IdentifierType</key>
+						<string>bundleID</string>
+						<key>StaticCode</key>
+						<false/>
+					</dict>
+				</array>
+			</dict>
+		</dict>
+	</array>
+</dict>
+</plist>

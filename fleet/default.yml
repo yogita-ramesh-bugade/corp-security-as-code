@@ -20,6 +20,8 @@ controls:
       - path: ./profiles/macos/lumen-screen-lock.mobileconfig
       - path: ./profiles/macos/lumen-gatekeeper.mobileconfig
       - path: ./profiles/macos/lumen-ddm-passcode.json
+      - path: ./profiles/macos/santa-system-extension.mobileconfig
+      - path: ./profiles/macos/santa-tcc.mobileconfig
 custom_host_vitals:
 labels:
 org_settings:

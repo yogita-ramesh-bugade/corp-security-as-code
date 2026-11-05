@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1">
+<dict>
+	<!-- See https://developer.apple.com/documentation/devicemanagement/systemextensions for payload descriptions -->
+	<key>PayloadUUID</key>
+	<string>CAA3F5F6-4519-410D-960B-FDC323FA08E2</string>
+	<key>PayloadType</key>
+	<string>Configuration</string>
+	<key>PayloadOrganization</key>
+	<string>Lumen AI</string>
+	<key>PayloadIdentifier</key>
+	<string>com.lumenai.santa.sysx-policy.CAA3F5F6-4519-410D-960B-FDC323FA08E2</string>
+	<key>PayloadDisplayName</key>
+	<string>Santa: System Extension</string>
+	<key>PayloadDescription</key>
+	<string>Automatically enable Santa's EndpointSecurityExtension</string>
+	<key>PayloadVersion</key>
+	<integer>1</integer>
+	<key>PayloadEnabled</key>
+	<true/>
+	<key>PayloadRemovalDisallowed</key>
+	<true/>
+	<key>PayloadScope</key>
+	<string>System</string>
+	<key>PayloadContent</key>
+	<array>
+		<dict>
+			<key>PayloadUUID</key>
+			<string>67EF74B6-F4FB-49FC-A086-5DE3E61B838A</string>
+			<key>PayloadType</key>
+			<string>com.apple.system-extension-policy</string>
+			<key>PayloadOrganization</key>
+			<string>Lumen AI</string>
+			<key>PayloadIdentifier</key>
+			<string>com.lumenai.santa.sysx-policy.67EF74B6-F4FB-49FC-A086-5DE3E61B838A</string>
+			<key>PayloadDisplayName</key>
+			<string>Sysx</string>
+			<key>PayloadDescription</key>
+			<string>Allow Santa's system extension and prevent removal.</string>
+			<key>PayloadVersion</key>
+			<integer>1</integer>
+			<key>PayloadEnabled</key>
+			<true/>
+			<key>AllowedSystemExtensions</key>
+			<dict>
+				<key>ZMCG7MLDV9</key>
+				<array>
+					<string>com.northpolesec.santa.daemon</string>
+				</array>
+			</dict>
+			<key>AllowedSystemExtensionTypes</key>
+			<dict>
+				<key>ZMCG7MLDV9</key>
+				<array>
+					<string>EndpointSecurityExtension</string>
+				</array>
+			</dict>
+			<key>NonRemovableSystemExtensions</key>
+			<dict>
+				<key>ZMCG7MLDV9</key>
+				<array>
+					<string>com.northpolesec.santa.daemon</string>
+				</array>
+			</dict>
+		</dict>
+	</array>
+</dict>
+</plist>
