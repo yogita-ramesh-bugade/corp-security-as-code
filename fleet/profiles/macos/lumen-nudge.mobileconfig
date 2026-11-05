@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PayloadContent</key>
+	<array>
+		<dict>
+			<key>PayloadDisplayName</key>
+			<string>Nudge settings</string>
+			<key>PayloadIdentifier</key>
+			<string>com.lumenai.nudge.settings</string>
+			<key>PayloadType</key>
+			<string>com.github.macadmins.Nudge</string>
+			<key>PayloadUUID</key>
+			<string>5C561940-4A17-459B-9AF3-FF15E731602C</string>
+			<key>PayloadVersion</key>
+			<integer>1</integer>
+			<key>osVersionRequirements</key>
+			<array>
+				<dict>
+					<key>aboutUpdateURL</key>
+					<string>https://support.apple.com/en-us/100100</string>
+					<key>requiredInstallationDate</key>
+					<date>2026-11-19T17:00:00Z</date>
+					<key>requiredMinimumOSVersion</key>
+					<string>27.3</string>
+					<key>targetedOSVersionsRule</key>
+					<string>default</string>
+				</dict>
+			</array>
+			<key>userInterface</key>
+			<dict>
+				<key>simpleMode</key>
+				<false/>
+			</dict>
+		</dict>
+	</array>
+	<key>PayloadDescription</key>
+	<string>Reminds users to update macOS by a deadline.</string>
+	<key>PayloadDisplayName</key>
+	<string>Lumen AI - Nudge</string>
+	<key>PayloadIdentifier</key>
+	<string>com.lumenai.nudge</string>
+	<key>PayloadOrganization</key>
+	<string>Lumen AI</string>
+	<key>PayloadScope</key>
+	<string>System</string>
+	<key>PayloadType</key>
+	<string>Configuration</string>
+	<key>PayloadUUID</key>
+	<string>09DCD62B-2704-4437-862B-7C67670AC49A</string>
+	<key>PayloadVersion</key>
+	<integer>1</integer>
+</dict>
+</plist>
