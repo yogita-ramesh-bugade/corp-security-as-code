@@ -141,3 +141,25 @@ Each entry: what I did, what broke, how I fixed it. Newest at the bottom.
 - **Tested:** Renamed the org to "Lumen AI DRIFT TEST" in the UI, then applied GitOps. [The name reverted to "Lumen AI".]
 - **Learned:** GitOps resets anything missing from the YAML to defaults, so export and review before applying. Fleet's dry run validates files but doesn't show a field-by-field diff; compare with `fleetctl get config` to see drift. Secrets never live in Git: they're injected from the environment. The folder name in the prompt tells me where I am.
 
+---
+
+## 2026-11-03 — Project 1A, Step 1.4: Fleet configuration in Git (GitOps)
+
+- **Did:** Backed up Fleet's config outside the repo (`fleetctl get config --yaml`), exported the current settings with `fleetctl generate-gitops`, replaced the enroll secret with a placeholder (`$FLEET_GLOBAL_ENROLL_SECRET`, real value in ~/fleet-server/gitops.env, outside the repo), copied the files into fleet/, added a .gitignore for secrets, installers, keys and backups, and applied with `fleetctl gitops`.
+- **Broke (1):** "environment variable FLEET_GLOBAL_ENROLL_SECRET not set."
+- **Fixed (1):** Ran `source ~/fleet-server/gitops.env`. Each new Terminal window needs it.
+- **Broke (2):** "fleet/default.yml: no such file or directory."
+- **Fixed (2):** I was in ~/fleet-server instead of the repo; ran `cd ~/corp-security-as-code`.
+- **Broke (3):** `git add .gitignore` failed because the file had never been created.
+- **Fixed (3):** Created .gitignore, then confirmed with `git status` and `git diff --cached` that only YAML, logos and the placeholder secret were committed.
+- **Tested:** Renamed the org to "Lumen AI DRIFT TEST" in the UI, then applied GitOps. [The name reverted to "Lumen AI".]
+- **Learned:** GitOps resets anything missing from the YAML to defaults, so export and review before applying. Fleet's dry run validates the files but doesn't show a field-by-field diff; `fleetctl get config` shows the live state. Secrets never live in Git; they're injected from the environment.
+
+### Later GitOps lessons (2026-11-04)
+
+- **Broke:** Installers built before GitOps applied the secret from gitops.env stopped enrolling ("enroll request: unauthenticated, or invalid token").
+- **Learned:** Changing the enroll secret through GitOps rotates it: old installers stop working, enrolled devices keep working. Always build installers with `--enroll-secret="$FLEET_GLOBAL_ENROLL_SECRET"`.
+- **Broke:** `git checkout fleet/default.yml` restored the last *committed* version and silently dropped uncommitted profile changes. I caught it by reading the file and the dry run before applying.
+- **Learned:** Commit every working change immediately, and always read a dry run before applying.
+- **Did:** Added scripts/gitops.sh, which loads the secret and runs `fleetctl gitops`, so I don't hit "variable not set" in new Terminal windows.
+- **Did:** Updated deprecated keys: `controls.macos_settings.custom_settings` became `controls.apple_settings.configuration_profiles`. Tools change faster than guides, so read warnings.
