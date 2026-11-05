@@ -6,3 +6,4 @@
 - Secrets (.env, server private key, tunnel credentials) are kept outside this repo.
 - Fleet web address is set to the public HTTPS URL, which devices need for enrollment and MDM.
 - Apple MDM turned on with an APNs certificate from Apple's Push Certificates Portal (personal Apple ID; renews yearly, reminder set two weeks before expiry).
+- macOS baseline (firewall, stealth mode, screen lock, Gatekeeper) is verified with 4 Fleet policies: all passing on fleet-macos-lab. Profiles were installed manually because the VM can't obtain an APNs push token; MDM delivery is ready in Git for physical hardware.
