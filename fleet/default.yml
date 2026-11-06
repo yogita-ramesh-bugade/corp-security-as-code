@@ -151,4 +151,22 @@ policies:
     critical: false
     description: Checks the Lumen AI Nudge settings profile is installed.
     resolution: Install the Lumen AI - Nudge profile.
+  - name: Windows - BitLocker on for C:
+    query: SELECT 1 FROM bitlocker_info WHERE drive_letter = 'C:' AND protection_status = 1;
+    platform: windows
+    critical: false
+    description: Checks BitLocker protection is on for the system drive.
+    resolution: Run the windows-bitlocker.ps1 script.
+  - name: Windows - Firewall on (private profile)
+    query: SELECT 1 FROM registry WHERE path = 'HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy\StandardProfile\EnableFirewall' AND data = 1;
+    platform: windows
+    critical: false
+    description: Checks the Windows firewall is on for the private profile.
+    resolution: Run the windows-firewall-smb.ps1 script.
+  - name: Windows - SMBv1 disabled
+    query: SELECT 1 FROM windows_optional_features WHERE name = 'SMB1Protocol' AND state != 1;
+    platform: windows
+    critical: false
+    description: Checks the legacy SMBv1 protocol is not enabled.
+    resolution: Run the windows-firewall-smb.ps1 script.
 reports:
