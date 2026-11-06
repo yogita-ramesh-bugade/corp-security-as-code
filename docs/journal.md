@@ -212,3 +212,20 @@ Each entry: what I did, what broke, how I fixed it. Newest at the bottom.
 - **Fixed (4):** The policy name "Windows - BitLocker on for C:" ended with a colon, which YAML reads as a new key. Quoted the name.
 - **Proof in Fleet:** Three Windows policies (BitLocker on, firewall on, SMBv1 disabled): [results on fleet-windows-lab].
 - **Learned:** ASR rules start in audit mode to measure breakage before blocking. Encryption without a recovery path is a trap, so always verify the protectors. BitLocker needs a TPM and no bootable media. In YAML, quote any text containing a colon. Copy-paste commands to avoid typos like `Enable-BitLocket`.
+
+---
+
+## 2026-11-06 — Project 1A, Step 1.8: Linux baseline (Ansible)
+
+- **Did:** Installed openssh-server on fleet-ubuntu-lab, created an SSH key on my Mac (~/.ssh/lumen_lab, never committed) and copied it to the VM. Wrote linux/inventory.ini and linux/baseline.yml: unattended security updates, ufw deny-incoming with OpenSSH allowed *before* enabling, auditd running at boot, SSH hardening (no root login, no passwords) with `validate: sshd -t` before saving, and a read-only LUKS report.
+- **Broke (1):** "Permission denied (publickey,password)."
+- **Fixed (1):** The key was installed but has a passphrase, which Ansible can't type. Loaded it into the SSH agent with `ssh-add --apple-use-keychain ~/.ssh/lumen_lab`.
+- **Broke (2):** "Timeout (12s) waiting for privilege escalation prompt."
+- **Fixed (2):** Ubuntu 26.04 uses sudo-rs (0.2.13), whose password prompt Ansible doesn't recognise. Classic sudo is installed as /usr/bin/sudo.ws, so I set `ansible_become_exe=/usr/bin/sudo.ws` in the inventory. (I first checked sudo on my Mac by mistake; checking over SSH from the Mac showed the real target.)
+- **Broke (3):** The `--check --diff` preview failed: "Could not find the requested service auditd."
+- **Fixed (3):** Check mode only simulates package installs, so the service didn't exist yet. Added `when: not ansible_check_mode` to the service task, and ran the playbook for real.
+- **Tidied:** Set `ansible_python_interpreter=/usr/bin/python3` to silence the interpreter-discovery warning.
+- **Idempotence:** First real run changed=[N]; second run changed=[0].
+- **Verified on the VM:** ufw [active, deny incoming, OpenSSH allowed]; auditd [active]; sshd -T shows permitrootlogin [no] and passwordauthentication [no]; auto-updates [on]; LUKS: [YES]. Password SSH from my Mac [refused: "Permission denied (publickey)"].
+- **Fleet policies:** auditd running, unattended-upgrades installed, root disk encrypted: [results].
+- **Learned:** Set up key auth before disabling passwords, and allow SSH before enabling the firewall, or you lock yourself out. Validate config before restarting a service. Dry runs have limits when later tasks depend on earlier changes. Check facts on the actual target, not the control machine. Idempotence (changed=0 on re-run) is what makes config-as-code safe to repeat.
