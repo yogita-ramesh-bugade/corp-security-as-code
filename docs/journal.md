@@ -194,3 +194,21 @@ Each entry: what I did, what broke, how I fixed it. Newest at the bottom.
 ![Nudge reminder](images/nudge-reminder.png)
 ![Nudge past deadline](images/nudge-past-deadline.png)
 
+---
+
+## 2026-11-05 — Project 1A, Step 1.7: Windows baseline
+
+- **Did:** Wrote three PowerShell scripts in windows/scripts/: firewall on for all profiles plus SMBv1 off; four Defender ASR rules in audit mode (LSASS credential theft, Office child processes, Office executable content, Office code injection, with GUIDs verified against Microsoft's ASR reference); and BitLocker with the TPM plus a recovery password. Tracked them in GitOps under controls.scripts, and ran them on fleet-windows-lab [with `fleetctl run-script` / from Fleet's Run script action].
+- **BitLocker, broke (1):** Get-Tpm failed with 0x80284001: the VM had no virtual TPM.
+- **Fixed (1):** Enabled TPM 2.0 in UTM's VM settings. tpm.msc then showed "The TPM is ready for use."
+- **BitLocker, broke (2):** "Bootable media detected" (0x80310030).
+- **Fixed (2):** Ejected the Windows installer and guest-tools ISOs in UTM.
+- **BitLocker, broke (3):** Enable-BitLocker: "Value does not fall within the expected range," because the protectors already existed from earlier attempts.
+- **Fixed (3):** `manage-bde -on C: -UsedSpaceOnly -SkipHardwareTest`. Result: Used Space Only Encrypted, 100%, Protection On, XTS-AES 128 (kept from an earlier attempt; switching to 256 would need decrypting and re-encrypting).
+- **Caught:** Only a TPM protector remained, with no recovery path. Added a recovery password with `manage-bde -protectors -add C: -RecoveryPassword` and stored it in my password manager. Production: escrow recovery keys centrally.
+- **ASR:** All four rule IDs present in Get-MpPreference [each with action=2 (audit)].
+- **Firewall/SMB:** [All profiles Enabled: True; EnableSMB1Protocol: False].
+- **Broke (4):** GitOps failed: "yaml: line 154: mapping values are not allowed in this context."
+- **Fixed (4):** The policy name "Windows - BitLocker on for C:" ended with a colon, which YAML reads as a new key. Quoted the name.
+- **Proof in Fleet:** Three Windows policies (BitLocker on, firewall on, SMBv1 disabled): [results on fleet-windows-lab].
+- **Learned:** ASR rules start in audit mode to measure breakage before blocking. Encryption without a recovery path is a trap, so always verify the protectors. BitLocker needs a TPM and no bootable media. In YAML, quote any text containing a colon. Copy-paste commands to avoid typos like `Enable-BitLocket`.
