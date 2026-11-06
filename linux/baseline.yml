@@ -1,0 +1,67 @@
+---
+# Lumen AI - Linux baseline (Ubuntu). Safe to run repeatedly (idempotent).
+- name: Lumen AI Linux baseline
+  hosts: linux_lab
+  become: true
+
+  tasks:
+    - name: Install baseline packages
+      ansible.builtin.apt:
+        name: [unattended-upgrades, ufw, auditd]
+        state: present
+        update_cache: true
+        cache_valid_time: 3600
+
+    - name: Turn on automatic security updates
+      ansible.builtin.copy:
+        dest: /etc/apt/apt.conf.d/20auto-upgrades
+        mode: "0644"
+        content: |
+          APT::Periodic::Update-Package-Lists "1";
+          APT::Periodic::Unattended-Upgrade "1";
+
+    - name: Firewall - allow SSH first, so we don't lock ourselves out
+      community.general.ufw:
+        rule: allow
+        name: OpenSSH
+
+    - name: Firewall - deny incoming by default, then turn it on
+      community.general.ufw:
+        state: enabled
+        policy: deny
+        direction: incoming
+
+    - name: Keep auditd running and starting at boot
+      ansible.builtin.service:
+        name: auditd
+        state: started
+        enabled: true
+      when: not ansible_check_mode
+
+    - name: Harden SSH (no root login, no passwords)
+      ansible.builtin.copy:
+        dest: /etc/ssh/sshd_config.d/01-lumen-hardening.conf
+        mode: "0644"
+        content: |
+          PermitRootLogin no
+          PasswordAuthentication no
+          KbdInteractiveAuthentication no
+          PubkeyAuthentication yes
+        validate: /usr/sbin/sshd -t -f %s
+      notify: Restart SSH
+
+    - name: Check whether any disk is LUKS-encrypted
+      ansible.builtin.shell: lsblk -no FSTYPE | grep -q crypto_LUKS
+      register: luks
+      changed_when: false
+      failed_when: false
+
+    - name: Report disk encryption
+      ansible.builtin.debug:
+        msg: "LUKS encryption: {{ 'YES' if luks.rc == 0 else 'NO' }}"
+
+  handlers:
+    - name: Restart SSH
+      ansible.builtin.service:
+        name: ssh
+        state: restarted

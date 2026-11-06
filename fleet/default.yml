@@ -169,4 +169,22 @@ policies:
     critical: false
     description: Checks the legacy SMBv1 protocol is not enabled.
     resolution: Run the windows-firewall-smb.ps1 script.
+  - name: Linux - auditd running
+    query: SELECT 1 FROM processes WHERE name = 'auditd';
+    platform: linux
+    critical: false
+    description: Checks the audit daemon is running.
+    resolution: Run linux/baseline.yml with Ansible.
+  - name: Linux - automatic security updates installed
+    query: SELECT 1 FROM deb_packages WHERE name = 'unattended-upgrades';
+    platform: linux
+    critical: false
+    description: Checks unattended-upgrades is installed.
+    resolution: Run linux/baseline.yml with Ansible.
+  - name: Linux - root disk encrypted (LUKS)
+    query: SELECT 1 FROM mounts m JOIN disk_encryption d ON m.device_alias = d.name WHERE m.path = '/' AND d.encrypted = 1;
+    platform: linux
+    critical: false
+    description: Checks the root filesystem is on an encrypted disk.
+    resolution: Reinstall with full-disk encryption.
 reports:
