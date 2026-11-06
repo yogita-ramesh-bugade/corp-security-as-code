@@ -151,7 +151,7 @@ policies:
     critical: false
     description: Checks the Lumen AI Nudge settings profile is installed.
     resolution: Install the Lumen AI - Nudge profile.
-  - name: Windows - BitLocker on for C:
+  - name: "Windows - BitLocker on for C:"
     query: SELECT 1 FROM bitlocker_info WHERE drive_letter = 'C:' AND protection_status = 1;
     platform: windows
     critical: false
