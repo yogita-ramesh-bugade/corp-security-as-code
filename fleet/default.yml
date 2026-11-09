@@ -187,4 +187,40 @@ policies:
     critical: false
     description: Checks the root filesystem is on an encrypted disk.
     resolution: Reinstall with full-disk encryption.
+  - name: macOS - FileVault on
+    query: SELECT 1 FROM disk_encryption WHERE user_uuid IS NOT '' AND filevault_status = 'on' LIMIT 1;
+    platform: darwin
+    critical: false
+    description: Checks FileVault disk encryption is on.
+    resolution: Turn on FileVault (production - enforce with recovery key escrow).
+  - name: macOS - OS at or above 27.3
+    query: SELECT 1 FROM os_version WHERE major > 27 OR (major = 27 AND minor >= 3);
+    platform: darwin
+    critical: false
+    description: Checks macOS meets the minimum version set in Nudge.
+    resolution: Install the latest macOS update (Nudge will remind you).
+  - name: Windows - OS build at or above 26100
+    query: SELECT 1 FROM os_version WHERE CAST(build AS INTEGER) >= 26100;
+    platform: windows
+    critical: false
+    description: Checks Windows 11 24H2 or later.
+    resolution: Install Windows updates.
+  - name: Windows - Firewall on (public and domain profiles)
+    query: SELECT 1 WHERE (SELECT COUNT(*) FROM registry WHERE path IN ('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy\PublicProfile\EnableFirewall', 'HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy\DomainProfile\EnableFirewall') AND data = 1) = 2;
+    platform: windows
+    critical: false
+    description: Checks the firewall is on for the public and domain profiles.
+    resolution: Run the windows-firewall-smb.ps1 script.
+  - name: Windows - ASR LSASS rule in audit or block
+    query: SELECT 1 FROM registry WHERE path = 'HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR\Rules\9e6c4e1f-7d60-472f-ba1a-a39ef669e4b2' AND data IN (1, 2);
+    platform: windows
+    critical: false
+    description: Checks the credential-theft ASR rule is in audit (2) or block (1) mode.
+    resolution: Run the windows-asr-audit.ps1 script.
+  - name: Linux - OS release 26 or later
+    query: SELECT 1 FROM os_version WHERE major >= 26;
+    platform: linux
+    critical: false
+    description: Checks Ubuntu 26.04 LTS or later.
+    resolution: Upgrade to a supported Ubuntu LTS release.
 reports:
