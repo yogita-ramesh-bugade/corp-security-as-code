@@ -229,3 +229,18 @@ Each entry: what I did, what broke, how I fixed it. Newest at the bottom.
 - **Verified on the VM:** ufw [active, deny incoming, OpenSSH allowed]; auditd [active]; sshd -T shows permitrootlogin [no] and passwordauthentication [no]; auto-updates [on]; LUKS: [YES]. Password SSH from my Mac [refused: "Permission denied (publickey)"].
 - **Fleet policies:** auditd running, unattended-upgrades installed, root disk encrypted: [results].
 - **Learned:** Set up key auth before disabling passwords, and allow SSH before enabling the firewall, or you lock yourself out. Validate config before restarting a service. Dry runs have limits when later tasks depend on earlier changes. Check facts on the actual target, not the control machine. Idempotence (changed=0 on re-run) is what makes config-as-code safe to repeat.
+
+---
+
+## 2026-11-06 — Project 1A, Step 1.9: Compliance checks as osquery policies
+
+- **Did:** Reviewed the 12 existing policies from Steps 1.5–1.8, then added six more through GitOps: macOS FileVault on, macOS OS at or above 27.3, Windows OS build at or above 26100, Windows firewall on for public and domain profiles, Windows ASR LSASS rule in audit or block, and Linux OS release 26 or later. Total: [18] policies.
+- **Deferred:** Santa running, to Project 1B (Santa isn't installed yet, so the check would fail forever).
+- **Verified first:** Confirmed the ASR registry path with `reg query "HKLM\SOFTWARE\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR\Rules"` before writing the check: [four rule IDs, value 0x2].
+- **Break/fix test (Linux):** `sudo systemctl stop auditd` → "Linux - auditd running" turned No after a refetch → `sudo systemctl start auditd` → back to Yes.
+- **Break/fix test (Windows):** `Set-NetFirewallProfile -Profile Private -Enabled False` → "Windows - Firewall on (private profile)" turned No → re-enabled → back to Yes.
+- **Honest failures:** macOS FileVault [No; enforced FileVault is Premium-only / Yes after turning it on manually, recovery key in my password manager]. macOS OS at or above 27.3: No, because the VM runs 27.2, which matches Nudge's reminder.
+- **Did:** Documented how each policy maps to a posture signal (disk_encrypted, os_current, firewall_on, endpoint_protection) in docs/posture-signals.md, as input for Project 2's access gate.
+- **Broke:** [describe anything, or "Nothing"]
+- **Learned:** Policies prove settings are in effect, not just sent; break/fix testing proves the checks actually detect change. A failing check that matches reality is the system working. Verify where a setting is stored before writing a check for it.
+
