@@ -1,0 +1,14 @@
+# Lumen AI - Chrome browser policy. Single source of truth.
+# Edit this file, then run: python3 browser/render.py
+# Policy reference: https://chromeenterprise.google/policies/
+policies:
+  # Block every extension...
+  ExtensionInstallBlocklist:
+    - "*"
+  # ...except these (Chrome Web Store extension IDs; verify each ID on its store page)
+  ExtensionInstallAllowlist:
+    - ghbmnnjooekpmoecnnnilnnbdlolhkhi   # Google Docs Offline
+  # 2 = Enhanced Safe Browsing
+  SafeBrowsingProtectionLevel: 2
+  # Use the company password manager, not the browser's
+  PasswordManagerEnabled: false

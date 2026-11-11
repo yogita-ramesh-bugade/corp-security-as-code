@@ -23,10 +23,12 @@ controls:
       - path: ./profiles/macos/santa-system-extension.mobileconfig
       - path: ./profiles/macos/santa-tcc.mobileconfig
       - path: ./profiles/macos/lumen-nudge.mobileconfig
+      - path: ../browser/out/macos/lumen-chrome.mobileconfig
   scripts:
     - path: ../windows/scripts/windows-firewall-smb.ps1
     - path: ../windows/scripts/windows-asr-audit.ps1
     - path: ../windows/scripts/windows-bitlocker.ps1
+    - path: ../browser/out/windows/lumen-chrome.ps1
 custom_host_vitals:
 labels:
 org_settings:

@@ -1,0 +1,10 @@
+{
+  "ExtensionInstallAllowlist": [
+    "ghbmnnjooekpmoecnnnilnnbdlolhkhi"
+  ],
+  "ExtensionInstallBlocklist": [
+    "*"
+  ],
+  "PasswordManagerEnabled": false,
+  "SafeBrowsingProtectionLevel": 2
+}
