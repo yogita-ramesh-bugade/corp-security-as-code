@@ -244,3 +244,17 @@ Each entry: what I did, what broke, how I fixed it. Newest at the bottom.
 - **Broke:** [describe anything, or "Nothing"]
 - **Learned:** Policies prove settings are in effect, not just sent; break/fix testing proves the checks actually detect change. A failing check that matches reality is the system working. Verify where a setting is stored before writing a check for it.
 
+---
+
+## 2026-11-11 — Project 1A, Step 1.10: Browser policy from one source
+
+- **Did:** Wrote browser/policy.yaml as the single source of truth (block all extensions except an allowlist, enhanced Safe Browsing, built-in password manager off) and browser/render.py, which renders it to a Linux JSON file, a macOS com.google.Chrome profile and a Windows PowerShell registry script. Stable UUIDs keep the output identical between runs, and `render.py --check` fails if outputs are stale (for CI in Step 1.11).
+- **Tracked in GitOps:** macOS profile under controls.apple_settings.configuration_profiles; Windows script under controls.scripts.
+- **Applied:** macOS: profile installed manually from GitHub (the VM can't receive MDM profiles). Windows: `fleetctl run-script`. Linux: two new Ansible tasks create the Chrome and Chromium policy folders and copy the generated JSON into both.
+- **Broke (1):** On macOS, the downloaded Chrome profile didn't appear under Device Management.
+- **Fixed (1):** [The file hadn't been pushed to GitHub yet, so curl got a 404 / Ran `open lumen-chrome.mobileconfig` and found it under "Profile Downloaded"], then installed it.
+- **Broke (2):** On Ubuntu, chrome://policy showed "No policies set."
+- **Fixed (2):** The policy file wasn't in /etc/opt/chrome/policies/managed/ yet. Added the Chrome tasks to linux/baseline.yml, validated with `ansible-playbook --syntax-check`, ran the playbook, then fully restarted Chrome and reloaded policies.
+- **Verified:** chrome://policy shows the same four policies (Source: Platform, Status: OK) on [macOS, Windows, Ubuntu]. Installing a non-allowlisted extension is blocked by the administrator [yes].
+- **Learned:** One source of truth plus a generator means the three platforms can't drift apart. Each OS stores browser policy differently (JSON file, configuration profile, registry). Use `--syntax-check` to catch YAML indentation mistakes before running, and restart the browser to pick up new policy files.
+

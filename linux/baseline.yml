@@ -60,6 +60,24 @@
       ansible.builtin.debug:
         msg: "LUKS encryption: {{ 'YES' if luks.rc == 0 else 'NO' }}"
 
+    - name: Chrome policy folders
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        mode: "0755"
+      loop:
+        - /etc/opt/chrome/policies/managed
+        - /etc/chromium-browser/policies/managed
+
+    - name: Chrome policy (generated from browser/policy.yaml)
+      ansible.builtin.copy:
+        src: ../browser/out/linux/lumen-chrome.json
+        dest: "{{ item }}/lumen-chrome.json"
+        mode: "0644"
+      loop:
+        - /etc/opt/chrome/policies/managed
+        - /etc/chromium-browser/policies/managed
+
   handlers:
     - name: Restart SSH
       ansible.builtin.service:
