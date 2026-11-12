@@ -31,6 +31,15 @@ controls:
     - path: ../browser/out/windows/lumen-chrome.ps1
 custom_host_vitals:
 labels:
+  - name: ring-canary
+    description: First ring - one lab device receives new changes first.
+    query: SELECT 1 FROM system_info WHERE hostname LIKE 'fleet-ubuntu-lab%';
+  - name: ring-pilot
+    description: Second ring - a small group, after canary is healthy.
+    query: SELECT 1 FROM system_info WHERE hostname LIKE 'fleet-macos-lab%' OR hostname LIKE 'fleet-windows-lab%';
+  - name: ring-all
+    description: Everyone.
+    query: SELECT 1;
 org_settings:
   activity_expiry_settings:
     activity_expiry_enabled: false
