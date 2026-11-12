@@ -234,4 +234,11 @@ policies:
     critical: false
     description: Checks Ubuntu 26.04 LTS or later.
     resolution: Upgrade to a supported Ubuntu LTS release.
+  - name: Linux - ufw installed
+    query: SELECT 1 FROM deb_packages WHERE name = 'ufw';
+    platform: linux
+    critical: false
+    description: Canary rollout demo.
+    labels_include_any:
+      - ring-canary
 reports:
