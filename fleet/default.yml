@@ -241,4 +241,10 @@ policies:
     critical: false
     description: Rollout ring demo - enforced on ring-canary only; other hosts pass automatically until promoted.
     resolution: Run linux/baseline.yml with Ansible.
+  - name: macOS - Santa running
+    query: SELECT 1 FROM processes WHERE name LIKE '%santa%daemon%' OR name = 'santad';
+    platform: darwin
+    critical: false
+    description: Checks the Santa allowlisting daemon is running.
+    resolution: Install Santa and approve its system extension.
 reports:
