@@ -24,6 +24,7 @@ controls:
       - path: ./profiles/macos/santa-tcc.mobileconfig
       - path: ./profiles/macos/lumen-nudge.mobileconfig
       - path: ../browser/out/macos/lumen-chrome.mobileconfig
+      - path: ./profiles/macos/lumen-santa.mobileconfig
   scripts:
     - path: ../windows/scripts/windows-firewall-smb.ps1
     - path: ../windows/scripts/windows-asr-audit.ps1

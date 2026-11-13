@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PayloadContent</key>
+	<array>
+		<dict>
+			<key>ClientMode</key>
+			<integer>1</integer>
+			<key>EnableSilentMode</key>
+			<false/>
+			<key>ModeNotificationLockdown</key>
+			<string>Santa is in Lockdown mode: only approved apps can run.</string>
+			<key>ModeNotificationMonitor</key>
+			<string>Santa is in Monitor mode: nothing is blocked yet.</string>
+			<key>PayloadDisplayName</key>
+			<string>Santa settings</string>
+			<key>PayloadIdentifier</key>
+			<string>com.lumenai.santa.settings</string>
+			<key>PayloadType</key>
+			<string>com.northpolesec.santa</string>
+			<key>PayloadUUID</key>
+			<string>027F5919-13CA-5168-9627-E3AC25A0C9EB</string>
+			<key>PayloadVersion</key>
+			<integer>1</integer>
+			<key>StaticRules</key>
+			<array>
+				<dict>
+					<key>identifier</key>
+					<string>ZMCG7MLDV9</string>
+					<key>policy</key>
+					<string>ALLOWLIST</string>
+					<key>rule_type</key>
+					<string>TEAMID</string>
+				</dict>
+			</array>
+			<key>SyncBaseURL</key>
+			<string>https://corp-lab.tail832443.ts.net:8443/v1/santa/</string>
+		</dict>
+	</array>
+	<key>PayloadDescription</key>
+	<string>Santa allowlisting configuration (Monitor mode).</string>
+	<key>PayloadDisplayName</key>
+	<string>Lumen AI - Santa</string>
+	<key>PayloadIdentifier</key>
+	<string>com.lumenai.santa</string>
+	<key>PayloadOrganization</key>
+	<string>Lumen AI</string>
+	<key>PayloadScope</key>
+	<string>System</string>
+	<key>PayloadType</key>
+	<string>Configuration</string>
+	<key>PayloadUUID</key>
+	<string>6ADF7839-C409-5A1F-9779-56D7434F9C64</string>
+	<key>PayloadVersion</key>
+	<integer>1</integer>
+</dict>
+</plist>
