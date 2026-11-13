@@ -46,7 +46,7 @@ jobs:
       FLEET_GLOBAL_ENROLL_SECRET: ${{ secrets.FLEET_GLOBAL_ENROLL_SECRET }}
     steps:
       - uses: actions/checkout@v4
-      - run: npm install -g fleetctl@latest
+      - run: npm install -g fleetctl@4.94.0
       - name: Connect to Fleet
         run: fleetctl config set --address "$FLEET_URL" --token "$FLEET_TOKEN"
       - name: Dry run

@@ -234,8 +234,8 @@ policies:
     critical: false
     description: Checks Ubuntu 26.04 LTS or later.
     resolution: Upgrade to a supported Ubuntu LTS release.
-  - name: "Linux - ufw installed [ring-canary]"
-    query: SELECT 1 WHERE NOT EXISTS (SELECT 1 FROM system_info WHERE hostname LIKE 'fleet-ubuntu-lab%') OR EXISTS (SELECT 1 FROM deb_packages WHERE name = 'ufw');
+  - name: "Linux - ufw installed [ring-pilot]"
+    query: SELECT 1 WHERE NOT EXISTS (SELECT 1 FROM system_info WHERE hostname LIKE 'fleet-ubuntu-lab%') OR hostname LIKE 'fleet-macos-lab%' OR hostname LIKE 'fleet-windows-lab%' OR  EXISTS (SELECT 1 FROM deb_packages WHERE name = 'ufw');
     platform: linux
     critical: false
     description: Rollout ring demo - enforced on ring-canary only; other hosts pass automatically until promoted.
