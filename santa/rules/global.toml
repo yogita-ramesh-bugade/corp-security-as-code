@@ -1,0 +1,17 @@
+# Lumen AI - Santa rules served by Moroz to every Mac.
+# Change by pull request only. Prefer TEAMID / SIGNINGID rules (they survive app updates);
+# use BINARY (sha256) rules only when there is no signature to match.
+client_mode = "MONITOR"
+batch_size = 100
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "ZMCG7MLDV9"
+custom_msg = "North Pole Security (Santa itself)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "EQHXZ8M8AV"
+custom_msg = "Google (Chrome)"
