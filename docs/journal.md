@@ -258,3 +258,34 @@ Each entry: what I did, what broke, how I fixed it. Newest at the bottom.
 - **Verified:** chrome://policy shows the same four policies (Source: Platform, Status: OK) on [macOS, Windows, Ubuntu]. Installing a non-allowlisted extension is blocked by the administrator [yes].
 - **Learned:** One source of truth plus a generator means the three platforms can't drift apart. Each OS stores browser policy differently (JSON file, configuration profile, registry). Use `--syntax-check` to catch YAML indentation mistakes before running, and restart the browser to pick up new policy files.
 
+---
+
+## 2026-11-12 — Project 1A complete: Fleet baseline as code
+
+### What I built
+- **Fleet server** (Docker Compose: Fleet, MySQL, Redis) on my Mac, published over HTTPS with Tailscale Funnel at a stable *.ts.net address. Secrets kept outside the repo.
+- **Three managed VMs** in UTM: fleet-macos-lab (macOS 27.2), fleet-windows-lab (Windows 11 Pro ARM64), fleet-ubuntu-lab (Ubuntu 26.04 LTS), all running the Fleet agent and online.
+- **GitOps:** all Fleet configuration in fleet/default.yml, applied with `fleetctl gitops`; the enroll secret injected from an environment variable; scripts/gitops.sh helper; drift test reverted a UI change.
+- **macOS baseline:** firewall + stealth mode, screen lock, Gatekeeper (no override), DDM passcode, Santa system extension + PPPC profiles, Nudge (minimum 27.3, deadline, escalation tested).
+- **Windows baseline:** BitLocker (TPM + recovery password), four Defender ASR rules in audit mode, firewall on, SMBv1 off, delivered as Fleet scripts.
+- **Linux baseline:** Ansible playbook: unattended security updates, ufw, auditd, SSH hardening, LUKS report. Idempotent (changed=0 on re-run).
+- **Compliance policies:** about 19 osquery policies across all three platforms, break/fix tested, mapped to device posture signals for Project 2 (docs/posture-signals.md).
+- **Browser policy from one source:** browser/policy.yaml rendered by browser/render.py to Linux JSON, a macOS profile and a Windows registry script.
+- **CI pipeline:** GitHub Actions with offline validation (yamllint, profile validator, render --check, plain-English PR summary), then a Fleet dry run on PRs and apply on main, using an API-only robot account. main is protected (PR + passing checks).
+- **Rollout rings:** ring-canary (Ubuntu), ring-pilot (macOS, Windows), ring-all labels; changes promoted by reviewed PRs.
+
+### Biggest problems and how I solved them
+- **macOS VM never received MDM profiles.** Traced the enrollment step by step: SCEP, Authenticate and SetBootstrapToken succeeded, but TokenUpdate never arrived (`connected_to_fleet: false`). The device log showed "asked for publicToken, got (null)": the VM can't obtain an APNs push token. Decision: install profiles manually and verify them with policies; MDM delivery needs physical hardware.
+- **Agents not enrolling:** a VM resolving my Mac's private Tailscale IP (fixed with `tailscale set --accept-dns=false`); amd64 vs arm64 installers; old installers rejected after GitOps rotated the enroll secret ("invalid token").
+- **Free vs Premium:** `enable_disk_encryption` and `labels_include_any` are Premium-only. CI caught the second before deployment; I moved ring scoping into the policy query.
+- **BitLocker:** no virtual TPM, then installer ISO still attached, then only a TPM protector (no recovery path). Added a recovery password.
+- **Ansible:** passphrase key (ssh-agent), Ubuntu's sudo-rs prompt (`ansible_become_exe=/usr/bin/sudo.ws`), check-mode limits.
+- **A policy stuck at "---":** the device's orbit log showed "near ")": syntax error". My first fix left unbalanced brackets; replaced it with a bracket-free UNION query. Also found the 5-minute policy interval in .env never reached the container. [Policy now passing on fleet-ubuntu-lab.]
+
+### What I learned
+- Configuration as code only works if secrets stay out of Git and every change is reviewed and dry-run.
+- "Sent" isn't "in effect": verify with policies, and test that checks detect breakage.
+- Debug layer by layer (network, server, device) and trust logs over assumptions: server logs, device logs, and the exact committed text (`sed -n`, `cat -v`).
+- Know the platform limits (VMs, licence tiers) and document the production design honestly.
+- Rings and CI limit the blast radius: one device first, every change reviewed.
+
