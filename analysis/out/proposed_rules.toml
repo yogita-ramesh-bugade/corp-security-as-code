@@ -1,0 +1,3932 @@
+# SYNTHETIC Team IDs from the simulated fleet: for the analysis only, never merge into santa/rules/
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "WT1Q3TMY4G"
+custom_msg = "CommonApp 001 (2540 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "PYWSSBZRAD"
+custom_msg = "CommonApp 004 (1370 devices)"
+
+[[rules]]
+rule_type = "SIGNINGID"
+policy = "ALLOWLIST"
+identifier = "I65FDHJK1E:com.dockerdesktop"
+custom_msg = "Docker Desktop (1553 devices)"
+
+[[rules]]
+rule_type = "SIGNINGID"
+policy = "ALLOWLIST"
+identifier = "A9TGIQHG9J:com.visualstudiocode"
+custom_msg = "Visual Studio Code (1553 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "5SOWOMQIGC"
+custom_msg = "CommonApp 008 (1010 devices)"
+
+[[rules]]
+rule_type = "SIGNINGID"
+policy = "ALLOWLIST"
+identifier = "72HPOEVB9O:com.jetbrainspycharm"
+custom_msg = "JetBrains PyCharm (1090 devices)"
+
+[[rules]]
+rule_type = "SIGNINGID"
+policy = "ALLOWLIST"
+identifier = "RSNVNQ65QD:com.wireshark"
+custom_msg = "Wireshark (1090 devices)"
+
+[[rules]]
+rule_type = "SIGNINGID"
+policy = "ALLOWLIST"
+identifier = "D467KD6FLE:com.postman"
+custom_msg = "Postman (1090 devices)"
+
+[[rules]]
+rule_type = "SIGNINGID"
+policy = "ALLOWLIST"
+identifier = "Q71N8MTZX2:com.jetbrainsgoland"
+custom_msg = "JetBrains GoLand (1090 devices)"
+
+[[rules]]
+rule_type = "SIGNINGID"
+policy = "ALLOWLIST"
+identifier = "6GT6MJXK87:com.githubdesktop"
+custom_msg = "GitHub Desktop (1090 devices)"
+
+[[rules]]
+rule_type = "SIGNINGID"
+policy = "ALLOWLIST"
+identifier = "9J1ICTXCWN:com.iterm2"
+custom_msg = "iTerm2 (1090 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "T2CXIFSU0L"
+custom_msg = "CommonApp 011 (813 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "MI8X76RKQ4"
+custom_msg = "CommonApp 014 (679 devices)"
+
+[[rules]]
+rule_type = "SIGNINGID"
+policy = "ALLOWLIST"
+identifier = "AU5BHXTPDP:com.gong"
+custom_msg = "Gong (601 devices)"
+
+[[rules]]
+rule_type = "SIGNINGID"
+policy = "ALLOWLIST"
+identifier = "QIP98Q1ZXO:com.calendly"
+custom_msg = "Calendly (601 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "SVH3EJOZ9X"
+custom_msg = "CommonApp 015 (564 devices)"
+
+[[rules]]
+rule_type = "SIGNINGID"
+policy = "ALLOWLIST"
+identifier = "QNUPQZIT3U:com.salesforce"
+custom_msg = "Salesforce (601 devices)"
+
+[[rules]]
+rule_type = "SIGNINGID"
+policy = "ALLOWLIST"
+identifier = "8AFPK054NZ:com.microsoftpowerpoint"
+custom_msg = "Microsoft PowerPoint (601 devices)"
+
+[[rules]]
+rule_type = "SIGNINGID"
+policy = "ALLOWLIST"
+identifier = "PR5N8I4P40:com.linkedinsales"
+custom_msg = "LinkedIn Sales (601 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "FZAQ8H3XQY"
+custom_msg = "CommonApp 020 (529 devices)"
+
+[[rules]]
+rule_type = "SIGNINGID"
+policy = "ALLOWLIST"
+identifier = "FF5E8II49K:com.intercom"
+custom_msg = "Intercom (549 devices)"
+
+[[rules]]
+rule_type = "SIGNINGID"
+policy = "ALLOWLIST"
+identifier = "DKYAYQ3S19:com.microsoftword"
+custom_msg = "Microsoft Word (549 devices)"
+
+[[rules]]
+rule_type = "SIGNINGID"
+policy = "ALLOWLIST"
+identifier = "EA3GE8N6QI:com.snagit"
+custom_msg = "Snagit (549 devices)"
+
+[[rules]]
+rule_type = "SIGNINGID"
+policy = "ALLOWLIST"
+identifier = "MGG1W103DG:com.loom"
+custom_msg = "Loom (549 devices)"
+
+[[rules]]
+rule_type = "SIGNINGID"
+policy = "ALLOWLIST"
+identifier = "F1RCAVIQK2:com.zendesk"
+custom_msg = "Zendesk (549 devices)"
+
+[[rules]]
+rule_type = "SIGNINGID"
+policy = "ALLOWLIST"
+identifier = "OAEDOECVE6:com.jupyterdesktop"
+custom_msg = "Jupyter Desktop (463 devices)"
+
+[[rules]]
+rule_type = "SIGNINGID"
+policy = "ALLOWLIST"
+identifier = "ZRENUN5Z3J:com.anacondanavigator"
+custom_msg = "Anaconda Navigator (463 devices)"
+
+[[rules]]
+rule_type = "SIGNINGID"
+policy = "ALLOWLIST"
+identifier = "DZVGPMM82I:com.matlab"
+custom_msg = "MATLAB (463 devices)"
+
+[[rules]]
+rule_type = "SIGNINGID"
+policy = "ALLOWLIST"
+identifier = "EPZHPCF07U:com.rstudio"
+custom_msg = "RStudio (463 devices)"
+
+[[rules]]
+rule_type = "SIGNINGID"
+policy = "ALLOWLIST"
+identifier = "919AHEJ8CX:com.zotero"
+custom_msg = "Zotero (463 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "XGO4B9UOE3"
+custom_msg = "CommonApp 021 (447 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "T0HICCT5HG"
+custom_msg = "CommonApp 024 (398 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "P8IY3X80J0"
+custom_msg = "CommonApp 028 (395 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "XGX8WDZRMH"
+custom_msg = "CommonApp 034 (364 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "G50RCXN22P"
+custom_msg = "CommonApp 030 (351 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "3FNBDVPINE"
+custom_msg = "CommonApp 037 (308 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "8QLHBIAWPU"
+custom_msg = "CommonApp 042 (303 devices)"
+
+[[rules]]
+rule_type = "SIGNINGID"
+policy = "ALLOWLIST"
+identifier = "WEPXSK28T7:com.tableau"
+custom_msg = "Tableau (297 devices)"
+
+[[rules]]
+rule_type = "SIGNINGID"
+policy = "ALLOWLIST"
+identifier = "YY37Q9AH8R:com.docusign"
+custom_msg = "DocuSign (297 devices)"
+
+[[rules]]
+rule_type = "SIGNINGID"
+policy = "ALLOWLIST"
+identifier = "VHS1K3AQ6L:com.expensify"
+custom_msg = "Expensify (297 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "9NNOVJARJI"
+custom_msg = "CommonApp 041 (280 devices)"
+
+[[rules]]
+rule_type = "SIGNINGID"
+policy = "ALLOWLIST"
+identifier = "1LR3PE29GD:com.microsoftexcel"
+custom_msg = "Microsoft Excel (297 devices)"
+
+[[rules]]
+rule_type = "SIGNINGID"
+policy = "ALLOWLIST"
+identifier = "5JMSND8DUD:com.netsuiteconnector"
+custom_msg = "NetSuite Connector (297 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "2X6G26OC7T"
+custom_msg = "CommonApp 049 (273 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "BLQDI07HE4"
+custom_msg = "CommonApp 047 (262 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "S361GH9N12"
+custom_msg = "CommonApp 057 (221 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "O0V3Z0GU1U"
+custom_msg = "CommonApp 061 (224 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "3BD4Z1G52E"
+custom_msg = "CommonApp 051 (233 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "FUJEIR9UY7"
+custom_msg = "CommonApp 055 (225 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "QXJ4EFFF1G"
+custom_msg = "CommonApp 065 (220 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "XI9D99VH0W"
+custom_msg = "CommonApp 066 (225 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "OGW9XHRO19"
+custom_msg = "CommonApp 072 (192 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "1DSTWG6NJ4"
+custom_msg = "CommonApp 070 (186 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "9BRBLRTVWA"
+custom_msg = "CommonApp 077 (183 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "LJZEJBF7NY"
+custom_msg = "CommonApp 079 (181 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "03VKXTUFDJ"
+custom_msg = "CommonApp 082 (174 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "N6HW1HS57T"
+custom_msg = "CommonApp 087 (171 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "76MWWJPGJQ"
+custom_msg = "CommonApp 110 (153 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "EU1Z0SHZBU"
+custom_msg = "CommonApp 100 (150 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "KDFR21520R"
+custom_msg = "CommonApp 085 (154 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "COZDANTNIQ"
+custom_msg = "CommonApp 092 (146 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "ET32CDXSEF"
+custom_msg = "CommonApp 119 (148 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "FZTVOVKE6H"
+custom_msg = "CommonApp 105 (142 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "J2E42TRDW6"
+custom_msg = "CommonApp 115 (141 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "SUHA51LIY8"
+custom_msg = "CommonApp 093 (137 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "6Y39C2MU46"
+custom_msg = "CommonApp 122 (136 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "K3XF1GP1Z7"
+custom_msg = "CommonApp 104 (134 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "JD2GVF6LCP"
+custom_msg = "CommonApp 125 (134 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "MLJEL532UU"
+custom_msg = "CommonApp 113 (134 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "O69WEZC1B3"
+custom_msg = "CommonApp 097 (126 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "VDVEVG9YSQ"
+custom_msg = "CommonApp 130 (122 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "D4X9G7HSFK"
+custom_msg = "CommonApp 153 (114 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "2277KXXSY0"
+custom_msg = "CommonApp 127 (118 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "XTLNV5MOIJ"
+custom_msg = "CommonApp 140 (121 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "9YVI7F16XB"
+custom_msg = "CommonApp 136 (115 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "JKLK2C0XP2"
+custom_msg = "CommonApp 145 (106 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "ESG687CVIY"
+custom_msg = "CommonApp 143 (111 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "42AFBQNJ97"
+custom_msg = "CommonApp 165 (111 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "S2O8PT4MX2"
+custom_msg = "CommonApp 149 (102 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "JVFJWTZIFT"
+custom_msg = "CommonApp 132 (109 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "8669BY4CYX"
+custom_msg = "CommonApp 178 (101 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "UGFUST21K2"
+custom_msg = "CommonApp 200 (99 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "3SY670KMIQ"
+custom_msg = "CommonApp 151 (101 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "0DZ6XPYFXO"
+custom_msg = "CommonApp 159 (96 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "W2CW1RDEZX"
+custom_msg = "CommonApp 203 (95 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "CSMCMCUT6Z"
+custom_msg = "CommonApp 187 (85 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "EH58B6PJS1"
+custom_msg = "CommonApp 173 (90 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "AWP0LF7XE7"
+custom_msg = "CommonApp 176 (96 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "MHIE2L2FUW"
+custom_msg = "CommonApp 217 (87 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "R26J1FO2WB"
+custom_msg = "CommonApp 158 (85 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "QBWEWPGVIC"
+custom_msg = "CommonApp 180 (90 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "W8VL34LIE3"
+custom_msg = "CommonApp 183 (85 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "X7RF1F1L8S"
+custom_msg = "CommonApp 197 (83 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "BUGVJICS4I"
+custom_msg = "CommonApp 163 (83 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "1HSPTHDP03"
+custom_msg = "CommonApp 168 (82 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "6KBJ2CIEPX"
+custom_msg = "CommonApp 206 (81 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "HX1Z2YVL55"
+custom_msg = "CommonApp 193 (80 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "5BFZ63PNWD"
+custom_msg = "CommonApp 258 (76 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "XYCJ2XX2EI"
+custom_msg = "CommonApp 209 (82 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "QXZXCZD9MX"
+custom_msg = "CommonApp 266 (78 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "7Y9HQQ2NS5"
+custom_msg = "CommonApp 215 (79 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "84QCMSWDVR"
+custom_msg = "CommonApp 189 (74 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "HMIP5BX9X3"
+custom_msg = "CommonApp 223 (73 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "ZIX69GUP3H"
+custom_msg = "CommonApp 249 (75 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "47YUL38V8W"
+custom_msg = "CommonApp 291 (70 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "CBFCQN0B58"
+custom_msg = "CommonApp 242 (73 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "6IUUKZTV66"
+custom_msg = "CommonApp 277 (72 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "LI16DH7JTK"
+custom_msg = "CommonApp 232 (71 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "N5U4W9RSH8"
+custom_msg = "CommonApp 299 (66 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "EIUE237WI9"
+custom_msg = "CommonApp 228 (65 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "9IFETZ4700"
+custom_msg = "CommonApp 225 (69 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "RIT8F6KJKV"
+custom_msg = "CommonApp 237 (67 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "2043NVJUUW"
+custom_msg = "CommonApp 247 (67 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "KUOW7SFQM9"
+custom_msg = "CommonApp 234 (63 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "6CCCIV473J"
+custom_msg = "CommonApp 273 (69 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "ST4PZT3EDK"
+custom_msg = "CommonApp 245 (66 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "DS54S8AG1I"
+custom_msg = "CommonApp 261 (67 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "E98STKLX6O"
+custom_msg = "CommonApp 219 (64 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "7XZURPHBL5"
+custom_msg = "CommonApp 212 (66 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "N064DI7N9U"
+custom_msg = "CommonApp 288 (66 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "PCHMB2U0J0"
+custom_msg = "CommonApp 286 (66 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "85T4BXVH0T"
+custom_msg = "CommonApp 281 (65 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "R2PJGDSY0P"
+custom_msg = "CommonApp 253 (63 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "KUUMK5635T"
+custom_msg = "CommonApp 257 (59 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "Q4MPR9TOTS"
+custom_msg = "CommonApp 296 (61 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "9SEY629RHI"
+custom_msg = "CommonApp 269 (63 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "GZXV9XJM6Z"
+custom_msg = "CommonApp 270 (60 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "B4QOD4K7YJ"
+custom_msg = "CommonApp 283 (58 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "BBBSHNLEEQ"
+custom_msg = "RareApp 1778 (20 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "ZHI9R1N6UV"
+custom_msg = "RareApp 0291 (15 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "QTOSR9HKOC"
+custom_msg = "RareApp 3146 (18 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "R4FXZYK421"
+custom_msg = "RareApp 3737 (14 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "R3P3LHPKCE"
+custom_msg = "RareApp 2794 (13 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "71SD9EC6G6"
+custom_msg = "RareApp 0484 (12 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "XFX348KXX9"
+custom_msg = "RareApp 1574 (16 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "MHJ45LKCDX"
+custom_msg = "RareApp 3005 (13 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "CYMTYGW5F2"
+custom_msg = "RareApp 2721 (12 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "2Q5Z33XN3I"
+custom_msg = "RareApp 0841 (13 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "VHXFCJL17V"
+custom_msg = "RareApp 0846 (18 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "G3T34OOJQX"
+custom_msg = "RareApp 3306 (13 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "RRS6OUUPMW"
+custom_msg = "RareApp 0603 (11 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "OS7E3DX7AK"
+custom_msg = "RareApp 3973 (14 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "CZGV6ER988"
+custom_msg = "RareApp 1318 (11 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "WDPPPTFETH"
+custom_msg = "RareApp 3500 (14 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "EW09U3BDL2"
+custom_msg = "RareApp 3120 (15 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "XI27VLTBHO"
+custom_msg = "RareApp 2008 (13 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "6R7Z7M1C39"
+custom_msg = "RareApp 0587 (14 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "WIGV06G6JB"
+custom_msg = "RareApp 3060 (10 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "RD3AEYRXGB"
+custom_msg = "RareApp 3492 (11 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "XPOQTFZNEU"
+custom_msg = "RareApp 0938 (13 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "KAONFJJK4A"
+custom_msg = "RareApp 1307 (11 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "Y7PGU7MX3G"
+custom_msg = "RareApp 1689 (11 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "MXDNHP1UAK"
+custom_msg = "RareApp 3164 (11 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "D0TT2SLHIM"
+custom_msg = "RareApp 1063 (10 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "AY7R54V1VX"
+custom_msg = "RareApp 0311 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "U86GDW05RF"
+custom_msg = "RareApp 0796 (11 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "7EFVUZK1DZ"
+custom_msg = "RareApp 3640 (11 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "AK7QHMB8B7"
+custom_msg = "RareApp 3246 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "9DAQM2OX8M"
+custom_msg = "RareApp 2592 (10 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "21S4IL6FJA"
+custom_msg = "RareApp 2478 (11 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "CR5NAMZHR6"
+custom_msg = "RareApp 0048 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "GP9IT02F6N"
+custom_msg = "RareApp 3669 (11 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "18BAZHAK43"
+custom_msg = "RareApp 2593 (9 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "T2HL5AU645"
+custom_msg = "RareApp 2248 (11 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "M5MPPQNOMP"
+custom_msg = "RareApp 3521 (9 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "HATCFV3CG7"
+custom_msg = "RareApp 0298 (14 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "P55ZNZ1PSP"
+custom_msg = "RareApp 0751 (10 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "2DUG8RMBVU"
+custom_msg = "RareApp 1513 (10 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "LATR9WHV3F"
+custom_msg = "RareApp 1718 (11 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "X0VJP4NQGV"
+custom_msg = "RareApp 0700 (11 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "4IEU0JJTM9"
+custom_msg = "RareApp 1516 (12 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "B0BAVMEOGK"
+custom_msg = "RareApp 0166 (10 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "ANX3FPTMIT"
+custom_msg = "RareApp 0249 (10 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "AUYTBXELM5"
+custom_msg = "RareApp 0937 (10 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "6JZOON4O79"
+custom_msg = "RareApp 3157 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "N06JKLOQMH"
+custom_msg = "RareApp 2128 (9 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "1NG2QGCEEQ"
+custom_msg = "RareApp 1227 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "WZMTFC8VYI"
+custom_msg = "RareApp 1150 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "5MN46WW9IE"
+custom_msg = "RareApp 0850 (9 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "WRI1E9QQYK"
+custom_msg = "RareApp 2000 (11 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "6EK26Y9YZR"
+custom_msg = "RareApp 1761 (10 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "MZ2N3Q82HR"
+custom_msg = "RareApp 2600 (10 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "6G5OSCZVK4"
+custom_msg = "RareApp 2350 (9 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "YC5F4Q8FFP"
+custom_msg = "RareApp 0152 (10 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "HGZNNHSLKZ"
+custom_msg = "RareApp 3328 (11 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "F540V1GKQ6"
+custom_msg = "RareApp 3976 (9 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "2B26ZNLHCY"
+custom_msg = "RareApp 0275 (9 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "10H9TN4CXK"
+custom_msg = "RareApp 1343 (10 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "LK6RNA7L0E"
+custom_msg = "RareApp 2956 (9 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "A0R0L93IML"
+custom_msg = "RareApp 3110 (9 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "3516ZMQLMR"
+custom_msg = "RareApp 2137 (9 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "2I5U7W86NG"
+custom_msg = "RareApp 0240 (10 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "RB4BUYYUG5"
+custom_msg = "RareApp 1755 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "PCUYHYQ8SB"
+custom_msg = "RareApp 2975 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "7I0U24IQLU"
+custom_msg = "RareApp 0880 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "65NF4EK6Y6"
+custom_msg = "RareApp 2580 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "I2MS1Z1YF5"
+custom_msg = "RareApp 2449 (9 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "4TK3B33IZL"
+custom_msg = "RareApp 0859 (11 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "1XNFMYGR82"
+custom_msg = "RareApp 2552 (9 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "6P6EGA7NMS"
+custom_msg = "RareApp 1599 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "R2LIOGRP91"
+custom_msg = "RareApp 0145 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "BJXJFPEA0J"
+custom_msg = "RareApp 0260 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "YTFDRY5BYY"
+custom_msg = "RareApp 3489 (9 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "2CONYL18DT"
+custom_msg = "RareApp 0861 (9 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "AQA3558A5P"
+custom_msg = "RareApp 0497 (9 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "U0ZKHI804E"
+custom_msg = "RareApp 2382 (9 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "DMNV9KY71L"
+custom_msg = "RareApp 2505 (9 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "6GN8W9URJS"
+custom_msg = "RareApp 3652 (10 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "XI6WD15YKX"
+custom_msg = "RareApp 3387 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "GS0B3QWWWP"
+custom_msg = "RareApp 0054 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "NKZGGE49DB"
+custom_msg = "RareApp 2322 (11 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "AUPO1RXIV4"
+custom_msg = "RareApp 0041 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "U6Y0PRZVS2"
+custom_msg = "RareApp 3903 (10 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "941KPBMEEG"
+custom_msg = "RareApp 1363 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "GI5OU9W2MB"
+custom_msg = "RareApp 3876 (12 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "QXV4ZTCO6G"
+custom_msg = "RareApp 3868 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "FPTNK2U0CR"
+custom_msg = "RareApp 1745 (9 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "J815FJDA4L"
+custom_msg = "RareApp 1645 (10 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "1RONWBI2HY"
+custom_msg = "RareApp 0158 (9 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "8CPWGE62H6"
+custom_msg = "RareApp 1449 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "XPRNYFGIHC"
+custom_msg = "RareApp 0189 (11 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "LNR20QD58X"
+custom_msg = "RareApp 1593 (9 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "16WT8JJ4TV"
+custom_msg = "RareApp 2609 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "MCC2MAWBXV"
+custom_msg = "RareApp 2778 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "7C7G23CP78"
+custom_msg = "RareApp 1509 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "QX67Z4KWJ6"
+custom_msg = "RareApp 2730 (11 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "U438R92I8L"
+custom_msg = "RareApp 1638 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "FU787Z8MSU"
+custom_msg = "RareApp 0812 (9 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "PERH8H90EV"
+custom_msg = "RareApp 1107 (9 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "A3VP8OWTSI"
+custom_msg = "RareApp 1787 (10 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "L1JTSWGR5X"
+custom_msg = "RareApp 2387 (11 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "3XVMQQBIH0"
+custom_msg = "RareApp 2081 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "1QT68YT0FG"
+custom_msg = "RareApp 0118 (10 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "WNYCJYFEO6"
+custom_msg = "RareApp 0546 (11 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "ZIYGSFUO2C"
+custom_msg = "RareApp 3533 (9 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "YJRV0E7XE5"
+custom_msg = "RareApp 0675 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "XXV6AZEOI5"
+custom_msg = "RareApp 2045 (9 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "ZM5U6DXZJ1"
+custom_msg = "RareApp 3235 (12 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "9TK51ITY5H"
+custom_msg = "RareApp 3092 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "6KBC88MA5B"
+custom_msg = "RareApp 2516 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "688ZOZ53S2"
+custom_msg = "RareApp 2709 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "JQHUCI5RX1"
+custom_msg = "RareApp 3882 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "LIM5L6H2NL"
+custom_msg = "RareApp 1953 (9 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "E59NLC0QYP"
+custom_msg = "RareApp 3073 (9 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "KIW1AWMHMS"
+custom_msg = "RareApp 2701 (11 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "AJ3J5UH0Q7"
+custom_msg = "RareApp 2656 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "3082IAT44Q"
+custom_msg = "RareApp 3606 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "SFHFVMHXIU"
+custom_msg = "RareApp 2908 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "567H488S2X"
+custom_msg = "RareApp 2771 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "KVKUYFGFFA"
+custom_msg = "RareApp 2741 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "3ZU2IU1ULA"
+custom_msg = "RareApp 1537 (13 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "50YP2KNWDQ"
+custom_msg = "RareApp 0197 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "EVYY91OOQH"
+custom_msg = "RareApp 3709 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "L6QKV3EOYY"
+custom_msg = "RareApp 3729 (9 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "9E34UZYKDX"
+custom_msg = "RareApp 0609 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "XCEN0T5G8K"
+custom_msg = "RareApp 0524 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "VT8UT465Y9"
+custom_msg = "RareApp 0983 (9 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "SZ0I2X6UXF"
+custom_msg = "RareApp 2714 (11 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "XSTKT42SJI"
+custom_msg = "RareApp 2051 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "RSKQPZPHJM"
+custom_msg = "RareApp 1044 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "MHBMBN4JP1"
+custom_msg = "RareApp 0409 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "LJLNGBZ4JR"
+custom_msg = "RareApp 1366 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "T582BCVDVC"
+custom_msg = "RareApp 2164 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "9Y2H9EVPXJ"
+custom_msg = "RareApp 1963 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "W43KSWI6GZ"
+custom_msg = "RareApp 1417 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "68FROGHEXC"
+custom_msg = "RareApp 3961 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "WDSS7E6MLG"
+custom_msg = "RareApp 3813 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "21BKSM4W2O"
+custom_msg = "RareApp 0527 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "IZCRMJ1BMF"
+custom_msg = "RareApp 1179 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "W65XDY1PP4"
+custom_msg = "RareApp 1687 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "36192YWOL1"
+custom_msg = "RareApp 1586 (9 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "510DGRRQ6V"
+custom_msg = "RareApp 3992 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "QS3E3R1UQK"
+custom_msg = "RareApp 0288 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "CIAX08EVL7"
+custom_msg = "RareApp 2132 (9 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "VW328KCV6J"
+custom_msg = "RareApp 3656 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "6OV3ISY0X4"
+custom_msg = "RareApp 3323 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "6HR4N5SYDV"
+custom_msg = "RareApp 3260 (9 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "03OUO2QTCO"
+custom_msg = "RareApp 2589 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "FJNT47VEYF"
+custom_msg = "RareApp 0590 (9 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "W5B0KXQM6R"
+custom_msg = "RareApp 3222 (9 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "X3AEYV7CS1"
+custom_msg = "RareApp 1726 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "GCFCAMKZ5G"
+custom_msg = "RareApp 3807 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "YULJCN17RU"
+custom_msg = "RareApp 0795 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "6RDQYB9ROJ"
+custom_msg = "RareApp 3522 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "0BS95PY8IY"
+custom_msg = "RareApp 2857 (9 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "PE2BYWXYB5"
+custom_msg = "RareApp 1570 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "WR61RDEXW2"
+custom_msg = "RareApp 1903 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "GNJ6OM9789"
+custom_msg = "RareApp 0138 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "HMW53A7OMX"
+custom_msg = "RareApp 1198 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "3PGYIUIZUS"
+custom_msg = "RareApp 0327 (9 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "0LL7JLXHKB"
+custom_msg = "RareApp 3515 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "9A0NIWSPFB"
+custom_msg = "RareApp 3221 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "2UC9ODQQBW"
+custom_msg = "RareApp 1797 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "NLAKNA6367"
+custom_msg = "RareApp 2922 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "GTWL1Q5FLQ"
+custom_msg = "RareApp 3362 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "I4599VHCUP"
+custom_msg = "RareApp 2021 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "GIJ51RW3P7"
+custom_msg = "RareApp 1546 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "N3R81D7MX3"
+custom_msg = "RareApp 3925 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "F2PU8Q97SB"
+custom_msg = "RareApp 0931 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "JNODL5ZTKB"
+custom_msg = "RareApp 3612 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "042LPICDIT"
+custom_msg = "RareApp 2885 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "ZY18NL4IM9"
+custom_msg = "RareApp 3749 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "G2IJESVUP4"
+custom_msg = "RareApp 3244 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "BD9DXGKA7A"
+custom_msg = "RareApp 1172 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "S31F4TJITP"
+custom_msg = "RareApp 2061 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "7RS8R0MELI"
+custom_msg = "RareApp 0103 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "EM3FFZLSEG"
+custom_msg = "RareApp 1845 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "KRISCDMZ58"
+custom_msg = "RareApp 3225 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "CPCMJTNI9N"
+custom_msg = "RareApp 2795 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "0BUPK4FXBY"
+custom_msg = "RareApp 0682 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "SQQ7U1KU5J"
+custom_msg = "RareApp 1181 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "Z7G3FWGZAK"
+custom_msg = "RareApp 3311 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "IGBM760JGL"
+custom_msg = "RareApp 1075 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "M5VWIPGSEM"
+custom_msg = "RareApp 3303 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "D8BLGSRI2A"
+custom_msg = "RareApp 2590 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "84LMQYAHPY"
+custom_msg = "RareApp 0371 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "BQ4Y8G1W5B"
+custom_msg = "RareApp 0271 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "P2AC195ODS"
+custom_msg = "RareApp 0594 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "L4I7T40V2A"
+custom_msg = "RareApp 3359 (9 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "ZD8H4QBCV0"
+custom_msg = "RareApp 2301 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "UX01UP8NY9"
+custom_msg = "RareApp 0777 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "Y9ZAEMQ539"
+custom_msg = "RareApp 3727 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "L5SIMF7NA1"
+custom_msg = "RareApp 1666 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "ZK3AJMLTTF"
+custom_msg = "RareApp 2772 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "ZWAG15MF76"
+custom_msg = "RareApp 1197 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "EFBADVFUWM"
+custom_msg = "RareApp 2905 (10 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "BMW7J77D8X"
+custom_msg = "RareApp 0388 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "FN202SK10I"
+custom_msg = "RareApp 1487 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "V8PLE5H3U9"
+custom_msg = "RareApp 2848 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "L5PBHR5EX4"
+custom_msg = "RareApp 2697 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "WAR7JZ2N82"
+custom_msg = "RareApp 1533 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "VMIUOPP54B"
+custom_msg = "RareApp 3469 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "GU9ET83Z0P"
+custom_msg = "RareApp 1606 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "1DU10RH735"
+custom_msg = "RareApp 2967 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "FG1EYIAK7H"
+custom_msg = "RareApp 2943 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "139Q6TO1KR"
+custom_msg = "RareApp 3906 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "4IUZNY1QEG"
+custom_msg = "RareApp 0870 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "APK6I2KLJ4"
+custom_msg = "RareApp 3823 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "BS5FI6ERQI"
+custom_msg = "RareApp 2346 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "6OB4RGLY41"
+custom_msg = "RareApp 3701 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "X94IHDWXIS"
+custom_msg = "RareApp 3659 (9 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "JBY7CQKDSM"
+custom_msg = "RareApp 2257 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "7TDNOP43G8"
+custom_msg = "RareApp 1661 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "CXBJQ3JQPK"
+custom_msg = "RareApp 0330 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "0QWFAG5P5O"
+custom_msg = "RareApp 1989 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "ATC2CWI33R"
+custom_msg = "RareApp 3599 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "5TA1WADQIW"
+custom_msg = "RareApp 1151 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "4C86HF4I8A"
+custom_msg = "RareApp 1061 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "1DG9YS8317"
+custom_msg = "RareApp 1428 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "4NK0BPCIKI"
+custom_msg = "RareApp 0085 (9 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "9408S1A7GB"
+custom_msg = "RareApp 2121 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "LOSMAHB3HN"
+custom_msg = "RareApp 1939 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "RMLSQ2QF5W"
+custom_msg = "RareApp 2545 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "MDLMQ02GKF"
+custom_msg = "RareApp 1209 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "XJUY9B1UZL"
+custom_msg = "RareApp 3994 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "GFB0G58G26"
+custom_msg = "RareApp 3567 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "OR9WPJB9UO"
+custom_msg = "RareApp 3999 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "YYTXBU5MBN"
+custom_msg = "RareApp 2738 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "6FGK88AENN"
+custom_msg = "RareApp 1528 (9 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "CHWC8ZPLF8"
+custom_msg = "RareApp 0057 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "QMVDIN9VDP"
+custom_msg = "RareApp 2271 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "00CVW9NAMS"
+custom_msg = "RareApp 3751 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "AECEW6GSTF"
+custom_msg = "RareApp 2318 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "KRHJ5JN7BS"
+custom_msg = "RareApp 0286 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "NJR720PLCL"
+custom_msg = "RareApp 2767 (9 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "JTIZAXD6AH"
+custom_msg = "RareApp 1171 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "6IJOFGZSGP"
+custom_msg = "RareApp 3444 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "DN7J95IOJT"
+custom_msg = "RareApp 0420 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "W84SGOHS02"
+custom_msg = "RareApp 2564 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "EPNUX0E1SJ"
+custom_msg = "RareApp 0786 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "0Y2Z1UBYH8"
+custom_msg = "RareApp 1452 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "HCAZ89FTNW"
+custom_msg = "RareApp 3638 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "U1XJCYDMLA"
+custom_msg = "RareApp 0154 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "J5B4CPIALD"
+custom_msg = "RareApp 0909 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "E35PQVS2V2"
+custom_msg = "RareApp 0655 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "OMK17MFBGN"
+custom_msg = "RareApp 1943 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "YAEVOTNOJR"
+custom_msg = "RareApp 1332 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "DI2LSCUWPS"
+custom_msg = "RareApp 2343 (9 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "88ZFWONVVX"
+custom_msg = "RareApp 0689 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "9K2UGR3RM3"
+custom_msg = "RareApp 3497 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "U7XY5K74L4"
+custom_msg = "RareApp 3071 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "37CZ1BNLBV"
+custom_msg = "RareApp 1565 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "NQN3QCH7L4"
+custom_msg = "RareApp 1355 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "8Z1HONGWUL"
+custom_msg = "RareApp 1628 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "6L3RY8DQH7"
+custom_msg = "RareApp 2526 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "FLMQJ8MHEM"
+custom_msg = "RareApp 2239 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "U0LJ4EATMM"
+custom_msg = "RareApp 1700 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "2VH6836H4R"
+custom_msg = "RareApp 2291 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "MICMBP5YE8"
+custom_msg = "RareApp 0006 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "VMB5ZKT9RO"
+custom_msg = "RareApp 3966 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "CRHYZIRFEE"
+custom_msg = "RareApp 0704 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "2EX7Z97ZQ5"
+custom_msg = "RareApp 2489 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "3178TW48OF"
+custom_msg = "RareApp 3269 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "ZBMXZ2OI46"
+custom_msg = "RareApp 0525 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "1Q4HX6BQKD"
+custom_msg = "RareApp 1757 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "BRUCJPLAI7"
+custom_msg = "RareApp 2284 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "60BA8JGZMT"
+custom_msg = "RareApp 3636 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "HFH2XF7Y6K"
+custom_msg = "RareApp 3984 (6 devices)"
+
+[[rules]]
+rule_type = "SIGNINGID"
+policy = "ALLOWLIST"
+identifier = "GAJT9F5G3U:com.rareapp2650"
+custom_msg = "RareApp 2650 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "G2LTZEGYU5"
+custom_msg = "RareApp 3849 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "P3JG86X0Z0"
+custom_msg = "RareApp 2347 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "8OZIWNZ003"
+custom_msg = "RareApp 0630 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "QEAJJUJY24"
+custom_msg = "RareApp 3352 (4 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "JAI7SX50VK"
+custom_msg = "RareApp 3220 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "KTV4JPD8R8"
+custom_msg = "RareApp 0505 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "PBSBA3SIZC"
+custom_msg = "RareApp 3912 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "2460MAUBXC"
+custom_msg = "RareApp 3433 (9 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "X994QTWZIH"
+custom_msg = "RareApp 1753 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "Z621HGJQHK"
+custom_msg = "RareApp 2604 (9 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "LPN1FPJ9XA"
+custom_msg = "RareApp 1050 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "2E5MZL5GJ8"
+custom_msg = "RareApp 1262 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "JETPZTN8GM"
+custom_msg = "RareApp 0256 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "5HUX9Z7ZOW"
+custom_msg = "RareApp 0022 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "YU7CG8W1RV"
+custom_msg = "RareApp 2654 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "H0595IUZ6Y"
+custom_msg = "RareApp 2607 (4 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "2AE5EMDJNI"
+custom_msg = "RareApp 3089 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "RRGQZ3PM7V"
+custom_msg = "RareApp 3881 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "U6GYJUF753"
+custom_msg = "RareApp 0014 (4 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "7R7ATIUP4N"
+custom_msg = "RareApp 3211 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "C6V3OJ577F"
+custom_msg = "RareApp 0512 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "FS27WOC36V"
+custom_msg = "RareApp 0282 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "WU5140VIPY"
+custom_msg = "RareApp 0210 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "HMQT68PDX4"
+custom_msg = "RareApp 0316 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "SOC4WPY1ZG"
+custom_msg = "RareApp 0569 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "DFS95A16I4"
+custom_msg = "RareApp 1729 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "QKXB1TJC30"
+custom_msg = "RareApp 1576 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "CHPZ5TLYF3"
+custom_msg = "RareApp 2089 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "AZMVFBO1EP"
+custom_msg = "RareApp 3475 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "HBKFLM28X9"
+custom_msg = "RareApp 2178 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "G83VGD3KEW"
+custom_msg = "RareApp 2818 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "X573LUX745"
+custom_msg = "RareApp 2615 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "WA3VTWGAWL"
+custom_msg = "RareApp 1860 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "TUKC97HQ4T"
+custom_msg = "RareApp 3756 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "EU4SJP75N0"
+custom_msg = "RareApp 3742 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "W13003B9B0"
+custom_msg = "RareApp 1483 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "UJ0UQYHDMP"
+custom_msg = "RareApp 0480 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "YWIQC529S8"
+custom_msg = "RareApp 3255 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "1EKB929DW4"
+custom_msg = "RareApp 1924 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "LC5BLMEYSN"
+custom_msg = "RareApp 0706 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "QGUYIVLU4E"
+custom_msg = "RareApp 2013 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "SJ580X1FQI"
+custom_msg = "RareApp 0233 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "7U7FNKRJ19"
+custom_msg = "RareApp 0607 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "YIAS375Z98"
+custom_msg = "RareApp 0080 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "WCO5OEQXOC"
+custom_msg = "RareApp 0857 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "KX7AZ0DEM6"
+custom_msg = "RareApp 1208 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "ZGKEXMVMZH"
+custom_msg = "RareApp 1562 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "4HW30ZAXO6"
+custom_msg = "RareApp 0410 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "3CEUXCJGY6"
+custom_msg = "RareApp 2354 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "4HQCETAGHN"
+custom_msg = "RareApp 0671 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "R8NFVD6XDH"
+custom_msg = "RareApp 2096 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "OFJA5NV0T5"
+custom_msg = "RareApp 1855 (5 devices)"
+
+[[rules]]
+rule_type = "SIGNINGID"
+policy = "ALLOWLIST"
+identifier = "WEC04T2VY4:com.rareapp2006"
+custom_msg = "RareApp 2006 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "WXTE1TOFY4"
+custom_msg = "RareApp 1204 (4 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "KMP1LPTS2M"
+custom_msg = "RareApp 1691 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "0DTSNL5AH9"
+custom_msg = "RareApp 0496 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "S2YZB4K8OI"
+custom_msg = "RareApp 2050 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "0QMAA7H7AY"
+custom_msg = "RareApp 2841 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "U52VTJXU1K"
+custom_msg = "RareApp 1178 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "EWVMT6KAGJ"
+custom_msg = "RareApp 2605 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "8WEUUONMTK"
+custom_msg = "RareApp 3342 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "NKFG1BKUYR"
+custom_msg = "RareApp 1945 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "MM2GE8VT4M"
+custom_msg = "RareApp 2902 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "A6ZISDX9DA"
+custom_msg = "RareApp 0292 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "G2WOSQMCBF"
+custom_msg = "RareApp 3975 (4 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "JTGE753MS5"
+custom_msg = "RareApp 2395 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "EJI6JE46EK"
+custom_msg = "RareApp 2165 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "8FE8B2HWYW"
+custom_msg = "RareApp 1809 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "Z3FQ1J8NER"
+custom_msg = "RareApp 2423 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "G7ECILCMG5"
+custom_msg = "RareApp 3789 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "ZN2T8TVO60"
+custom_msg = "RareApp 3503 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "J2COMXJFHD"
+custom_msg = "RareApp 1117 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "II06T9U9NM"
+custom_msg = "RareApp 1472 (4 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "9H8K6F3ME1"
+custom_msg = "RareApp 2880 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "SBB0FX3J2Y"
+custom_msg = "RareApp 2964 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "WO2TX9SP7R"
+custom_msg = "RareApp 0127 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "8RLSW0B2UT"
+custom_msg = "RareApp 0221 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "N8HAWXUF9Q"
+custom_msg = "RareApp 1712 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "SFN244KO0J"
+custom_msg = "RareApp 2763 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "WG1IQ4OFS8"
+custom_msg = "RareApp 2773 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "S86PYB5ZX8"
+custom_msg = "RareApp 1727 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "RL8H39XLJ8"
+custom_msg = "RareApp 2465 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "H03EHIB4WT"
+custom_msg = "RareApp 1109 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "D61DTHRXRW"
+custom_msg = "RareApp 3236 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "I67HN34CK9"
+custom_msg = "RareApp 3904 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "KU740ROQ4T"
+custom_msg = "RareApp 1136 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "NPNMMX390X"
+custom_msg = "RareApp 2479 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "C2UINDSUDE"
+custom_msg = "RareApp 0712 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "PL36HVKP3E"
+custom_msg = "RareApp 1020 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "PS2II7KBCW"
+custom_msg = "RareApp 0034 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "I3UXYCUGWA"
+custom_msg = "RareApp 2766 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "0BIUYJZXA1"
+custom_msg = "RareApp 2929 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "XWMUWBTKW2"
+custom_msg = "RareApp 0535 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "2PCM3G7N4Y"
+custom_msg = "RareApp 3014 (4 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "GUXQL9QPR4"
+custom_msg = "RareApp 0563 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "W2J35N8KYQ"
+custom_msg = "RareApp 0407 (4 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "U3P1ZCYUZ8"
+custom_msg = "RareApp 2666 (4 devices)"
+
+[[rules]]
+rule_type = "SIGNINGID"
+policy = "ALLOWLIST"
+identifier = "Y4CSKJ3FFO:com.rareapp3907"
+custom_msg = "RareApp 3907 (4 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "3JEVRCYQH3"
+custom_msg = "RareApp 3893 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "2516C96EJY"
+custom_msg = "RareApp 1959 (7 devices)"
+
+[[rules]]
+rule_type = "SIGNINGID"
+policy = "ALLOWLIST"
+identifier = "OOJI6UUYZB:com.rareapp0074"
+custom_msg = "RareApp 0074 (4 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "87CVBE4G0T"
+custom_msg = "RareApp 2804 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "BYFVW9ED7N"
+custom_msg = "RareApp 3583 (4 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "OFGVRE741N"
+custom_msg = "RareApp 0784 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "BPT35911CM"
+custom_msg = "RareApp 1769 (7 devices)"
+
+[[rules]]
+rule_type = "SIGNINGID"
+policy = "ALLOWLIST"
+identifier = "96MK3XPL4M:com.rareapp1116"
+custom_msg = "RareApp 1116 (3 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "VO01Z8TUBC"
+custom_msg = "RareApp 0184 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "KSQGORJGN9"
+custom_msg = "RareApp 1387 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "3NHB4LAHFP"
+custom_msg = "RareApp 0389 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "KDNQ4G2VQX"
+custom_msg = "RareApp 1660 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "K65V3IFU71"
+custom_msg = "RareApp 2031 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "10G3QWQF6B"
+custom_msg = "RareApp 3538 (4 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "1L0B7UYQFH"
+custom_msg = "RareApp 0848 (4 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "UEDI6214UT"
+custom_msg = "RareApp 1990 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "GNV56VKTX1"
+custom_msg = "RareApp 0908 (5 devices)"
+
+[[rules]]
+rule_type = "SIGNINGID"
+policy = "ALLOWLIST"
+identifier = "Q94GIC1BKE:com.rareapp1147"
+custom_msg = "RareApp 1147 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "Q6ARCR4ZCQ"
+custom_msg = "RareApp 1173 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "IT7I1JKUE9"
+custom_msg = "RareApp 3195 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "08I4W02BSM"
+custom_msg = "RareApp 2357 (4 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "TBTNUMMSR8"
+custom_msg = "RareApp 1655 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "SX1CYPNEJ5"
+custom_msg = "RareApp 2290 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "H3LLZCF0TU"
+custom_msg = "RareApp 3286 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "170XC71O4Y"
+custom_msg = "RareApp 2292 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "N7TLHXCMF2"
+custom_msg = "RareApp 2783 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "DADYMPXPMF"
+custom_msg = "RareApp 0264 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "GPNG4B62ZD"
+custom_msg = "RareApp 2700 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "KIIB25X1B7"
+custom_msg = "RareApp 3687 (4 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "ZYBC5130LA"
+custom_msg = "RareApp 1882 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "9C6GKHNXKS"
+custom_msg = "RareApp 2197 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "HJS2MXCBMM"
+custom_msg = "RareApp 2588 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "ZQDR5OVCT2"
+custom_msg = "RareApp 1014 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "LKXHO0VH44"
+custom_msg = "RareApp 3138 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "R2DU3QKN99"
+custom_msg = "RareApp 1912 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "ZQ98MEJGNR"
+custom_msg = "RareApp 1265 (8 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "N7XY43CCUG"
+custom_msg = "RareApp 0847 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "HXTXTS5BJJ"
+custom_msg = "RareApp 3615 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "A5GZ27FHJZ"
+custom_msg = "RareApp 2019 (4 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "2TX0QJTAA7"
+custom_msg = "RareApp 1219 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "0MUOHUOGP0"
+custom_msg = "RareApp 2244 (4 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "CJJPQ1TNR0"
+custom_msg = "RareApp 0868 (4 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "65ICNEXTH0"
+custom_msg = "RareApp 2436 (4 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "RJ6GD23HGG"
+custom_msg = "RareApp 2158 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "I1NNSM0L0J"
+custom_msg = "RareApp 2920 (4 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "VF0VE5Z8D7"
+custom_msg = "RareApp 2787 (4 devices)"
+
+[[rules]]
+rule_type = "SIGNINGID"
+policy = "ALLOWLIST"
+identifier = "AZUAYN3OER:com.rareapp0324"
+custom_msg = "RareApp 0324 (4 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "CXBJLIF0HD"
+custom_msg = "RareApp 2699 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "6VVLQV593G"
+custom_msg = "RareApp 0062 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "X8MK8ZOSKX"
+custom_msg = "RareApp 2658 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "5ML8WU3R9K"
+custom_msg = "RareApp 2079 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "ER0BTCHTJQ"
+custom_msg = "RareApp 0458 (3 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "TG3KEGH5OE"
+custom_msg = "RareApp 2249 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "7RQ8LYYXE7"
+custom_msg = "RareApp 1370 (4 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "5ZDTQGJ9OO"
+custom_msg = "RareApp 3367 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "0AZD0WI3RB"
+custom_msg = "RareApp 0933 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "26FO1SZJIV"
+custom_msg = "RareApp 3166 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "QTTL1UIMQI"
+custom_msg = "RareApp 2034 (4 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "5CR0HH2KUY"
+custom_msg = "RareApp 1240 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "5GADRACGN7"
+custom_msg = "RareApp 2236 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "O15RRZW4Z5"
+custom_msg = "RareApp 3512 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "M46BH8LBRN"
+custom_msg = "RareApp 3192 (4 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "8HLUJBU00T"
+custom_msg = "RareApp 3075 (3 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "0DPJGSXDW3"
+custom_msg = "RareApp 1844 (4 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "3B4HQEYOOU"
+custom_msg = "RareApp 3084 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "II49M5ZM97"
+custom_msg = "RareApp 0665 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "Y000MBOI6F"
+custom_msg = "RareApp 2866 (4 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "RS7ESIE3QK"
+custom_msg = "RareApp 0601 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "GTNJUKMZKK"
+custom_msg = "RareApp 2288 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "CM8SJUPDRI"
+custom_msg = "RareApp 0317 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "URNZJ2O1XJ"
+custom_msg = "RareApp 2193 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "M1VZUH8IUN"
+custom_msg = "RareApp 1394 (4 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "1SOA9XM091"
+custom_msg = "RareApp 0336 (4 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "QP5L7CVFJJ"
+custom_msg = "RareApp 1296 (4 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "OFQSFW9PNE"
+custom_msg = "RareApp 0096 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "4DGYDF1ZL2"
+custom_msg = "RareApp 1395 (4 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "ZKEARJ2WLN"
+custom_msg = "RareApp 0411 (4 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "DE5WD1F2AF"
+custom_msg = "RareApp 1167 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "FT0UFFEPFK"
+custom_msg = "RareApp 2840 (4 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "S83CSVB0E4"
+custom_msg = "RareApp 2462 (4 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "33UZ332JJY"
+custom_msg = "RareApp 0991 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "UH3H7I5XS9"
+custom_msg = "RareApp 0823 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "265GJXVIHM"
+custom_msg = "RareApp 2373 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "FITP6XI8SD"
+custom_msg = "RareApp 3363 (7 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "J3UJA86VS4"
+custom_msg = "RareApp 0718 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "IU8XG45MIO"
+custom_msg = "RareApp 3409 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "7GX86O3NRD"
+custom_msg = "RareApp 0309 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "2HXWMV1DPO"
+custom_msg = "RareApp 3251 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "2N0GAIB62E"
+custom_msg = "RareApp 2204 (5 devices)"
+
+[[rules]]
+rule_type = "SIGNINGID"
+policy = "ALLOWLIST"
+identifier = "V2RJJMFYRZ:com.rareapp3473"
+custom_msg = "RareApp 3473 (4 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "AR0OMNEL25"
+custom_msg = "RareApp 3918 (4 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "VTFPK4EUD1"
+custom_msg = "RareApp 1556 (4 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "SYOY6GU58F"
+custom_msg = "RareApp 1984 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "KMQVMUQZHS"
+custom_msg = "RareApp 2482 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "32QVLNLFQG"
+custom_msg = "RareApp 0750 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "MNUCAJVQLW"
+custom_msg = "RareApp 1329 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "M5E8NSQDTZ"
+custom_msg = "RareApp 2864 (3 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "09588588OY"
+custom_msg = "RareApp 1287 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "5NTZXQUBBV"
+custom_msg = "RareApp 0137 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "WP7C2K7OLE"
+custom_msg = "RareApp 0734 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "ZC9Y7DMS2Z"
+custom_msg = "RareApp 1402 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "Q4EL0H9COM"
+custom_msg = "RareApp 0516 (4 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "FAO08CAPDE"
+custom_msg = "RareApp 0283 (4 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "01RZBK6KT7"
+custom_msg = "RareApp 3561 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "TNZJ4G82T0"
+custom_msg = "RareApp 1526 (3 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "4DYYI119IH"
+custom_msg = "RareApp 1034 (4 devices)"
+
+[[rules]]
+rule_type = "SIGNINGID"
+policy = "ALLOWLIST"
+identifier = "8BDTYMW8D1:com.rareapp2351"
+custom_msg = "RareApp 2351 (4 devices)"
+
+[[rules]]
+rule_type = "SIGNINGID"
+policy = "ALLOWLIST"
+identifier = "TIWGX6M52Y:com.rareapp3451"
+custom_msg = "RareApp 3451 (3 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "XTX1L8RG22"
+custom_msg = "RareApp 2735 (4 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "0U3PI5U7CG"
+custom_msg = "RareApp 1485 (4 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "F7FP4E8TDV"
+custom_msg = "RareApp 1540 (4 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "G8N5TA1H2M"
+custom_msg = "RareApp 3924 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "X3YU2L6RGO"
+custom_msg = "RareApp 2637 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "0KMPLLB5HV"
+custom_msg = "RareApp 1415 (4 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "Q5YWSUDBCI"
+custom_msg = "RareApp 0049 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "GE070S1KLX"
+custom_msg = "RareApp 1430 (3 devices)"
+
+[[rules]]
+rule_type = "SIGNINGID"
+policy = "ALLOWLIST"
+identifier = "1P3ZG7IAGY:com.rareapp0314"
+custom_msg = "RareApp 0314 (4 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "2NJASPB420"
+custom_msg = "RareApp 2961 (3 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "JEM45PAYLY"
+custom_msg = "RareApp 2273 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "K1NKXGST89"
+custom_msg = "RareApp 3127 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "52AM7SMC67"
+custom_msg = "RareApp 2161 (3 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "E7J2SQ8X3A"
+custom_msg = "RareApp 0461 (4 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "SHJDCL6KAZ"
+custom_msg = "RareApp 0708 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "WZECBKOGG5"
+custom_msg = "RareApp 1154 (4 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "CU8JU6OJDZ"
+custom_msg = "RareApp 3800 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "65RML0CAXV"
+custom_msg = "RareApp 2527 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "XYXASWWT29"
+custom_msg = "RareApp 0342 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "DZIKD4JIPX"
+custom_msg = "RareApp 1674 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "HTZ4LP8Q2H"
+custom_msg = "RareApp 0829 (4 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "P0XOQ0D1CU"
+custom_msg = "RareApp 3502 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "V7QEX1B8IG"
+custom_msg = "RareApp 2247 (4 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "44SSG5XRZY"
+custom_msg = "RareApp 1789 (4 devices)"
+
+[[rules]]
+rule_type = "SIGNINGID"
+policy = "ALLOWLIST"
+identifier = "QHCE2XBLUG:com.rareapp0890"
+custom_msg = "RareApp 0890 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "Q43NVIK74A"
+custom_msg = "RareApp 2473 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "1QWP7AQSKE"
+custom_msg = "RareApp 1710 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "C7VH13WSHA"
+custom_msg = "RareApp 0547 (4 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "GIOXY26MZM"
+custom_msg = "RareApp 1097 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "09MTTFT38L"
+custom_msg = "RareApp 0529 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "NP3JJCFDHJ"
+custom_msg = "RareApp 0806 (4 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "WTVM8F3IF3"
+custom_msg = "RareApp 1406 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "SMF0XLZYOB"
+custom_msg = "RareApp 3761 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "I8MQEEB6BZ"
+custom_msg = "RareApp 1316 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "NSWIL68UHW"
+custom_msg = "RareApp 0852 (3 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "2NXJEYKZNN"
+custom_msg = "RareApp 0742 (6 devices)"
+
+[[rules]]
+rule_type = "SIGNINGID"
+policy = "ALLOWLIST"
+identifier = "5OD8VBOSQY:com.rareapp1783"
+custom_msg = "RareApp 1783 (3 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "K8UUTRXG8W"
+custom_msg = "RareApp 2037 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "HDK3Z4T48O"
+custom_msg = "RareApp 0073 (4 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "EMFFZQJV8W"
+custom_msg = "RareApp 3621 (3 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "JBGH3HGJSQ"
+custom_msg = "RareApp 2517 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "R32JVELV37"
+custom_msg = "RareApp 3462 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "1ONDFYU7M4"
+custom_msg = "RareApp 1519 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "FEKJVK78M4"
+custom_msg = "RareApp 0032 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "8A4364V0WS"
+custom_msg = "RareApp 0341 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "0W78AQPSFZ"
+custom_msg = "RareApp 0193 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "PB3LRB472W"
+custom_msg = "RareApp 3095 (6 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "SMJYNCP2VI"
+custom_msg = "RareApp 2039 (5 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "Q6H3BAY0ZG"
+custom_msg = "RareApp 0773 (4 devices)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "P2F8UZC5BV"
+custom_msg = "RareApp 0344 (5 devices)"
+
