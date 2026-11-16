@@ -132,7 +132,7 @@ def main():
     for _ in range(WEEKS):
         weekly_versions.append(dict(version))
         for name in version:
-            if rng.random() < 0.12:
+            if rng.random() < 0.25:
                 version[name] += 1
 
     fields = ["week", "device_id", "user", "team", "category", "file_name", "path", "sha256",
