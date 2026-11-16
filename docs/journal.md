@@ -332,3 +332,22 @@ Each entry: what I did, what broke, how I fixed it. Newest at the bottom.
 - **Documented:** every assumption, and what's not modelled (interpreted scripts, Apple platform binaries, transitive rules, people changing teams), in analysis/README.md.
 - **Learned:** Synthetic data is only honest if its assumptions are written down and defensible. The hard cases (developer builds, unsigned tools, the long tail) are what make allowlisting rollouts fail, and frequent updates are why hash rules don't scale.
 
+---
+
+## 2026-11-16 — Project 1B, Step 1B.4: What breaks if we enforce today?
+
+- **Did:** Built analysis/rollout_readiness.ipynb on the synthetic 3,000-device fleet: coverage today, a greedy smallest rule set for 99% of signed executions, blast radius by team, breakage classes derived only from what Santa reports (signature and path), and the effect of one alternative path per class. It writes analysis/out/readiness_summary.json for the rollout RFC, and analysis/out/proposed_rules.toml (synthetic Team IDs, never to be merged into santa/rules/).
+- **Units:** block incidents (one binary blocked on one device in one week, what a person feels) per 100 devices per week; blocked executions for scale.
+- **Broke:** generate_fleet.py wasn't reproducible: iterating over a Python set gave a different order each run, so the same seed produced slightly different data.
+- **Fixed:** Changed `for name in apps:` to `for name in sorted(apps):`. The same seed now gives identical data.
+- **Answer:** Enforcing today (standard build only) blocks 2,260 binaries per 100 devices per week. Adding 655 vendor rules cuts that to 812, 64% of it in Engineering. Transitive rules remove 10% of what's left; with an approved Homebrew catalog, signed internal tools and team-scoped rules, it falls to 21 per 100 devices per week: about 317 exception requests a week, plus 8 intended blocks of binaries running from Downloads, /tmp or hidden folders.
+- **Findings:**
+  - Coverage today is 29% of executions. Even perfect vendor rules can reach only 83%, because 17% of executions are unsigned.
+  - 128 rules reach 96% of signed use; the last 3% takes 527 more.
+  - The biggest breakage class is Homebrew tools (62%), not developer builds (10%), so transitive rules alone won't fix it.
+  - Hash rules are fragile: week-1 hash rules matched only 42% of the same vendors' use by week 4 (3,430 hash rules vs 663 Team ID rules).
+  - A Homebrew catalog that lags one week behind a version bump means 508 blocks per 100 devices that week, so rules must publish before engineers can upgrade.
+  - Grouping by path and signature agreed 100% with the simulation's ground truth.
+  - The long tail becomes exception load, so Project 3's bot needs self-service approval for signed apps.
+- **Learned:** Measure before assuming. The guide's example expected transitive rules to remove most breakage; this data says package-manager tools dominate. The method, not the exact numbers, is the deliverable.
+
