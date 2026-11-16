@@ -289,3 +289,20 @@ Each entry: what I did, what broke, how I fixed it. Newest at the bottom.
 - Know the platform limits (VMs, licence tiers) and document the production design honestly.
 - Rings and CI limit the blast radius: one device first, every change reviewed.
 
+---
+
+## 2026-11-13 — Project 1B, Step 1B.1: Santa in Monitor mode
+
+- **Did:** Installed Santa (North Pole Security) on fleet-macos-lab and approved its system extension and Full Disk Access by hand (the VM can't receive MDM profiles). Created a com.northpolesec.santa profile (ClientMode 1 = Monitor, SyncBaseURL https://corp-lab.tail832443.ts.net:8443/v1/santa/) and tracked it in GitOps. Ran Moroz on my Mac, serving rules from santa/rules/global.toml (changed by PR only), published through Tailscale Funnel on port 8443.
+- **Broke (1):** The downloaded profile wouldn't open: "Could not open profile ... invalid format (NSCocoaErrorDomain:3840)."
+- **Fixed (1):** The file wasn't a valid profile (1020 bytes; some earlier downloads had failed with curl error 6). Re-downloaded with `curl -fLO` into ~/Downloads and checked it with `plutil -lint` before opening.
+- **Broke (2):** `santactl sync --debug` showed Santa reached Funnel (certificate trusted) but failed with "bad gateway."
+- **Fixed (2):** Moroz wasn't running: it had exited on an unknown flag (`-event-logfile`; this version uses `-event-dir`). Restarted it with `-use-tls=false` (Funnel terminates TLS) and pointed Funnel 8443 at http://127.0.0.1:8080.
+- **Broke (3):** `santactl` "command not found."
+- **Fixed (3):** I'd run it on my real Mac (prompt yogi@Mac); santactl only exists on the Mac VM.
+- **Verified:** `santactl status` shows Mode: Monitor, Sync Server set, Last Successful Full Sync [time]. Opening Firefox (not allowlisted) produced events in ~/moroz/events [yes].
+- **Policy:** Added "macOS - Santa running" (deferred from Step 1.9), live-tested first, added through a PR: Pass. FileVault: Pass (turned on manually). OS ≥ 27.3: Fail, which is expected (the VM runs 27.2, matching Nudge).
+- **Broke (4):** "macOS - Nudge installed" showed "---" (no result, not Fail).
+- **Fixed (4):** The query used the apps table, which scans every application and is expensive; osquery's watchdog can stop heavy queries. Replaced it with a direct file check on Nudge's Info.plist, through a PR [now Pass].
+- **Learned:** Monitor mode is a rehearsal: record what would be blocked before blocking anything. TEAMID and SIGNINGID rules survive app updates; BINARY (hash) rules don't. "Bad gateway" means the middleman works but the server behind it doesn't. Read a tool's own `-h` output. Check which machine the prompt is on. In Fleet, "---" means no result, so look for errors or expensive queries.
+
