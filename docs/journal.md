@@ -306,3 +306,17 @@ Each entry: what I did, what broke, how I fixed it. Newest at the bottom.
 - **Fixed (4):** The query used the apps table, which scans every application and is expensive; osquery's watchdog can stop heavy queries. Replaced it with a direct file check on Nudge's Info.plist, through a PR [now Pass].
 - **Learned:** Monitor mode is a rehearsal: record what would be blocked before blocking anything. TEAMID and SIGNINGID rules survive app updates; BINARY (hash) rules don't. "Bad gateway" means the middleman works but the server behind it doesn't. Read a tool's own `-h` output. Check which machine the prompt is on. In Fleet, "---" means no result, so look for errors or expensive queries.
 
+---
+
+## 2026-11-15 — Project 1B, Step 1B.2: WDAC in audit mode
+
+- **Did:** Wrote windows/scripts/windows-wdac-audit.ps1, which builds a base App Control (WDAC) policy from Microsoft's DefaultWindows example policy with UMCI (option 0), audit mode (3), ISG reputation trust (14) and no-reboot updates (16), converts it to binary and deploys it with CiTool. Idempotent: reuses the same policy ID on re-runs. Delivered with `fleetctl run-script` and tracked in GitOps. Used PowerShell instead of the App Control Wizard, so the policy is repeatable as code.
+- **Broke (1):** CI's yamllint failed: "trailing spaces" on line 30 of default.yml, invisible in the editor.
+- **Fixed (1):** Stripped them with `sed -i '' 's/[[:space:]]*$//'`; now run `yamllint -d relaxed fleet/` locally before pushing. Pushed a new commit rather than re-running the old one.
+- **Broke (2):** An unsigned test program produced no 3076 events at all.
+- **Fixed (2):** Two causes. First, the program ran before the policy was deployed. Second, even once active ("Lumen AI Base (Audit)", enforced in CiTool), the policy wasn't evaluating user-mode programs. Enabled UMCI (option 0) through a PR and redeployed.
+- **Check passed:** Compiled an unsigned C:\lab\hello3.exe with Windows' built-in csc.exe. It ran, and event 3076 recorded that it "did not meet the Enterprise signing level requirements or violated code integrity policy (Policy ID {6ea7607b…}). However, due to code integrity auditing policy, the image was allowed to load."
+- **Finding:** Audit events also showed PowerShell loading runtime-generated DLLs (SystemTemp) that fail dynamic code trust verification: a breakage class to plan for before enforcement.
+- **Exported:** [N] events (3076 and 3089) to analysis/real/wdac_audit.csv; policy XML copied from the hidden C:\ProgramData folder to windows/wdac/LumenAI-Base-Audit.xml.
+- **Learned:** Without UMCI, a WDAC policy only checks drivers, not apps. Events only appear for programs run after a policy is active. Audit mode measures what would break before enforcing, the same principle as Santa's Monitor mode, now on two platforms.
+
