@@ -351,3 +351,20 @@ Each entry: what I did, what broke, how I fixed it. Newest at the bottom.
   - The long tail becomes exception load, so Project 3's bot needs self-service approval for signed apps.
 - **Learned:** Measure before assuming. The guide's example expected transitive rules to remove most breakage; this data says package-manager tools dominate. The method, not the exact numbers, is the deliverable.
 
+---
+
+## 2026-11-16 — Project 1B, Step 1B.5: Staged rollout plan (RFC)
+
+- **Did:** Wrote docs/rfc/santa-lockdown.md, a request-for-comments plan for moving Santa from Monitor to Lockdown, using the numbers from Step 1B.4.
+- **Contents:**
+  - Summary and the analysis table: blocks per 100 Macs per week fall from 2,260 (standard build only) to 812 (655 vendor rules), 733 (transitive rules), 225 (Homebrew catalog), 24 (signed internal tools), 21 (team-scoped rules) and 6 (per-Mac pre-approval).
+  - 8 prerequisites, each with an owner and a "done when" test: vendor rules, transitive compiler rules, an approved Homebrew catalog with zero publishing lag, signed internal tools, per-Mac pre-approval from ≥4 weeks of Monitor data, self-service approval for signed apps, a block message linking to the request page, and a rehearsed rollback.
+  - Three rings: canary (IT and Security, ~50 Macs, 2 weeks), pilot (one volunteer team per department, ~300 Macs including ≥100 from Engineering and Research, 2 weeks), then everyone in two waves (low-breakage teams first, Engineering and Research a week later).
+  - A six-metric gate held for two consecutive weeks: <1 appealed block needing human review per 100 Macs per week, median <15 minutes to unblock a signed app, 0 business-critical blocks unresolved after 4 hours, 0 days of Homebrew catalog lag, no unexplained rollbacks, and every intended block reviewed.
+  - Five written messages (T−14 announcement, T−14 engineering details, T−7 reminder, go-live, T+7 follow-up) and a 10-question FAQ in plain language.
+  - Rollback in one PR: revert sets the ring back to Monitor, and every Mac follows within 10 minutes (Santa's sync interval). Any Security engineer can roll back without waiting for approval.
+  - Risks with mitigations, and open questions for reviewers.
+- **Found:** The guide's example gate (<1 appealed block per 100 devices per week) couldn't pass with the Step 1B.4 residual of 21. Tested per-Mac pre-approval of signed apps already seen in Monitor mode on the synthetic data: the residual fell to 6 blocks, about 4.6 exception requests per 100 Macs per week, still above 1.
+- **Decision:** Made self-service approval for signed apps a prerequisite, and defined the gate on appeals that need a human reviewer. Required the pilot to include Engineering and Research, because they carry ~85% of the breakage.
+- **Learned:** Check a gate against the data before the rollout, not after. A security control survives only if people are warned, told why, and given an alternative path, so the messages and FAQ matter as much as the rules.
+
