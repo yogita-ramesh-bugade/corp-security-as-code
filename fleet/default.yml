@@ -27,7 +27,8 @@ controls:
       - path: ./profiles/macos/lumen-santa.mobileconfig
   scripts:
     - path: ../windows/scripts/windows-firewall-smb.ps1
-    - path: ../windows/scripts/windows-asr-audit.ps1
+    - path: ../windows/scripts/windows-asr-audit.ps1 
+    - path: ../windows/scripts/windows-wdac-audit.ps1
     - path: ../windows/scripts/windows-bitlocker.ps1
     - path: ../browser/out/windows/lumen-chrome.ps1
 custom_host_vitals:
