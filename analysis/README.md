@@ -35,8 +35,11 @@ ground truth for checking the analysis; a real Santa event wouldn't carry it.
 - **Common apps:** 300 apps with Zipf-like popularity (a few are on most devices, most are on few).
 - **Long tail:** 4,000 rare apps from ~1,200 vendors; each device has 0–4, used about every other week.
 - App names are real or generic, but **all Team IDs and hashes are synthetic** (random/derived), not the vendors' real identifiers.
-- **Updates:** each signed app ships a new version (new hash, same Team ID and Signing ID) in about 12% of weeks.
-  This is what makes hash rules fragile and Team ID / Signing ID rules durable.
+- **Updates:** each signed app ships a new version (new hash, same Team ID and Signing ID) in about 25% of weeks,
+    roughly monthly. I raised this from 12%: browsers and collaboration apps (Chrome, Slack, Zoom, Teams)
+    ship stable releases about every four weeks plus security fixes, so 12% understated churn.
+    This is what makes hash rules fragile and Team ID / Signing ID rules durable.
+  
 
 ### Hard cases (the reasons allowlisting rollouts fail)
 | Category | Who | Behaviour |
