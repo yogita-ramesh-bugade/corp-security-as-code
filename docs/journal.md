@@ -320,3 +320,15 @@ Each entry: what I did, what broke, how I fixed it. Newest at the bottom.
 - **Exported:** [N] events (3076 and 3089) to analysis/real/wdac_audit.csv; policy XML copied from the hidden C:\ProgramData folder to windows/wdac/LumenAI-Base-Audit.xml.
 - **Learned:** Without UMCI, a WDAC policy only checks drivers, not apps. Events only appear for programs run after a policy is active. Audit mode measures what would break before enforcing, the same principle as Santa's Monitor mode, now on two platforms.
 
+---
+
+## 2026-11-16 — Project 1B, Step 1B.3: Synthetic fleet
+
+- **Did:** Wrote analysis/generate_fleet.py, which builds 3,000 macOS devices across Engineering (35%), Research (15%), Sales (20%), Finance (10%) and Support (20%), and four weeks of execution events: device, user, team, path, sha256, signed, Team ID, Signing ID and run count. Seeded (default 42), so the same seed always produces the same data. Generated data is gitignored (analysis/data/) because anyone can regenerate it.
+- **Modelled:** a standard build on every device, team-specific apps, 300 common apps with Zipf-like popularity, a 4,000-app long tail from ~1,200 vendors, and weekly app updates (new hash, same Team ID). Hard cases: Homebrew tools (most engineers; unsigned, no Team ID), self-compiled developer builds (a new hash every week on every device), six unsigned internal tools, and five suspicious binaries on a handful of devices.
+- **Shaped by real data:** the categories reflect what I saw in my lab: Santa events for unsigned apps on the Mac VM, and WDAC 3076 events for an unsigned compiled tool and runtime-generated DLLs on Windows.
+- **Tuned:** raised the weekly app-update rate from 12% to 25%, because Chrome, Slack, Zoom and Teams ship roughly monthly. Unique hashes rose from ~13,100 to ~[14,300] with the same Team IDs.
+- **Output:** ~[370,000] rows, ~[14,300] unique hashes, median ~29 binaries per device per week.
+- **Documented:** every assumption, and what's not modelled (interpreted scripts, Apple platform binaries, transitive rules, people changing teams), in analysis/README.md.
+- **Learned:** Synthetic data is only honest if its assumptions are written down and defensible. The hard cases (developer builds, unsigned tools, the long tail) are what make allowlisting rollouts fail, and frequent updates are why hash rules don't scale.
+
