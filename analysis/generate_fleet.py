@@ -165,7 +165,7 @@ def main():
 
             for week in range(1, WEEKS + 1):
                 vers = weekly_versions[week - 1]
-                for name in apps:
+                for name in sorted(apps):
                     a = catalog[name]
                     if a["kind"] == "rare" and rng.random() < 0.5:
                         continue  # rare apps aren't used every week

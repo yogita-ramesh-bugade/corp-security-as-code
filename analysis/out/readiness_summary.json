@@ -1,0 +1,41 @@
+{
+  "devices": 3000,
+  "weeks": 4,
+  "incidents_per_100_dev_wk_today": 2259.9,
+  "proposed_rules": 655,
+  "signed_coverage_target": 0.99,
+  "incidents_per_100_dev_wk_with_rules": 812.1,
+  "engineering_share": 0.645,
+  "developer_build_share": 0.097,
+  "incidents_per_100_dev_wk_after_all_fixes": 21.2,
+  "exception_requests_per_week": 317.0,
+  "intended_block_incidents": 8,
+  "hash_rule_match_after_4_weeks": 0.416,
+  "homebrew_lag_incidents_per_100_devices": 507.6,
+  "steps": [
+    {
+      "after": "Standard build only",
+      "incidents_per_100_dev_wk": 2259.95
+    },
+    {
+      "after": "655 fleet vendor rules",
+      "incidents_per_100_dev_wk": 812.13
+    },
+    {
+      "after": "Transitive rules (developer builds)",
+      "incidents_per_100_dev_wk": 733.1
+    },
+    {
+      "after": "Homebrew approved catalog",
+      "incidents_per_100_dev_wk": 225.53
+    },
+    {
+      "after": "Sign internal tools",
+      "incidents_per_100_dev_wk": 24.17
+    },
+    {
+      "after": "Team-scoped rules (long tail)",
+      "incidents_per_100_dev_wk": 21.2
+    }
+  ]
+}
