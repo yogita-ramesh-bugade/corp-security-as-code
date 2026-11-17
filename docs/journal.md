@@ -383,3 +383,52 @@ Each entry: what I did, what broke, how I fixed it. Newest at the bottom.
 - **Rollback rehearsal:** Deleted the per-Mac file by PR; the Mac was back in Monitor [N] minutes after merging (RFC target: 10). Canary now left in [Lockdown/Monitor].
 - **Tidied:** Added .DS_Store, .ipynb_checkpoints/ and anaconda_projects/ to .gitignore, and untracked the .DS_Store files committed by accident.
 - **Learned:** Allowlist your management agents, and everything they depend on, before enforcing, or lockdown locks you out of your own fleet. A rollback you haven't run isn't a rollback. Read placeholders before pasting commands.
+---
+
+## Project 2, Step 2.1: Keycloak managed by Terraform
+
+**Date:** 2026-11-16
+**PR:** #17 (merged)
+
+### Goal
+Stand up Keycloak as Lumen's identity provider, with its whole setup defined in Git rather than clicked together in the UI. Every later part of Project 2 depends on this: Pomerium (2.3) logs users in through it, and the posture gate (2.4) makes decisions from the `groups` claim it puts into tokens.
+
+### What I built
+- `access-gate/keycloak/docker-compose.yml`: Keycloak 26.4 in dev mode on port 8081, because Moroz already uses 8080. The admin credentials come from `~/access-gate-secrets/keycloak.env`, outside the repo.
+- `access-gate/terraform/` (Keycloak provider `keycloak/keycloak ~> 5.0`):
+  - Realm `lumen` ("Lumen AI"): 15-minute access tokens, 8-hour idle sessions, password policy `length(12) and notUsername`.
+  - Groups: `engineering`, `sales`, `it-admins`, `break-glass`, `traveling`.
+  - Test users: alice (engineering), bob (sales), ivan (it-admins), tara (sales + traveling). Each has an `@lumenai.test` email, and the password comes from `TF_VAR_test_user_password`.
+  - OIDC client `pomerium`: confidential, authorization-code flow only, PKCE S256, and a single redirect URI.
+  - A `groups` protocol mapper, so tokens carry group names for policy decisions.
+  - Outputs: `issuer_url`, `pomerium_client_id`, and `pomerium_client_secret` (marked sensitive).
+- Terraform credentials live in `~/access-gate-secrets/terraform.env`, not in the repo.
+
+### Checks
+- [x] `terraform apply` created the realm, groups, users, client and mapper.
+- [x] `terraform plan` right after apply: **"No changes. Your infrastructure matches the configuration."**
+- [ ] Drift test: delete `traveling` in the admin UI, then run `terraform apply` and confirm it's recreated. [Result to confirm with screenshot. In a pre-test against the same code, plan showed `traveling` "will be created" and apply restored it.]
+
+### Problems and fixes
+- **No realm dropdown.** Keycloak 26.4 moved realm switching to **Manage realms** in the left menu. At first only `master` was listed, because `terraform apply` hadn't run yet; after apply, `lumen` appeared.
+- **Secrets pushed to GitHub (caught before merge).** The ignore file was saved as `.gitignore.txt`, so Git ignored nothing. The first push (6.91 MB) included `terraform.tfstate`, `terraform.tfstate.backup` and the 20 MB provider binary in `.terraform/`. The push size was the warning sign: five text files should be a few KB.
+  - Response:
+    1. Renamed the file to `.gitignore`.
+    2. Ran `git rm --cached` on the state files and `.terraform/`, then amended the commit.
+    3. Deleted the remote branch and pushed a clean one with 7 files.
+    4. Rotated everything the state contained: `terraform apply -replace` on the Pomerium client and all four users, with a new test password. The result was 10 added and 10 destroyed, and the next plan showed no changes.
+    5. Verified main: `git ls-tree -r origin/main | grep -E 'tfstate|/\.terraform/'` returned nothing (CLEAN).
+  - Impact: low, because Keycloak runs only on localhost, and the leaked values were rotated anyway.
+- **Kept on purpose:** `.terraform.lock.hcl` is committed. It pins the provider version so every run uses the same build.
+
+### What I learned
+- Terraform state is a secret store. It holds client secrets and passwords in plain text, so it needs `.gitignore` from the first commit. In production it would live in an encrypted remote backend.
+- Treat a leaked secret as compromised even after removing it from Git. GitHub can keep the old commit reachable, so rotation is what actually fixes it.
+- `git show --stat` before pushing, and the push size, are cheap checks that catch this class of mistake.
+- Infrastructure as code turns the identity provider into something reviewable: every group or client change is a PR, and drift from UI clicks is visible in `plan` and reverted by `apply`.
+
+### Resume line
+Defined the Keycloak identity provider (realm, RBAC groups, OIDC client with PKCE, group claims) as Terraform with drift detection. Caught a state-file secret leak before merge, then remediated it with history cleanup and credential rotation.
+
+### Next
+Step 2.2: step-ca device certificates.
