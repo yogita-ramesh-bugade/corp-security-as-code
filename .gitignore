@@ -8,3 +8,8 @@
 config-backup.yaml
 
 analysis/data/
+
+# macOS and Jupyter clutter
+.DS_Store
+.ipynb_checkpoints/
+anaconda_projects/
