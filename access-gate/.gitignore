@@ -5,3 +5,4 @@ terraform/terraform.tfstate.*
 terraform/*.tfvars
 terraform/crash.log
 *.env
+device-certs/out/
