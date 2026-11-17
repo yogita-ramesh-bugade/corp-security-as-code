@@ -432,3 +432,20 @@ Defined the Keycloak identity provider (realm, RBAC groups, OIDC client with PKC
 
 ### Next
 Step 2.2: step-ca device certificates.
+
+---
+
+## 2026-11-17 — Project 2, Step 2.2: Device certificates with step-ca
+
+- **Design:** A password proves who the person is; a device certificate proves which machine they're on. Built a lab CA ("Lumen AI Lab CA", step-ca on the admin Mac, port 9000, provisioner `lumen-devices`, 30-day certificates). Only the public root_ca.crt is in Git; the CA keys stay in ~/.step/secrets and the passwords in ~/access-gate-secrets.
+- **Enrollment:** access-gate/device-certs/mint_and_run.py reads each host from Fleet, mints a one-time token bound to that host's serial (5-minute expiry), writes a per-device script to out/ (gitignored), runs it with `fleetctl run-script` and deletes it. The key is generated on the device and never sent to the CA. macOS: System keychain, non-extractable (`security import -x`). Windows: LocalMachine\My, `Exportable = FALSE` (Fleet runs as SYSTEM, so the machine store rather than the user store). Linux: /etc/lumen/device, key root-only.
+- **Tested:** A token for serial A used with a request for serial B is refused (403); a reused token is refused (401).
+- **Broke (1):** Ubuntu failed with `curl: command not found` (exit 127).
+- **Fixed (1):** `sudo apt install curl` in the VM.
+- **Broke (2):** Windows "Unable to connect to the remote server" and Ubuntu `curl: (28)` against 192.168.64.1. UTM puts the Mac VM on 192.168.64.x but the QEMU VMs (Windows, Ubuntu) on 192.168.65.x.
+- **Fixed (2):** Found it with `ipconfig` and `Test-NetConnection` on Windows, and `ip -4 -br addr` plus `curl /health` on Ubuntu. Added 192.168.65.1 to the CA's dnsNames in ca.json, restarted step-ca, and changed mint_and_run.py to pick the CA address per platform, so plain `--run` works for all three.
+- **Broke (3):** SSH to the Ubuntu VM timed out: its IP had changed from 192.168.64.4 to 192.168.65.3. Updated linux/inventory.ini.
+- **Check:** Every VM has its own certificate. Mac: CN=ZR2JVG236J (hardware serial). Ubuntu: CN=784701bb-1f43-4572-9018-f51fb812d9bb and Windows: CN=115CE3BE-507E-4D7A-99D2-1B16631DAA18 (Fleet UUIDs, because UTM QEMU VMs report no hardware serial; the script falls back and says so). Windows shows HasPrivateKey: True.
+- **Copy demo:** [Copied the Ubuntu VM's device.key and device.crt to the Mac; the certificate's public key matched the copied key: "COPY WORKS".] The lab's weakness: software keys can be copied by anyone with admin or root. Production fix, in docs/design/device-identity.md: Apple Managed Device Attestation. An ACME payload with HardwareBound and Attest creates the key inside the Secure Enclave, Apple signs the serial and UDID, and step-ca's `device-attest-01` challenge verifies them before issuing. A copied certificate without its key is useless. TPM keys do the same on Windows and Linux. Not possible in this lab, because the Mac VM never gets an APNs token.
+- **Broke (4):** `gh pr merge` was blocked: "the base branch policy prohibits the merge". That's my own branch protection working; merged PR #19 as the owner with `--admin` [confirm merged].
+- **Learned:** User identity, device identity and device health together are zero trust; any one alone can be stolen or faked. "Non-exportable" in software isn't hardware-bound; only attestation proves the key can't leave the device. Check the network first: `Test-NetConnection` and `curl /health` found the two-network problem in minutes.
