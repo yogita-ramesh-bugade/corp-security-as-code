@@ -368,3 +368,18 @@ Each entry: what I did, what broke, how I fixed it. Newest at the bottom.
 - **Decision:** Made self-service approval for signed apps a prerequisite, and defined the gate on appeals that need a human reviewer. Required the pilot to include Engineering and Research, because they carry ~85% of the breakage.
 - **Learned:** Check a gate against the data before the rollout, not after. A security control survives only if people are warned, told why, and given an alternative path, so the messages and FAQ matter as much as the rules.
 
+---
+
+## 2026-11-16 — Project 1B, Step 1B.6: Enforce on canary
+
+- **Design:** Santa's rings are controlled by the sync server, because free Fleet can't target a profile at a label and the Mac VM can't receive MDM profiles. santa/rules/global.toml keeps every Mac in Monitor; a per-Mac file named by machine ID (25D83DC7-A8EC-52C5-BBB4-85145D5FD8CF.toml) sets only the canary Mac to Lockdown. Moroz serves the files straight from the repo, so a merged PR changes the ring.
+- **Pre-flight:** Before enforcing, found the Team IDs of everything that must keep running with `santactl fileinfo`: Fleet's agent orbit (8VBZ3948LU), osqueryd (3522FA9PXF) and Nudge (T4SK8ZXCXG). The Fleet agent depends on osquery, which is signed by a different developer; allowlisting Fleet alone would have stopped the Mac reporting. Added all three to global.toml (5 rules total).
+- **Block message:** Updated the Santa profile with UnknownBlockMessage, BannedBlockMessage and a "Request access" button (EventDetailURL passing %file_sha%, %machine_id% and %username%) that opens docs/request-access.md, a placeholder until Project 3's exception bot.
+- **Broke (1):** The machine ID wasn't where I expected: ~/moroz/events top-level folders are file fingerprints (SHA-256), not Macs.
+- **Fixed (1):** `ls -R ~/moroz/events` showed the machine ID one level down (fingerprint → machine → event files); it matched the host UUID in `fleetctl get hosts`.
+- **Broke (2):** `sudo santactl sync` "command not found" and rejected passwords: I was on my real Mac (yogi@Mac); santactl exists only on the Mac VM.
+- **Check:** Mode: [Lockdown]. Chrome opened normally; an ad-hoc-signed copy of /bin/echo was blocked with my message; Request access opened the request page with the fingerprint, machine ID and username filled in; Fleet stayed online. Recorded on video [yes, stored outside the repo].
+- **Broke (3):** The first rollback did nothing: I ran `git rm` with the placeholder MACHINE-ID instead of the real file name, so no commit was made and the PR had nothing to propose.
+- **Rollback rehearsal:** Deleted the per-Mac file by PR; the Mac was back in Monitor [N] minutes after merging (RFC target: 10). Canary now left in [Lockdown/Monitor].
+- **Tidied:** Added .DS_Store, .ipynb_checkpoints/ and anaconda_projects/ to .gitignore, and untracked the .DS_Store files committed by accident.
+- **Learned:** Allowlist your management agents, and everything they depend on, before enforcing, or lockdown locks you out of your own fleet. A rollback you haven't run isn't a rollback. Read placeholders before pasting commands.
