@@ -5,10 +5,16 @@
 	<key>PayloadContent</key>
 	<array>
 		<dict>
+			<key>BannedBlockMessage</key>
+			<string>Lumen Security has blocked this app because it is known to be unsafe. If you think this is a mistake, post in #ask-security.</string>
 			<key>ClientMode</key>
 			<integer>1</integer>
 			<key>EnableSilentMode</key>
 			<false/>
+			<key>EventDetailText</key>
+			<string>Request access</string>
+			<key>EventDetailURL</key>
+			<string>https://github.com/yogita-ramesh-bugade/corp-security-as-code/blob/main/docs/request-access.md?sha=%file_sha%&amp;machine=%machine_id%&amp;user=%username%</string>
 			<key>ModeNotificationLockdown</key>
 			<string>Santa is in Lockdown mode: only approved apps can run.</string>
 			<key>ModeNotificationMonitor</key>
@@ -36,10 +42,12 @@
 			</array>
 			<key>SyncBaseURL</key>
 			<string>https://corp-lab.tail832443.ts.net:8443/v1/santa/</string>
+			<key>UnknownBlockMessage</key>
+			<string>This app isn't approved on Lumen Macs yet. Click Request access and the Security team will review it. Signed apps are usually approved within minutes. Blocked from your work? Post in #ask-security.</string>
 		</dict>
 	</array>
 	<key>PayloadDescription</key>
-	<string>Santa allowlisting configuration (Monitor mode).</string>
+	<string>Santa allowlisting configuration. Mode is set per ring by the sync server.</string>
 	<key>PayloadDisplayName</key>
 	<string>Lumen AI - Santa</string>
 	<key>PayloadIdentifier</key>

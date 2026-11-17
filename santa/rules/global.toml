@@ -15,3 +15,22 @@ rule_type = "TEAMID"
 policy = "ALLOWLIST"
 identifier = "EQHXZ8M8AV"
 custom_msg = "Google (Chrome)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "8VBZ3948LU"
+custom_msg = "Fleet Device Management (Fleet agent, Fleet Desktop)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "3522FA9PXF"
+custom_msg = "osquery (used by the Fleet agent)"
+
+[[rules]]
+rule_type = "TEAMID"
+policy = "ALLOWLIST"
+identifier = "T4SK8ZXCXG"
+custom_msg = "Mac Admins Open Source (Nudge)"
+
