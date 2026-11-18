@@ -7,7 +7,7 @@ resource "keycloak_realm" "lumen" {
   enabled                  = true
   login_with_email_allowed = true
   duplicate_emails_allowed = false
-  ssl_required                = "none" # lab only: Keycloak runs plain HTTP. Production: TLS in front + "all"
+  ssl_required             = "none" # lab only: Keycloak runs plain HTTP. Production: TLS in front + "all"
   access_token_lifespan    = "15m"
   sso_session_idle_timeout = "8h"
 
@@ -30,6 +30,7 @@ locals {
     bob   = { first = "Bob", last = "Seller", groups = ["sales"] }
     ivan  = { first = "Ivan", last = "Admin", groups = ["it-admins"] }
     tara  = { first = "Tara", last = "Traveler", groups = ["sales", "traveling"] }
+    erin  = { first = "Erin", last = "Emergency", groups = ["break-glass"] }
   }
 }
 

@@ -1,7 +1,9 @@
-# Lumen AI lab - Pomerium in front of two demo apps (Step 2.3)
-# Start:  docker compose up -d        (from access-gate/pomerium/)
+# Lumen AI lab - access gate (Steps 2.3-2.4)
+# Pomerium (front door) -> gate (facts) + OPA (rules) -> demo apps
+# Start:  docker compose up -d --build      (from access-gate/pomerium/)
 # Apps:   https://wiki.lumen.test:4443   https://admin.lumen.test:4443
 # Port 4443 because Tailscale Funnel already uses 443 and 8443 on this Mac.
+# Only Pomerium publishes a port: the gate, OPA and the apps are reachable only through it.
 services:
   pomerium:
     image: pomerium/pomerium:v0.33.0 # 0.33+ needed for ${pomerium.client_cert_san_dns}
@@ -14,10 +16,32 @@ services:
       - "4443:4443"
     extra_hosts:
       - "keycloak.lumen.test:host-gateway" # reach Keycloak on the Mac's port 8081
+    networks:
+      default:
+        aliases: [auth.lumen.test, wiki.lumen.test, admin.lumen.test] # so the gate can fetch Pomerium's signing keys
     restart: unless-stopped
 
-  # Demo apps: traefik/whoami echoes back every header it receives,
-  # so you can see exactly what Pomerium passes on.
+  gate:
+    build: ../gate
+    env_file: ${HOME}/access-gate-secrets/gate.env # FLEET_URL, FLEET_API_TOKEN (read-only observer)
+    environment:
+      OPA_URL: http://opa:8181
+      JWKS_URL: https://auth.lumen.test:4443/.well-known/pomerium/jwks.json
+      CA_BUNDLE: /ca/lumen-ca-bundle.pem
+      CACHE_SECONDS: "60"
+    volumes:
+      - ../device-certs/ca:/ca:ro
+      - gate-data:/data # decisions.jsonl, alerts.jsonl, failing_since.json
+    restart: unless-stopped
+
+  opa:
+    image: openpolicyagent/opa:1.10.1
+    command: ["run", "--server", "--addr=0.0.0.0:8181", "/policy/access.rego"]
+    volumes:
+      - ../policy:/policy:ro
+    restart: unless-stopped
+
+  # Demo apps: traefik/whoami echoes back every header it receives.
   wiki:
     image: traefik/whoami:v1.10.1
     command: ["--name", "wiki"]
@@ -27,3 +51,6 @@ services:
     image: traefik/whoami:v1.10.1
     command: ["--name", "admin-console"]
     restart: unless-stopped
+
+volumes:
+  gate-data:
