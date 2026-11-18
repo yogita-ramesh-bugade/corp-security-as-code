@@ -1,13 +1,13 @@
 variable "keycloak_url" {
-  description = "Keycloak base URL"
+  description = "Keycloak base URL. keycloak.lumen.test is in /etc/hosts on the Mac (127.0.0.1) and on each VM (the Mac's IP)."
   type        = string
-  default     = "http://localhost:8081"
+  default     = "http://keycloak.lumen.test:8081"
 }
 
 variable "pomerium_redirect_uri" {
-  description = "Pomerium's OAuth callback (Step 2.3). *.localhost.pomerium.io resolves to 127.0.0.1."
+  description = "Pomerium's OAuth callback (Step 2.3)"
   type        = string
-  default     = "https://authenticate.localhost.pomerium.io/oauth2/callback"
+  default     = "https://auth.lumen.test:4443/oauth2/callback"
 }
 
 variable "test_user_password" {

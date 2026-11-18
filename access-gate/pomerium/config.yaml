@@ -1,0 +1,55 @@
+# Lumen AI lab - Pomerium identity-aware proxy (Step 2.3)
+#
+# Every request must bring (1) a device certificate from the Lumen lab CA (mutual TLS)
+# and (2) a Keycloak login. Pomerium then forwards who the user is and which device
+# they're on to the app. In Step 2.4 the routes' "to:" changes to the posture gate.
+#
+# Secrets are NOT in this file. They come from ~/access-gate-secrets/pomerium.env:
+#   IDP_CLIENT_SECRET, COOKIE_SECRET, SHARED_SECRET
+# The TLS key comes from ~/access-gate-secrets/pomerium-tls/ (mounted read-only).
+
+address: ":4443"
+authenticate_service_url: https://auth.lumen.test:4443
+
+# Server certificate (issued by step-ca for auth/wiki/admin.lumen.test)
+certificates:
+  - cert: /pomerium/tls/pomerium.crt
+    key: /pomerium/tls/pomerium.key
+
+# Identity provider: Keycloak realm "lumen", client "pomerium" (both made by Terraform)
+idp_provider: oidc
+idp_provider_url: http://keycloak.lumen.test:8081/realms/lumen
+idp_client_id: pomerium
+idp_scopes:
+  - openid
+  - profile
+  - email
+
+# Device check: only certificates from the Lumen lab CA are accepted.
+# policy_with_default_deny = no valid device certificate -> error page on every app route.
+downstream_mtls:
+  ca_file: /pomerium/ca/lumen-ca-bundle.pem
+  enforcement: policy_with_default_deny
+
+routes:
+  - from: https://wiki.lumen.test:4443
+    to: http://wiki:80
+    pass_identity_headers: true # adds X-Pomerium-Jwt-Assertion (signed user identity)
+    set_request_headers:
+      X-Lumen-Device-Serial: ${pomerium.client_cert_san_dns}
+      X-Lumen-Device-Cert-Fingerprint: ${pomerium.client_cert_fingerprint}
+    policy:
+      - allow:
+          or:
+            - authenticated_user: true
+
+  - from: https://admin.lumen.test:4443
+    to: http://admin-console:80
+    pass_identity_headers: true
+    set_request_headers:
+      X-Lumen-Device-Serial: ${pomerium.client_cert_san_dns}
+      X-Lumen-Device-Cert-Fingerprint: ${pomerium.client_cert_fingerprint}
+    policy:
+      - allow:
+          or:
+            - claim/groups: it-admins
