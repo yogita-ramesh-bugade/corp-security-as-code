@@ -248,4 +248,9 @@ policies:
     critical: false
     description: Checks the Santa allowlisting daemon is running.
     resolution: Install Santa and approve its system extension.
+  - name: "macOS: Santa in Lockdown mode"
+    query: SELECT 1 FROM santa_status WHERE mode = 'Lockdown';
+    platform: darwin
+    description: Santa must be enforcing (Lockdown), not just watching (Monitor).
+    resolution: Santa's mode is set centrally by the sync server. Contact IT.
 reports:

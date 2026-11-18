@@ -1,8 +1,9 @@
-# Lumen AI lab - Pomerium identity-aware proxy (Step 2.3)
+# Lumen AI lab - Pomerium identity-aware proxy (Steps 2.3-2.4)
 #
 # Every request must bring (1) a device certificate from the Lumen lab CA (mutual TLS)
-# and (2) a Keycloak login. Pomerium then forwards who the user is and which device
-# they're on to the app. In Step 2.4 the routes' "to:" changes to the posture gate.
+# and (2) a Keycloak login. Pomerium then sends the request to the posture gate (Step 2.4)
+# with who the user is and which device they're on. The gate checks the device's health
+# in Fleet, asks OPA, and only then forwards to the real app.
 #
 # Secrets are NOT in this file. They come from ~/access-gate-secrets/pomerium.env:
 #   IDP_CLIENT_SECRET, COOKIE_SECRET, SHARED_SECRET
@@ -33,9 +34,10 @@ downstream_mtls:
 
 routes:
   - from: https://wiki.lumen.test:4443
-    to: http://wiki:80
+    to: http://gate:8000
     pass_identity_headers: true # adds X-Pomerium-Jwt-Assertion (signed user identity)
-    set_request_headers:
+    set_request_headers: # set here = overwrites anything the browser sent
+      X-Lumen-App: wiki
       X-Lumen-Device-Serial: ${pomerium.client_cert_san_dns}
       X-Lumen-Device-Cert-Fingerprint: ${pomerium.client_cert_fingerprint}
     policy:
@@ -44,12 +46,14 @@ routes:
             - authenticated_user: true
 
   - from: https://admin.lumen.test:4443
-    to: http://admin-console:80
+    to: http://gate:8000
     pass_identity_headers: true
     set_request_headers:
+      X-Lumen-App: admin-console
       X-Lumen-Device-Serial: ${pomerium.client_cert_san_dns}
       X-Lumen-Device-Cert-Fingerprint: ${pomerium.client_cert_fingerprint}
     policy:
       - allow:
           or:
             - claim/groups: it-admins
+            - claim/groups: break-glass

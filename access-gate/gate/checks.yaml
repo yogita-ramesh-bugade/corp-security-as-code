@@ -1,0 +1,24 @@
+# How the posture gate turns Fleet policy results into the four health checks OPA knows.
+#
+# For each check, every Fleet policy whose NAME contains one of the `match` words
+# (case-insensitive) counts. The check is:
+#   pass     - at least one matching policy, and all of them pass on this host
+#   fail     - any matching policy fails
+#   missing  - no matching policy, or Fleet has no result yet (OPA treats this as failing)
+#
+# See what matched on a device:  docker compose exec gate python app.py inspect <serial>
+# If a check shows "missing", add a word from your Fleet policy's name below.
+
+checks:
+  disk_encrypted:
+    match: ["filevault", "bitlocker", "luks", "disk encryption", "encrypted"]
+    fix: "Turn on disk encryption (FileVault on Mac, BitLocker on Windows). IT can help if it asks for a recovery key."
+  os_current:
+    match: ["nudge", "os version", "up to date", "up-to-date", "unattended upgrade", "automatic update"]
+    fix: "Install the latest operating system update and restart."
+  firewall_on:
+    match: ["firewall", "ufw"]
+    fix: "Turn the firewall back on (Mac: System Settings > Network > Firewall; Windows: Windows Security > Firewall; Ubuntu: sudo ufw enable)."
+  santa_lockdown:
+    match: ["santa lockdown", "santa in lockdown"]
+    fix: "Santa must be in Lockdown mode. Contact IT; this is set centrally, not on your laptop."
