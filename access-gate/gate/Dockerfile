@@ -2,7 +2,7 @@ FROM python:3.12-slim
 WORKDIR /gate
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
-COPY app.py checks.yaml ./
+COPY app.py remediation.py checks.yaml ./
 RUN useradd --system gate && mkdir /data && chown gate /data
 USER gate
 EXPOSE 8000

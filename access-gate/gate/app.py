@@ -10,9 +10,14 @@ Pomerium sends every request here instead of straight to the app. For each reque
 
 Facts live here; rules live in access-gate/policy/access.rego.
 
+When access is denied, the gate shows the remediation page (remediation.py, Step 2.5):
+what's wrong, how to fix it, why it matters, a "check again" button and an exception link.
+It also measures time-to-remediate: from the first "blocked" to the next "allowed".
+
 Lab helpers (run inside the container):
   python app.py inspect <serial> [--email you@lumenai.test] [--app admin-console]
   python app.py backdate <serial> <check> <hours>     # pretend a check started failing earlier
+  python app.py stats                                 # time-to-remediate numbers for the RFC
 """
 from __future__ import annotations
 
@@ -23,12 +28,16 @@ import sys
 import threading
 import time
 from pathlib import Path
+from statistics import median
+from urllib.parse import parse_qs
 
 import httpx
 import jwt
 import yaml
+
+import remediation
 from fastapi import FastAPI, Request
-from fastapi.responses import HTMLResponse, Response
+from fastapi.responses import HTMLResponse, RedirectResponse, Response
 from starlette.concurrency import run_in_threadpool
 
 # ---------------------------------------------------------------- configuration
@@ -40,7 +49,13 @@ JWKS_URL = os.environ.get("JWKS_URL", "https://auth.lumen.test:4443/.well-known/
 CA_BUNDLE = os.environ.get("CA_BUNDLE", "/ca/lumen-ca-bundle.pem")
 DATA_DIR = Path(os.environ.get("DATA_DIR", "/data"))
 CACHE_SECONDS = int(os.environ.get("CACHE_SECONDS", "60"))
-CHECKS = yaml.safe_load(Path(os.environ.get("CHECKS_FILE", Path(__file__).with_name("checks.yaml"))).read_text())["checks"]
+CONTENT = yaml.safe_load(Path(os.environ.get("CHECKS_FILE", Path(__file__).with_name("checks.yaml"))).read_text())
+CHECKS = CONTENT["checks"]
+# Where "Request an exception" goes. Project 3 replaces this with the exception bot's URL.
+EXCEPTION_URL = os.environ.get(
+    "EXCEPTION_URL",
+    "https://github.com/yogita-ramesh-bugade/corp-security-as-code/blob/main/docs/request-access.md")
+RECHECK_SECONDS = 180  # after "check again": skip the cache and auto-refresh for 3 minutes
 
 # app name (set by Pomerium in X-Lumen-App) -> where the real app lives, and the
 # audience Pomerium puts in that route's identity token
@@ -49,18 +64,12 @@ APPS = {
     "admin-console": {"upstream": os.environ.get("UPSTREAM_ADMIN", "http://admin-console:80"), "audience": "admin.lumen.test"},
 }
 
-REASON_TEXT = {
-    "device_not_managed": "This device isn't enrolled in Lumen's device management.",
-    "device_not_assigned_to_you": "This device isn't assigned to you.",
-    "missing_group": "Your account doesn't have the role this app requires.",
-    "device_unhealthy": "This device is failing a security check this app requires.",
-    "unknown_app": "This app isn't configured in the access policy.",
-}
-
 DATA_DIR.mkdir(parents=True, exist_ok=True)
 STATE_FILE = DATA_DIR / "failing_since.json"
 _state_lock = threading.Lock()
 _cache: dict[tuple, tuple[float, dict]] = {}
+_recheck_until: dict[tuple, float] = {}
+BLOCKED_FILE = DATA_DIR / "blocked_since.json"
 _jwks: dict = {"fetched": 0.0, "keys": None}
 
 
@@ -161,6 +170,7 @@ def device_facts(serial: str, now_ns: int) -> tuple[dict, dict]:
     host = r.json()["host"]
     results, matched = check_results(host.get("policies") or [])
     facts = {
+        "fleet_id": host["id"],
         "serial": serial,
         "hostname": host.get("hostname", ""),
         "platform": host.get("platform", ""),
@@ -176,7 +186,7 @@ def device_facts(serial: str, now_ns: int) -> tuple[dict, dict]:
 def decide(app_name: str, claims: dict, serial: str) -> dict:
     key = (claims.get("email", ""), serial, app_name)
     hit = _cache.get(key)
-    if hit and hit[0] > time.time():
+    if hit and hit[0] > time.time() and _recheck_until.get(key, 0) < time.time():
         return hit[1]
     now_ns = time.time_ns()
     device, _ = device_facts(serial, now_ns)
@@ -197,7 +207,24 @@ def decide(app_name: str, claims: dict, serial: str) -> dict:
                            "reasons": decision.get("reasons"), "warnings": decision.get("warnings")})
     for alert in decision.get("alerts") or []:
         log_event("alert", alert)
+    track_remediation(key, decision)
     return decision
+
+
+def track_remediation(key: tuple, decision: dict) -> None:
+    """Time-to-remediate: seconds from the first block for an unhealthy device to the next allow."""
+    with _state_lock:
+        blocked = json.loads(BLOCKED_FILE.read_text()) if BLOCKED_FILE.exists() else {}
+        k = "|".join(key)
+        if not decision.get("allow") and "device_unhealthy" in (decision.get("reasons") or []):
+            blocked.setdefault(k, {"since": time.time(), "checks": sorted(decision.get("remediation") or [])})
+        elif decision.get("allow") and k in blocked:
+            start = blocked.pop(k)
+            log_event("remediation", {"user": key[0], "serial": key[1], "app": key[2], "checks": start["checks"],
+                                      "seconds": round(time.time() - start["since"])})
+        else:
+            return
+        BLOCKED_FILE.write_text(json.dumps(blocked, indent=1))
 
 
 # ---------------------------------------------------------------- web app
@@ -212,40 +239,60 @@ def health():
     return {"status": "ok"}
 
 
-def blocked_page(status: int, title: str, decision: dict | None = None, detail: str = "") -> HTMLResponse:
-    items = ""
-    if decision:
-        for reason in sorted(decision.get("reasons") or []):
-            items += f"<li>{html.escape(REASON_TEXT.get(reason, reason))}</li>"
-        fixes = "".join(f"<li><b>{html.escape(c)}</b>: {html.escape(CHECKS.get(c, {}).get('fix', ''))}</li>"
-                        for c in sorted(decision.get("remediation") or []))
-        if fixes:
-            items += f"</ul><h2>How to fix it</h2><ul>{fixes}"
-    device = (decision or {}).get("device") or {}
-    page = f"""<!doctype html><html><head><meta charset="utf-8"><title>{html.escape(title)}</title>
-<style>body{{font-family:system-ui,sans-serif;max-width:640px;margin:48px auto;padding:0 16px;color:#1d1d1f}}
-h1{{color:#b42318}}.meta{{color:#666;font-size:14px}}</style></head><body>
-<h1>{html.escape(title)}</h1><ul>{items}</ul>{f'<p>{html.escape(detail)}</p>' if detail else ''}
-<p class="meta">Device: {html.escape(device.get('serial', 'unknown'))} &middot; Access level {(decision or {}).get('level', 0)}
-of {(decision or {}).get('required_level', '?')} required. Once fixed, try again in about a minute.</p>
-<p class="meta">Need an exception? <a href="https://github.com/yogita-ramesh-bugade/corp-security-as-code/blob/main/docs/request-access.md">Request access</a></p>
-</body></html>"""
-    return HTMLResponse(page, status_code=status)
+def error_page(status: int, title: str, detail: str) -> HTMLResponse:
+    """For problems that aren't about the device (bad sign-in, gate can't reach Fleet)."""
+    return HTMLResponse(f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>{html.escape(title)}</title>
+<style>body{{font:16px/1.55 system-ui,sans-serif;max-width:640px;margin:48px auto;padding:0 16px}}</style></head>
+<body><h1>{html.escape(title)}</h1><p>{html.escape(detail)}</p></body></html>""", status_code=status)
+
+
+def identity_and_app(request: Request) -> tuple[str, dict, dict]:
+    app_name = request.headers.get("x-lumen-app", "")
+    target = APPS.get(app_name)
+    if not target:
+        raise LookupError("unknown app")
+    claims = verify_identity(request.headers.get("x-pomerium-jwt-assertion", ""), target["audience"])
+    return app_name, target, claims
+
+
+@app.post("/_gate/recheck")
+async def recheck(request: Request):
+    """'I've fixed it, check again': ask Fleet to re-check the device now and skip the cache."""
+    form = parse_qs((await request.body()).decode())
+    next_path = (form.get("next") or ["/"])[0]
+    if not next_path.startswith("/") or next_path.startswith("//"):
+        next_path = "/"  # only same-site redirects
+    try:
+        app_name, _, claims = await run_in_threadpool(identity_and_app, request)
+    except Exception:  # noqa: BLE001
+        return RedirectResponse(next_path, status_code=303)
+    serial = request.headers.get("x-lumen-device-serial", "")
+    key = (claims.get("email", ""), serial, app_name)
+    _cache.pop(key, None)
+    _recheck_until[key] = time.time() + RECHECK_SECONDS
+    try:
+        host_id = await run_in_threadpool(lambda: fleet_get(f"/api/v1/fleet/hosts/identifier/{serial}",
+                                                            exclude_software="true").json()["host"]["id"])
+        await run_in_threadpool(lambda: httpx.post(f"{FLEET_URL}/api/v1/fleet/hosts/{host_id}/refetch", timeout=10,
+                                                   headers={"Authorization": f"Bearer {FLEET_API_TOKEN}"}))
+    except Exception as e:  # noqa: BLE001 - refetch is a speed-up, not required
+        log_event("decision", {"app": app_name, "note": "refetch request failed", "error": str(e)})
+    log_event("recheck", {"user": key[0], "serial": serial, "app": app_name})
+    return RedirectResponse(next_path, status_code=303)
 
 
 @app.api_route("/{path:path}", methods=["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"])
 async def gate(path: str, request: Request):
-    app_name = request.headers.get("x-lumen-app", "")
-    target = APPS.get(app_name)
-    if not target:
-        return blocked_page(403, "Access blocked", detail="Unknown app.")
-
-    # 1. who
+    # 1. who (and which app)
     try:
-        claims = await run_in_threadpool(verify_identity, request.headers.get("x-pomerium-jwt-assertion", ""), target["audience"])
+        app_name, target, claims = await run_in_threadpool(identity_and_app, request)
+    except LookupError:
+        return error_page(403, "Access blocked", "This app isn't set up in the access policy.")
     except Exception as e:  # noqa: BLE001 - any failure means "not proven"
-        log_event("decision", {"app": app_name, "allow": False, "reasons": ["invalid_identity_token"], "error": str(e)})
-        return blocked_page(401, "Access blocked", detail="Your sign-in couldn't be verified. Reload the page to sign in again.")
+        log_event("decision", {"app": request.headers.get("x-lumen-app", ""), "allow": False,
+                               "reasons": ["invalid_identity_token"], "error": str(e)})
+        return error_page(401, "Access blocked", "Your sign-in couldn't be verified. Reload the page to sign in again.")
 
     # 2. which device  3. its health  4. the rules
     serial = request.headers.get("x-lumen-device-serial", "")
@@ -254,11 +301,15 @@ async def gate(path: str, request: Request):
     except Exception as e:  # noqa: BLE001 - fail closed if Fleet or OPA is down
         log_event("decision", {"user": claims.get("email"), "app": app_name, "allow": False,
                                "reasons": ["gate_error"], "error": str(e)})
-        return blocked_page(503, "Access temporarily unavailable",
-                            detail="The access check couldn't reach device management. Break-glass accounts still work.")
+        return error_page(503, "Access temporarily unavailable",
+                          "The access check couldn't reach device management. Try again in a few minutes; "
+                          "break-glass accounts still work.")
 
     if not decision.get("allow"):
-        return blocked_page(403, "Access blocked", decision)
+        key = (claims.get("email", ""), serial, app_name)
+        page = remediation.render(CONTENT, decision, app_name, claims.get("email", ""), EXCEPTION_URL,
+                                  "/" + path, rechecking=_recheck_until.get(key, 0) > time.time())
+        return HTMLResponse(page, status_code=403)
 
     # allowed: forward to the real app
     headers = {k: v for k, v in request.headers.items() if k.lower() not in HOP_BY_HOP}
@@ -304,6 +355,17 @@ def _cli(argv: list[str]) -> None:
             state.setdefault(serial, {})[check] = time.time_ns() - int(hours * 3600 * 1e9)
             STATE_FILE.write_text(json.dumps(state, indent=1))
         print(f"{serial}: {check} now counts as failing for {hours} hours")
+    elif argv[:1] == ["stats"]:
+        f = DATA_DIR / "remediations.jsonl"
+        rows = [json.loads(line) for line in f.read_text().splitlines()] if f.exists() else []
+        if not rows:
+            print("No remediations recorded yet.")
+            return
+        secs = sorted(r["seconds"] for r in rows)
+        print(f"Remediations: {len(secs)}   median: {median(secs) / 60:.1f} min   "
+              f"fastest: {secs[0] / 60:.1f} min   slowest: {secs[-1] / 60:.1f} min")
+        for r in rows:
+            print(f"  {r['time']}  {r['user']:24} {r['app']:14} {','.join(r['checks']):28} {r['seconds'] / 60:.1f} min")
     else:
         print(__doc__)
 

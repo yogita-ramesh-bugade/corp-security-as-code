@@ -1,24 +1,106 @@
-# How the posture gate turns Fleet policy results into the four health checks OPA knows.
+# What the posture gate shows people when access is denied, and how it maps Fleet results
+# onto the four health checks OPA knows.
 #
-# For each check, every Fleet policy whose NAME contains one of the `match` words
-# (case-insensitive) counts. The check is:
-#   pass     - at least one matching policy, and all of them pass on this host
-#   fail     - any matching policy fails
-#   missing  - no matching policy, or Fleet has no result yet (OPA treats this as failing)
+# match:  every Fleet policy whose NAME contains one of these words (case-insensitive) counts.
+#         pass = at least one match and all pass; fail = any match fails;
+#         missing = no match or no result yet (OPA treats missing as failing).
+# title/what/why/steps: the remediation page. Write for someone who has never heard of
+#         "posture" or "FileVault". steps are per platform: darwin, windows, linux.
 #
 # See what matched on a device:  docker compose exec gate python app.py inspect <serial>
-# If a check shows "missing", add a word from your Fleet policy's name below.
 
 checks:
   disk_encrypted:
     match: ["filevault", "bitlocker", "luks", "disk encryption", "encrypted"]
-    fix: "Turn on disk encryption (FileVault on Mac, BitLocker on Windows). IT can help if it asks for a recovery key."
+    title: "Disk encryption is turned off"
+    what: "Your laptop's storage isn't encrypted, so anyone who gets hold of it could read your files."
+    why: "If the laptop is lost or stolen, encryption keeps company and customer data unreadable."
+    steps:
+      darwin:
+        - "Click the Apple menu (top-left corner) and choose System Settings."
+        - "In the left sidebar, click Privacy & Security, then scroll down to FileVault."
+        - "Click Turn On and follow the prompts. If it asks where to keep the recovery key, choose the option for your company."
+        - "Keep working: encryption finishes in the background. Leave the laptop plugged in."
+      windows:
+        - "Click Start, type BitLocker, and open Manage BitLocker."
+        - "Click Turn on BitLocker next to the C: drive."
+        - "When asked, save the recovery key to your company account, then restart."
+      linux:
+        - "Disk encryption can only be switched on when the system is installed."
+        - "Click Request an exception below so IT can schedule a reinstall with encryption on."
+
   os_current:
     match: ["nudge", "os version", "up to date", "up-to-date", "unattended upgrade", "automatic update"]
-    fix: "Install the latest operating system update and restart."
+    title: "Your laptop needs a system update"
+    what: "Your operating system is missing the latest security update."
+    why: "Updates fix security holes that attackers already know how to use."
+    steps:
+      darwin:
+        - "Click the Apple menu (top-left corner) and choose System Settings."
+        - "Click General, then Software Update."
+        - "Click Update Now (or Restart Now). Updates can take 20 to 30 minutes, so start it before a break."
+      windows:
+        - "Click Start, then Settings, then Windows Update."
+        - "Click Check for updates, then Download & install."
+        - "Restart when it asks you to."
+      linux:
+        - "Open the Terminal app."
+        - "Type: sudo apt update && sudo apt upgrade -y   then press Enter and type your password."
+        - "Restart if it asks you to."
+
   firewall_on:
     match: ["firewall", "ufw"]
-    fix: "Turn the firewall back on (Mac: System Settings > Network > Firewall; Windows: Windows Security > Firewall; Ubuntu: sudo ufw enable)."
+    title: "Your firewall is turned off"
+    what: "The firewall, which blocks unwanted connections to your laptop, is switched off."
+    why: "On cafe, hotel or airport Wi-Fi, the firewall stops strangers on the same network from reaching your laptop."
+    steps:
+      darwin:
+        - "Click the Apple menu (top-left corner) and choose System Settings."
+        - "In the left sidebar, click Network, then click Firewall."
+        - "Switch Firewall on. It takes effect immediately."
+      windows:
+        - "Click Start, type Windows Security, and open it."
+        - "Click Firewall & network protection."
+        - "Click Turn on for any network that says the firewall is off."
+      linux:
+        - "Open the Terminal app."
+        - "Type: sudo ufw enable   then press Enter and type your password."
+
   santa_lockdown:
     match: ["santa lockdown", "santa in lockdown"]
-    fix: "Santa must be in Lockdown mode. Contact IT; this is set centrally, not on your laptop."
+    title: "App protection isn't switched on"
+    what: "Santa, which stops unknown apps from running, is only watching instead of blocking."
+    why: "Blocking unknown apps stops malware from a bad download or script before it can run."
+    steps:
+      darwin:
+        - "You can't change this one yourself: IT sets it centrally for your laptop."
+        - "Click Request an exception below. It already includes your device details, so IT knows which laptop to fix."
+
+# Reasons that aren't about device health.
+reasons:
+  device_not_assigned_to_you:
+    title: "This laptop is assigned to someone else"
+    what: "You signed in as {email}, but Lumen's records say this laptop belongs to another person."
+    why: "Tying each laptop to one person means a stolen password can't be used from someone else's machine."
+    steps:
+      - "Use the laptop that was issued to you."
+      - "If this is your new or replacement laptop, click Request an exception below so IT can assign it to you."
+  device_not_managed:
+    title: "This device isn't set up by Lumen IT"
+    what: "Lumen's device management doesn't know this device, so it can't confirm it's safe."
+    why: "Company apps only open on devices IT can keep updated and protected."
+    steps:
+      - "Use your Lumen-issued laptop."
+      - "If you think this device should be enrolled, click Request an exception below."
+  missing_group:
+    title: "This app is only for certain teams"
+    what: "Your account doesn't have the role this app requires."
+    why: "Admin tools can change every laptop in the company, so access is limited to the IT team."
+    steps:
+      - "If you need this app for your job, click Request an exception below and say why."
+  unknown_app:
+    title: "This app isn't set up in the access policy"
+    what: "The app you opened has no access rule yet."
+    why: "Apps without a rule are blocked by default, so nothing is left open by accident."
+    steps:
+      - "Tell IT which address you opened."
