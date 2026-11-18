@@ -1,0 +1,26 @@
+# Lumen AI lab - joiner/mover/leaver (Project 3)
+# Start:  docker compose up -d --build        (from jml/)
+# HR API: http://localhost:8100/docs           (writes need the X-HR-Admin-Key header)
+# Secrets: ~/jml-secrets/hr.env  (HR_ADMIN_KEY, HR_WEBHOOK_SECRET) - never in Git
+services:
+  hr:
+    build: ./hr
+    env_file: ${HOME}/jml-secrets/hr.env
+    environment:
+      HR_DB: /data/hr.sqlite
+      HR_WEBHOOK_URL: http://request-logger:8199/webhook # Step 3.2 points this at the JML engine
+    ports:
+      - "127.0.0.1:8100:8100" # only reachable from this Mac
+    volumes:
+      - hr-data:/data
+    restart: unless-stopped
+
+  # Shows every webhook HR sends and checks its signature (stand-in for the engine).
+  request-logger:
+    build: ./hr
+    command: ["python", "-u", "request_logger.py"]
+    env_file: ${HOME}/jml-secrets/hr.env
+    restart: unless-stopped
+
+volumes:
+  hr-data:
