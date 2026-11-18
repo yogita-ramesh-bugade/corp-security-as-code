@@ -528,3 +528,16 @@ Step 2.2: step-ca device certificates.
 
 **Project 2 complete:** device certificates, Keycloak + Pomerium with device mTLS, the posture gate with OPA (26 tests), the remediation page, and travel mode.
 
+---
+
+## 2026-11-18 — Project 3, Step 3.1: The mock HR system
+
+- **Design:** jml/hr/ is a small FastAPI app playing Workday: the official record of who works at Lumen. A SQLite table holds employees (ID, name, email, department, title, manager, employment type, status, start and end dates). Endpoints: hire, transfer, terminate and rehire, each emitting employee.hired, employee.moved (with from/to for every changed field) or employee.terminated; rehire sends employee.hired with "rehire": true. Writes need an X-HR-Admin-Key; the API listens only on 127.0.0.1:8100. Secrets (admin key, webhook secret) live in ~/jml-secrets/hr.env, never in Git.
+- **Signed webhooks:** Each event carries a unique ID (X-HR-Event-Id) and an X-HR-Signature header: `t=<time>,v1=<HMAC-SHA256 of "time.body">`. The HMAC proves the message came from HR. Signing the timestamp means a captured message can't be replayed later: receivers reject anything older than 5 minutes. They verify against the raw body, before parsing, with a constant-time comparison (signing.py, shared with the engine in 3.2).
+- **Reliable delivery:** Each HR change and its event are saved in the same database transaction (an "outbox"). A background worker delivers events and retries with back-off (2 s, 5 s, 15 s, 60 s, then every 5 minutes) until it gets a 2xx. So HR can never record a change that the access engine never hears about; delivery is "at least once", and the event ID lets the receiver drop duplicates.
+- **Request logger:** A local logger shows every webhook and checks its signature, standing in for the engine. Employee data never leaves my machine (unlike online request bins).
+- **Pre-tested:** With the logger down, a hire was stored with attempts: 2 and last_error: ConnectError, then delivered as soon as the logger came up. Redelivering the same event was flagged DUPLICATE; a forged signature got 401. 5 pytest tests cover: writes need the key; hire, transfer, terminate and rehire events; duplicate email rejected; event IDs unique; signature tampering, wrong secret, malformed header and a replay an hour later all rejected.
+- **Check:** [Hired Dana Lee through the API; the logger showed X-HR-Event-Type: employee.hired, the signature, and "Signature: VALID" with the employee data.]
+- **Bonus:** [Redeliver → "DUPLICATE: already processed". Forged signature → 401, INVALID.] [Tests: 5 passed.]
+- **Merged:** [PR merged.]
+- **Learned:** A webhook is only trustworthy if it's signed, recent and de-duplicable. Saving the change and the event together (the outbox) is what makes "HR is the source of truth" true: no change is lost because a receiver was down. Keep test data local when it looks like personal data, even if it's fake.
