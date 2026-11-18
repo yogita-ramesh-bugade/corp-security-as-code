@@ -541,3 +541,19 @@ Step 2.2: step-ca device certificates.
 - **Bonus:** [Redeliver → "DUPLICATE: already processed". Forged signature → 401, INVALID.] [Tests: 5 passed.]
 - **Merged:** [PR merged.]
 - **Learned:** A webhook is only trustworthy if it's signed, recent and de-duplicable. Saving the change and the event together (the outbox) is what makes "HR is the source of truth" true: no change is lost because a receiver was down. Keep test data local when it looks like personal data, even if it's fake.
+
+---
+
+## 2026-11-18 — Project 3, Step 3.2: Access rules as code
+
+- **Design:** jml/roles.yaml lists the "birthright" access every role gets on day one with no ticket: Keycloak groups, chat channels and laptop type. Layers: everyone (all-staff; town-square, announcements, it-help) + department (one entry per HR department, each with a named owner who approves changes) + title extras (any "manager" title → managers; SRE → eng-oncall; sales engineer → engineering-readonly) + employment type (contractors get contractors instead of all-staff, lose announcements, and must have an end date; interns get interns). Device types: macbook-pro, macbook-air, windows-laptop, chromebook.
+- **Beyond birthright:** A `requestable` catalog covers everything else. Each item has a named approver and a maximum length: it-admins (IT director, 90 days), break-glass (security lead, 7 days), engineering for other teams (180 days), eng-incidents channel (30 days). This is the answer for the person whose access doesn't fit the rules: requested access, with an owner and an expiry.
+- **Privileged access is never automatic:** IT staff get `it`, not `it-admins`; admin rights are requested and expire. This addresses S9 ("temporary admin never removed").
+- **Checker:** jml/rules.py loads the file, refuses to run if it's wrong, and works out a person's birthright (the engine in 3.3 will use it). Rules it enforces: every HR department has an entry and an owner; every group exists in Terraform (it reads the groups map in access-gate/terraform/main.tf); no privileged group is birthright; every privileged group is requestable; every requestable item has an approver and 1–365 days. 11 tests in test_rules.py, run in CI (.github/workflows/jml.yml) on every PR that touches jml/ or the Terraform.
+- **Pre-tested:** Adding it-admins to IT's birthright was rejected: "privileged groups must never be birthright: ['it-admins']".
+- **Terraform:** Added the 10 groups the rules use (all-staff, research, it, finance, people, legal, managers, engineering-readonly, contractors, interns). [`terraform apply`: 10 added.]
+- **Check:** [`python rules.py` → "roles.yaml OK" and a table of each department's groups, channels and device; `pytest test_rules.py` → 11 passed.]
+- **Broke:** `git add ... .github/workflows/jml.yml` failed with "pathspec did not match any files": the hidden .github folder hadn't been extracted, and git adds nothing when one path is missing.
+- **Fixed:** Created the workflow file directly, then re-ran the add.
+- **CI:** [The jml check passed on the PR; merged.]
+- **Learned:** Writing access rules down turns "ask around what a new engineer needs" into a file anyone can read, review and change through a PR. Every rule needs an owner. Tests that check the rules file against the real system (Terraform's groups) stop a typo from silently granting nothing, or too much.
