@@ -1,0 +1,26 @@
+# Checks the joiner/mover/leaver code and the birthright rules on every pull request.
+name: jml
+on:
+  pull_request:
+    paths: ["jml/**", "access-gate/terraform/main.tf", ".github/workflows/jml.yml"]
+  push:
+    branches: [main]
+    paths: ["jml/**", "access-gate/terraform/main.tf"]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install
+        run: pip install -r jml/hr/requirements.txt pytest pyyaml
+      - name: Birthright rules (roles.yaml)
+        working-directory: jml
+        run: python rules.py && python -m pytest -q test_rules.py
+      - name: Mock HR
+        working-directory: jml/hr
+        run: python -m pytest -q

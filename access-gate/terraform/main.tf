@@ -23,6 +23,17 @@ locals {
     "it-admins"   = "IT and Security administrators (admin consoles)"
     "break-glass" = "Emergency access; every use raises an alert"
     "traveling"   = "Temporarily abroad; access capped at level 1"
+    # Birthright groups used by jml/roles.yaml (Project 3)
+    "all-staff"            = "Every employee (not contractors)"
+    "research"             = "Research staff"
+    "it"                   = "IT staff (no admin rights; those are requested)"
+    "finance"              = "Finance staff"
+    "people"               = "People (HR) staff"
+    "legal"                = "Legal staff"
+    "managers"             = "People managers"
+    "engineering-readonly" = "Read-only engineering tools (e.g. sales engineers)"
+    "contractors"          = "Contractors (end date required)"
+    "interns"              = "Interns"
   }
 
   users = {

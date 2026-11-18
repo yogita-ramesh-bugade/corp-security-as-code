@@ -1,0 +1,117 @@
+# Lumen AI birthright access (Project 3, Step 3.2)
+#
+# "Birthright" = what everyone in a role gets automatically on day one, with no ticket.
+# The joiner/mover/leaver engine reads this file: it gives people exactly this, takes away
+# what no longer applies when they move, and removes everything when they leave.
+#
+# Anything NOT listed here must be REQUESTED (see `requestable` at the bottom):
+# a named approver, a reason, and an end date. Privileged access is never birthright.
+#
+# Change this file only through a pull request. CI checks it (jml/test_rules.py):
+#   - every HR department has an entry and an owner
+#   - every Keycloak group exists in Terraform (access-gate/terraform/main.tf)
+#   - no privileged group appears as birthright
+#   - every device type and requestable item is complete
+
+version: 1
+
+# Never handed out automatically. Only through `requestable`, with an expiry.
+privileged_groups: [it-admins, break-glass]
+
+# Everyone, every role
+everyone:
+  keycloak_groups: [all-staff]
+  chat_channels: [town-square, announcements, it-help]
+
+# By HR department. owner = who approves changes to that department's birthright.
+departments:
+  engineering:
+    owner: vp-engineering@lumenai.test
+    keycloak_groups: [engineering]
+    chat_channels: [eng, eng-incidents]
+    device: macbook-pro
+  research:
+    owner: head-of-research@lumenai.test
+    keycloak_groups: [research]
+    chat_channels: [research, papers]
+    device: macbook-pro
+  sales:
+    owner: vp-sales@lumenai.test
+    keycloak_groups: [sales]
+    chat_channels: [sales, deals]
+    device: macbook-air
+  it:
+    owner: it-director@lumenai.test
+    keycloak_groups: [it]           # NOT it-admins: admin rights are requested, with an expiry
+    chat_channels: [it-team, it-alerts]
+    device: macbook-pro
+  finance:
+    owner: cfo@lumenai.test
+    keycloak_groups: [finance]
+    chat_channels: [finance]
+    device: windows-laptop
+  people:
+    owner: head-of-people@lumenai.test
+    keycloak_groups: [people]
+    chat_channels: [people-team]
+    device: macbook-air
+  legal:
+    owner: general-counsel@lumenai.test
+    keycloak_groups: [legal]
+    chat_channels: [legal]
+    device: macbook-air
+
+# Extra birthright for certain titles within a department (case-insensitive, * = anything)
+titles:
+  - department: "*"
+    title: "*manager*"
+    keycloak_groups: [managers]
+    chat_channels: [managers]
+  - department: engineering
+    title: "*site reliability*"
+    chat_channels: [eng-oncall]
+  - department: sales
+    title: "*sales engineer*"
+    keycloak_groups: [engineering-readonly]
+    chat_channels: [eng]
+
+# Adjustments by HR employment type
+employment_types:
+  full_time: {}
+  intern:
+    add_keycloak_groups: [interns]
+  contractor:
+    add_keycloak_groups: [contractors]
+    remove_keycloak_groups: [all-staff]         # contractors don't see company-internal pages
+    remove_chat_channels: [announcements]
+    requires_end_date: true                     # HR must give an end date; access stops then
+
+# Device types the IT team issues
+devices:
+  macbook-pro:    {platform: darwin,  description: "MacBook Pro 14-inch, Apple silicon"}
+  macbook-air:    {platform: darwin,  description: "MacBook Air 13-inch, Apple silicon"}
+  windows-laptop: {platform: windows, description: "Windows 11 laptop with TPM"}
+  chromebook:     {platform: chrome,  description: "Chromebook (browser-only roles)"}
+
+# Access beyond birthright: must be requested, approved by the named role, and expires.
+requestable:
+  it-admins:
+    kind: keycloak_group
+    approver: it-director@lumenai.test
+    max_days: 90
+    description: "Admin consoles (Fleet, Keycloak). Needs a healthy level-3 device too."
+  break-glass:
+    kind: keycloak_group
+    approver: security-lead@lumenai.test
+    max_days: 7
+    description: "Emergency access. Every use raises an alert."
+  engineering:
+    kind: keycloak_group
+    approver: vp-engineering@lumenai.test
+    max_days: 180
+    description: "Engineering tools for people outside Engineering (e.g. a cross-team project)."
+  eng-incidents:
+    kind: chat_channel
+    approver: vp-engineering@lumenai.test
+    max_days: 30
+    description: "Incident channel for responders from other teams."
