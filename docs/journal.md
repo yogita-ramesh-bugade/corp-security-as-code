@@ -497,3 +497,17 @@ Step 2.2: step-ca device certificates.
 - **Lab limits:** The grace clock starts when the gate first sees a failure, because Fleet only reports the current result; `backdate` exists to demo it. The serial header is trusted because only Pomerium can reach the gate.
 - **Learned:** Keep facts in code and rules in policy, and access changes become a reviewed edit to one file with tests. Missing data must fail closed. Test the tests by breaking the rules on purpose. Enforced settings (like the locked firewall) are what make posture checks mean something.
 
+---
+
+## 2026-11-18 — Project 2, Step 2.5: The remediation page
+
+- **Design:** When the gate denies access, it no longer shows a bare "Access blocked". It shows a page (access-gate/gate/remediation.py) with one card per problem, each giving: what's wrong, how to fix it (plain steps for the person's own OS: macOS, Windows or Linux), and one line on why it matters. Non-health problems get the same treatment ("This laptop is assigned to someone else", "This app is only for certain teams"). All wording lives in checks.yaml, so it can be improved without touching code.
+- **Buttons:** "I've fixed it, check again" asks Fleet to re-check the device right away (the gate's read-only observer account is allowed to request a refetch), skips the 60-second cache for 3 minutes, and refreshes the page by itself until access opens. "Can't fix it? Request an exception" opens docs/request-access.md pre-filled with app, serial, user and problem; Project 3 points it at the exception bot by changing EXCEPTION_URL.
+- **Measurement:** The gate logs time-to-remediate automatically: seconds from the first "blocked" for an unhealthy device to the next "allowed" (remediations.jsonl). `python app.py stats` prints the count, median, fastest and slowest.
+- **Pre-test:** Checked the page in light and dark mode and at phone width (no sideways scrolling). The white button text was hard to read on light purple in dark mode, so I gave the button dark text there. The full loop worked: blocked page, firewall fixed, "check again", allowed, and a remediation was logged.
+- **Setup for the test:** The firewall can't normally be switched off (the Fleet profile locks it), so for the test I removed the firewall profile on the Mac VM, switched the firewall off, clicked Refetch in Fleet, and ran `app.py backdate ZR2JVG236J firewall_on 100` to skip the 72-hour grace.
+- **Check:** [The Mac VM showed "One thing to fix before you can open the Admin Console: Your firewall is turned off", with the steps and the why line.]
+- **Usability test:** [Tester: friend, (job), no security background. Fixed it using only the page in __ min __ s (stopwatch) / __ min (`app.py stats`). Asked for help: yes/no. Hesitated at: "…". Rating: _/5.]
+- **Changed after testing:** [e.g. reworded "…" to "…" in checks.yaml; rebuilt the gate.]
+- **Clean-up:** [Reinstalled the firewall profile; ivan allowed again.] [PR merged.]
+- **Learned:** A blocked page is part of the security control: if it's confusing, people file tickets or look for workarounds. Plain steps for the person's own OS, plus one line of "why", turn a block into a fix. Measuring time-to-remediate turns "good employee experience" into a number for the RFC.
