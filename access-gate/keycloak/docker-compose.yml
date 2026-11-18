@@ -1,6 +1,7 @@
 # Lumen AI lab - Keycloak identity provider (dev mode: in-memory H2 database, HTTP only).
 # Start:  docker compose --env-file ~/access-gate-secrets/keycloak.env up -d
-# Admin console: http://localhost:8081  (Moroz already uses 8080)
+# Admin console: http://keycloak.lumen.test:8081  (Moroz already uses 8080)
+# KC_HOSTNAME fixes the issuer URL, so the Mac, the VMs and Pomerium all see the same one.
 services:
   keycloak:
     image: quay.io/keycloak/keycloak:26.4
@@ -9,6 +10,7 @@ services:
       KC_BOOTSTRAP_ADMIN_USERNAME: ${KC_ADMIN_USERNAME}
       KC_BOOTSTRAP_ADMIN_PASSWORD: ${KC_ADMIN_PASSWORD}
       KC_HEALTH_ENABLED: "true"
+      KC_HOSTNAME: "http://keycloak.lumen.test:8081"
     ports:
       - "8081:8080"
     volumes:

@@ -1,0 +1,29 @@
+# Lumen AI lab - Pomerium in front of two demo apps (Step 2.3)
+# Start:  docker compose up -d        (from access-gate/pomerium/)
+# Apps:   https://wiki.lumen.test:4443   https://admin.lumen.test:4443
+# Port 4443 because Tailscale Funnel already uses 443 and 8443 on this Mac.
+services:
+  pomerium:
+    image: pomerium/pomerium:v0.33.0 # 0.33+ needed for ${pomerium.client_cert_san_dns}
+    env_file: ${HOME}/access-gate-secrets/pomerium.env # IDP_CLIENT_SECRET, COOKIE_SECRET, SHARED_SECRET
+    volumes:
+      - ./config.yaml:/pomerium/config.yaml:ro
+      - ../device-certs/ca:/pomerium/ca:ro # public CA certs (in Git)
+      - ${HOME}/access-gate-secrets/pomerium-tls:/pomerium/tls:ro # server key (never in Git)
+    ports:
+      - "4443:4443"
+    extra_hosts:
+      - "keycloak.lumen.test:host-gateway" # reach Keycloak on the Mac's port 8081
+    restart: unless-stopped
+
+  # Demo apps: traefik/whoami echoes back every header it receives,
+  # so you can see exactly what Pomerium passes on.
+  wiki:
+    image: traefik/whoami:v1.10.1
+    command: ["--name", "wiki"]
+    restart: unless-stopped
+
+  admin-console:
+    image: traefik/whoami:v1.10.1
+    command: ["--name", "admin-console"]
+    restart: unless-stopped

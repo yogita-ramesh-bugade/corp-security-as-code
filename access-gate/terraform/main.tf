@@ -7,7 +7,7 @@ resource "keycloak_realm" "lumen" {
   enabled                  = true
   login_with_email_allowed = true
   duplicate_emails_allowed = false
-  ssl_required             = "external"
+  ssl_required                = "none" # lab only: Keycloak runs plain HTTP. Production: TLS in front + "all"
   access_token_lifespan    = "15m"
   sso_session_idle_timeout = "8h"
 
@@ -81,8 +81,9 @@ resource "keycloak_openid_client" "pomerium" {
   implicit_flow_enabled        = false
   service_accounts_enabled     = false
 
-  valid_redirect_uris        = [var.pomerium_redirect_uri]
-  pkce_code_challenge_method = "S256"
+  # PKCE is not required: Pomerium is a confidential client (it authenticates with a client secret)
+  # and does not send a PKCE challenge, so requiring S256 makes Keycloak reject every login.
+  valid_redirect_uris = [var.pomerium_redirect_uri]
 }
 
 # Put the user's groups in the token as a "groups" claim, so the posture gate and OPA can read them.
