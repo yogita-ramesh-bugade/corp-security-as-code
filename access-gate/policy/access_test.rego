@@ -170,3 +170,46 @@ test_email_match_ignores_case if {
 test_unknown_app_denied if {
 	not access.allow with input as req("payroll", ivan, mac(healthy, {}))
 }
+
+# ---- Scenario: traveling user (Step 2.6) ---------------------------------------------
+
+ivan_abroad := {"email": "ivan@lumenai.test", "groups": ["it-admins", "traveling"]}
+
+test_traveler_admin_blocked_even_when_healthy if {
+	d := access.decision with input as req("admin-console", ivan_abroad, mac(healthy, {}))
+	not d.allow
+	d.level == 1
+	d.device_level == 3
+	"travel_mode" in d.reasons
+	not "device_unhealthy" in d.reasons
+}
+
+test_traveler_wiki_allowed_with_travel_warning if {
+	d := access.decision with input as req("wiki", ivan_abroad, mac(healthy, {}))
+	d.allow
+	d.level == 1
+	some w in d.warnings
+	startswith(w, "Travel mode is on")
+}
+
+test_traveler_on_someone_elses_device_still_blocked if {
+	bob_abroad := {"email": "bob@lumenai.test", "groups": ["sales", "traveling"]}
+	not access.allow with input as req("wiki", bob_abroad, mac(healthy, {}))
+}
+
+test_traveler_grace_does_not_lift_cap if {
+	d := access.decision with input as req("admin-console", ivan_abroad, mac(firewall_off, {"firewall_on": now - (10 * hour)}))
+	not d.allow
+	d.level == 1
+}
+
+test_break_glass_overrides_travel_with_alert if {
+	erin_abroad := {"email": "erin@lumenai.test", "groups": ["break-glass", "traveling"]}
+	d := access.decision with input as req("admin-console", erin_abroad, {})
+	d.allow
+	count(d.alerts) == 1
+}
+
+test_back_home_admin_allowed_again if {
+	access.allow with input as req("admin-console", ivan, mac(healthy, {}))
+}

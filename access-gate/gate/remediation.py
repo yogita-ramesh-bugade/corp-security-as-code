@@ -58,6 +58,11 @@ def render(content: dict, decision: dict, app_name: str, email: str, exception_u
     app_label = APP_NAMES.get(app_name, app_name)
     heading = (f"One thing to fix before you can open {app_label}" if n == 1
                else f"{n} things to fix before you can open {app_label}")
+    lede = ("Your sign-in worked. Lumen also checks that the laptop is safe before opening company apps. "
+            "Follow the steps below; most fixes take a couple of minutes.")
+    if problems == ["travel_mode"]:
+        heading = f"{app_label[0].upper() + app_label[1:]} is paused while you travel"
+        lede = "Nothing is wrong with your laptop. Some tools are switched off while you're abroad."
     query = urlencode({"app": app_name, "serial": serial, "user": email, "problems": ",".join(problems)})
     exception_link = f"{exception_url}{'&' if '?' in exception_url else '?'}{query}"
     refresh = '<meta http-equiv="refresh" content="20">' if rechecking else ""
@@ -93,8 +98,7 @@ def render(content: dict, decision: dict, app_name: str, email: str, exception_u
 <body><main>
   <p class="eyebrow">Access blocked</p>
   <h1>{html.escape(heading)}</h1>
-  <p class="lede">Your sign-in worked. Lumen also checks that the laptop is safe before opening company apps.
-  Follow the steps below; most fixes take a couple of minutes.</p>
+  <p class="lede">{html.escape(lede)}</p>
   {status}
   {body}
   <div class="actions">

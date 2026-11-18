@@ -24,6 +24,7 @@ import rego.v1
 # 3 = your device, fully healthy (or failing for under 72 hours)
 # 1 = your device, but failing a health check
 # 0 = not your device, or no device facts at all
+# Travel mode (group "traveling", Step 2.6) caps the level at 1 while abroad.
 required_level := {"wiki": 1, "admin-console": 3}
 
 # Group an app also requires (on top of the device level). The proxy checks this too;
@@ -65,23 +66,35 @@ in_grace if {
 
 # ---------------------------------------------------------------- level
 
-default level := 0
+default device_level := 0
 
-level := 3 if {
+device_level := 3 if {
 	bound
 	count(failing) == 0
 }
 
-level := 3 if {
+device_level := 3 if {
 	bound
 	in_grace
 }
 
-level := 1 if {
+device_level := 1 if {
 	bound
 	count(failing) > 0
 	not in_grace
 }
+
+# ---------------------------------------------------------------- travel mode
+
+# While someone is abroad, their laptop may be inspected, copied or taken.
+# Cap them at level 1: everyday apps keep working, admin consoles don't.
+travel_cap := 1
+
+traveling if "traveling" in input.user.groups
+
+level := device_level if not traveling
+
+level := min({device_level, travel_cap}) if traveling
 
 # ---------------------------------------------------------------- break-glass
 
@@ -116,6 +129,11 @@ alerts contains {
 	break_glass
 }
 
+warnings contains "Travel mode is on: admin tools are unavailable until you're back and IT has re-checked your laptop." if {
+	allow
+	traveling
+}
+
 warnings contains msg if {
 	allow
 	in_grace
@@ -134,7 +152,13 @@ reasons contains "missing_group" if not has_required_group
 
 reasons contains "device_unhealthy" if {
 	bound
+	device_level < required_level[input.app]
+}
+
+reasons contains "travel_mode" if {
+	traveling
 	level < required_level[input.app]
+	device_level >= required_level[input.app]
 }
 
 reasons contains "unknown_app" if not required_level[input.app]
@@ -150,6 +174,7 @@ remediation contains check if {
 decision := {
 	"allow": allow,
 	"level": level,
+	"device_level": device_level,
 	"required_level": object.get(required_level, input.app, null),
 	"reasons": reasons,
 	"remediation": remediation,

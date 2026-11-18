@@ -1,0 +1,14 @@
+# Lumen AI travel register (Step 2.6). Changes go through a reviewed pull request.
+#
+# While today is between start and end (inclusive, UTC), Terraform puts the user in the
+# Keycloak group "traveling", and OPA caps them at access level 1 (no admin consoles).
+# After the end date, the next `terraform apply` removes them automatically.
+# A scheduled apply (or the Project 3 engine) makes this happen without anyone remembering.
+#
+# tier: high = loaner laptop required (see docs/rfc/travel.md); standard = own laptop, travel mode only.
+trips:
+  - user: tara
+    destination_tier: standard
+    start: "2026-11-01"
+    end: "2026-12-31"
+    note: "Demo trip: Tara (sales) at a customer conference."

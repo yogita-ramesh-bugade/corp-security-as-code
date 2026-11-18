@@ -98,6 +98,14 @@ reasons:
     why: "Admin tools can change every laptop in the company, so access is limited to the IT team."
     steps:
       - "If you need this app for your job, click Request an exception below and say why."
+  travel_mode:
+    title: "Travel mode is on"
+    what: "While you're traveling, admin tools are switched off for your account. Everyday apps still work."
+    why: "Laptops can be inspected, copied or taken at borders and in hotels, so the most powerful access stays at home."
+    steps:
+      - "Use everyday apps (like the Wiki) as normal while you're away."
+      - "When you're back, tell IT. They end travel mode, sign you out everywhere and re-check your laptop; then sign in again."
+      - "If you need admin access urgently while abroad, click Request an exception below or contact the on-call IT lead."
   unknown_app:
     title: "This app isn't set up in the access policy"
     what: "The app you opened has no access rule yet."

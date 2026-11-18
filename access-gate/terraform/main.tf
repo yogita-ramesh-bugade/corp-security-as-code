@@ -29,7 +29,7 @@ locals {
     alice = { first = "Alice", last = "Engineer", groups = ["engineering"] }
     bob   = { first = "Bob", last = "Seller", groups = ["sales"] }
     ivan  = { first = "Ivan", last = "Admin", groups = ["it-admins"] }
-    tara  = { first = "Tara", last = "Traveler", groups = ["sales", "traveling"] }
+    tara  = { first = "Tara", last = "Traveler", groups = ["sales"] } # "traveling" comes from travel/trips.yaml
     erin  = { first = "Erin", last = "Emergency", groups = ["break-glass"] }
   }
 }
@@ -61,11 +61,30 @@ resource "keycloak_user" "u" {
   }
 }
 
+# --- Travel mode (Step 2.6) -----------------------------------------------------
+# Trips live in travel/trips.yaml (reviewed by PR). A user is "traveling" only while
+# the plan's date is inside their trip, so the group drops off by itself after the end date.
+locals {
+  trips = yamldecode(file("${path.module}/../travel/trips.yaml")).trips
+  traveling_now = toset([
+    for t in local.trips : t.user
+    if timecmp(plantimestamp(), "${t.start}T00:00:00Z") >= 0 && timecmp(plantimestamp(), "${t.end}T23:59:59Z") <= 0
+  ])
+}
+
 resource "keycloak_user_groups" "u" {
-  for_each  = local.users
-  realm_id  = keycloak_realm.lumen.id
-  user_id   = keycloak_user.u[each.key].id
-  group_ids = [for g in each.value.groups : keycloak_group.g[g].id]
+  for_each = local.users
+  realm_id = keycloak_realm.lumen.id
+  user_id  = keycloak_user.u[each.key].id
+  group_ids = concat(
+    [for g in each.value.groups : keycloak_group.g[g].id],
+    contains(local.traveling_now, each.key) ? [keycloak_group.g["traveling"].id] : [],
+  )
+}
+
+output "traveling_now" {
+  description = "Users in travel mode as of this plan"
+  value       = local.traveling_now
 }
 
 # --- OIDC client for Pomerium ----------------------------------------------
