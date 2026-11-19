@@ -29,6 +29,7 @@ services:
       JWKS_URL: https://auth.lumen.test:4443/.well-known/pomerium/jwks.json
       CA_BUNDLE: /ca/lumen-ca-bundle.pem
       CACHE_SECONDS: "60"
+      EXCEPTION_URL: http://exceptions.lumen.test:8200/request # "Request an exception" on the blocked page
     volumes:
       - ../device-certs/ca:/ca:ro
       - gate-data:/data # decisions.jsonl, alerts.jsonl, failing_since.json
@@ -36,9 +37,11 @@ services:
 
   opa:
     image: openpolicyagent/opa:1.10.1
-    command: ["run", "--server", "--addr=0.0.0.0:8181", "/policy/access.rego"]
+    # --watch reloads when the exception bot changes waivers.json (Step 3.4)
+    command: ["run", "--server", "--addr=0.0.0.0:8181", "--watch", "/policy/access.rego", "/waivers/waivers.json"]
     volumes:
       - ../policy:/policy:ro
+      - ${HOME}/lab-data/opa:/waivers:ro
     restart: unless-stopped
 
   # Demo apps: traefik/whoami echoes back every header it receives.

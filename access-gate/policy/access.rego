@@ -52,6 +52,26 @@ failing contains check if {
 	some check in strict_checks
 	applies(check)
 	object.get(input.device, ["policies", check], "missing") != "pass"
+	not waived(check)
+}
+
+# ---------------------------------------------------------------- exceptions (Step 3.4)
+
+# Posture waivers are approved in chat by the exception bot, which writes them to
+# data.waivers (waivers.json, reloaded by `opa run --watch`). A waiver covers ONE check on
+# ONE device until its end date; after that the check counts again.
+waived(check) if {
+	some w in data.waivers
+	w.serial == input.device.serial
+	w.check == check
+	time.parse_rfc3339_ns(w.expires_at) > input.now_ns
+}
+
+waived_checks contains check if {
+	some check in strict_checks
+	applies(check)
+	object.get(input.device, ["policies", check], "missing") != "pass"
+	waived(check)
 }
 
 hours_failing(check) := (input.now_ns - input.device.failing_since[check]) / ((3600 * 1000) * 1000000)
@@ -136,6 +156,15 @@ warnings contains "Travel mode is on: admin tools are unavailable until you're b
 
 warnings contains msg if {
 	allow
+	some check in waived_checks
+	some w in data.waivers
+	w.serial == input.device.serial
+	w.check == check
+	msg := sprintf("%s is failing but covered by exception %s until %s.", [check, w.id, w.expires_at])
+}
+
+warnings contains msg if {
+	allow
 	in_grace
 	some check in failing
 	msg := sprintf("%s is failing. You have %d hours left to fix it before access is reduced.", [check, round(grace_hours - hours_failing(check))])
@@ -181,4 +210,5 @@ decision := {
 	"warnings": warnings,
 	"alerts": alerts,
 	"failing": failing,
+	"waived": waived_checks,
 }
