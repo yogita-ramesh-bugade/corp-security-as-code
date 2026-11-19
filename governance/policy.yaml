@@ -1,0 +1,100 @@
+# Decision rules for the SaaS and agent inventory (Project 4, Step 4.3).
+#
+# Rules decide the obvious cases so people only look at the unclear ones.
+#   python -m governance.decide                  # decide everything, print the % decided by policy
+#   python -m governance.decide --queue          # what's left for a human
+#   python -m governance.decide review <name> approve "reason"   # record a human decision
+#   python -m governance.decide suggest          # human calls made 3+ times -> draft rules
+#
+# How a rule matches: EVERY condition it lists must be true. Rules are checked from the top and
+# the FIRST match wins, so deny rules come first: a deny can never be skipped because an
+# approve rule matched earlier. Nothing matched -> "review" (the human queue).
+#
+# Conditions you can use:
+#   type:          [oauth_grant, chat_app, browser_extension, admin_role, internal_agent]
+#   publisher:     [verified, unverified, unknown, internal]   (verified list lives in risk.yaml)
+#   scopes_any:    [patterns]   at least one scope matches   (* works, like in risk.yaml)
+#   scopes_only:   [patterns]   every scope matches (no scopes at all also counts)
+#   extension_ids: name of a list below
+#   min_score / max_score:  the 0-100 score from risk.yaml (inclusive)
+#   has_owner:     true / false
+#   owner_left:    true / false   owner or creator is a former employee (risk.yaml former_employees)
+#   details:       {key: value}  exact match on a field in the item's details
+
+lists:
+  # Extensions we never allow. Add an ID here when you've decided it once.
+  # The Coupon Finder Pro (Lumen TEST) ID comes from your own inventory: see the Step 4.3 notes.
+  known_bad_extensions: []
+
+rules:
+  # ------------------------------------------------------------------ deny
+  - id: deny-known-bad-extension
+    decision: deny
+    why: extension is on the known-bad list
+    when: {type: [browser_extension], extension_ids: known_bad_extensions}
+
+  - id: deny-sideloaded-extension
+    decision: deny
+    why: unpacked (side-loaded) extension; no store ID, no store review, can't be blocked by ID
+    when: {type: [browser_extension], details: {unpacked: true}}
+
+  - id: deny-unvetted-mail-or-file-write
+    decision: deny
+    why: a publisher security hasn't reviewed wants mail, file-write or directory access
+    when:
+      type: [oauth_grant, chat_app, browser_extension]
+      publisher: [unverified, unknown]
+      scopes_any: [mail.read, mail.send, files.readwrite, admin.directory]
+
+  - id: deny-unknown-extension-reading-sites
+    decision: deny
+    why: extension from an unknown publisher can read cookies or every website
+    when:
+      type: [browser_extension]
+      publisher: [unknown]
+      scopes_any: ["<all_urls>", "*://*/*", "http*://*/*", cookies, debugger, nativeMessaging]
+
+  - id: deny-ownerless-risky-agent
+    decision: deny
+    why: high-risk agent nobody is accountable for; suspend until someone takes it over
+    when: {type: [internal_agent], has_owner: false, min_score: 60}
+
+  - id: deny-leaver-risky-agent
+    decision: deny
+    why: high-risk agent built or owned by someone who left; suspend until reassigned (JML leaver follow-up)
+    when: {type: [internal_agent], owner_left: true, min_score: 60}
+
+  # ------------------------------------------------------------------ always a human
+  - id: review-admin-roles
+    decision: review
+    why: admin access is always re-certified by a person
+    when: {type: [admin_role]}
+
+  # ------------------------------------------------------------------ approve
+  - id: approve-vetted-basic-profile
+    decision: approve
+    why: reviewed publisher asking only for sign-in and basic profile
+    when:
+      type: [oauth_grant]
+      publisher: [verified]
+      scopes_only: [openid, profile, email]
+
+  - id: approve-vetted-low-risk-extension
+    decision: approve
+    why: reviewed publisher and low risk score
+    when: {type: [browser_extension], publisher: [verified], max_score: 29}
+
+  - id: approve-owned-internal-chat-app
+    decision: approve
+    why: internal chat integration with an owner, staying inside Lumen, low risk
+    when: {type: [chat_app], publisher: [internal], has_owner: true, max_score: 29}
+
+  - id: approve-owned-low-risk-agent
+    decision: approve
+    why: agent with a current owner and a low risk score
+    when: {type: [internal_agent], has_owner: true, owner_left: false, max_score: 29}
+
+  - id: approve-owned-supervised-agent
+    decision: approve
+    why: agent with a current owner and a person approving every action, medium risk at most
+    when: {type: [internal_agent], has_owner: true, owner_left: false, details: {human_in_the_loop: true}, max_score: 49}
