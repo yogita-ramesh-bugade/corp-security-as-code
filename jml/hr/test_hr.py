@@ -75,3 +75,14 @@ def test_signature_roundtrip_and_tampering():
     assert verify("s3cret", body, "garbage")[0] is False                # malformed
     old = sign("s3cret", body, timestamp=int(time.time()) - 3600)
     assert verify("s3cret", body, old)[0] is False                      # replayed an hour later
+
+
+def test_contractor_needs_end_date_and_conversion_clears_it():
+    c = {**ALICE, "email": "cara@lumenai.test", "name": "Cara", "employment_type": "contractor"}
+    assert client.post("/employees/hire", json=c, headers=ADMIN).status_code == 422
+    r = client.post("/employees/hire", json={**c, "end_date": "2027-03-31"}, headers=ADMIN)
+    emp = r.json()["employee"]
+    assert emp["end_date"] == "2027-03-31"
+    r = client.post(f"/employees/{emp['id']}/transfer", json={"employment_type": "full_time"}, headers=ADMIN)
+    assert r.json()["employee"]["end_date"] is None
+    assert r.json()["changes"]["end_date"] == {"from": "2027-03-31", "to": None}

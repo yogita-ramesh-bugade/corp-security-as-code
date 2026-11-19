@@ -125,3 +125,34 @@ resource "keycloak_openid_group_membership_protocol_mapper" "groups" {
   claim_name = "groups"
   full_path  = false
 }
+
+# --- Service account for the JML engine (Project 3) -------------------------------
+# The engine signs in as this client (client credentials), not as the Keycloak admin.
+# It can manage users and read groups in realm "lumen" only.
+resource "keycloak_openid_client" "jml_engine" {
+  realm_id                 = keycloak_realm.lumen.id
+  client_id                = "jml-engine"
+  name                     = "Joiner/mover/leaver engine"
+  enabled                  = true
+  access_type              = "CONFIDENTIAL"
+  standard_flow_enabled    = false
+  service_accounts_enabled = true
+}
+
+data "keycloak_openid_client" "realm_management" {
+  realm_id  = keycloak_realm.lumen.id
+  client_id = "realm-management"
+}
+
+resource "keycloak_openid_client_service_account_role" "jml_engine" {
+  for_each                = toset(["manage-users", "view-users", "query-users", "query-groups"])
+  realm_id                = keycloak_realm.lumen.id
+  service_account_user_id = keycloak_openid_client.jml_engine.service_account_user_id
+  client_id               = data.keycloak_openid_client.realm_management.id
+  role                    = each.key
+}
+
+output "jml_engine_client_secret" {
+  value     = keycloak_openid_client.jml_engine.client_secret
+  sensitive = true
+}
