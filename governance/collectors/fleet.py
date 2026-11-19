@@ -37,7 +37,7 @@ class Fleet:
         return r.json()
 
     def saved_query_id(self, name=QUERY_NAME):
-        for q in self.get("/queries", query=name).get("queries") or []:
+        for q in self.get("/queries", per_page=1000).get("queries") or []:
             if q["name"] == name:
                 return q["id"]
         raise RuntimeError(f"saved query '{name}' not found: fleetctl apply -f governance/lab/fleet-query.yml")
@@ -70,12 +70,15 @@ def collect_browser_extensions(fleet: Fleet) -> list[Item]:
             fleet.skipped.append(f"{host['hostname']} ({res.get('error') if res else 'no answer'})")
             continue
         for row in res.get("rows") or []:
-            e = found.setdefault(row["identifier"], {"row": row, "installs": set(), "perms": set()})
+            # Unpacked (side-loaded) extensions have no store ID, so key them by name instead of
+            # letting every unpacked extension collapse into one item with an empty ID.
+            key = row.get("identifier") or f"unpacked:{row.get('name')}"
+            e = found.setdefault(key, {"row": row, "installs": set(), "perms": set()})
             e["installs"].add(f"{host['hostname']}:{row.get('os_user')}")
             e["perms"] |= set(_split(row.get("permissions")))
     return [Item("browser_extension", f"browser_extension:chrome:{ext_id}", e["row"]["name"],
                  e["row"].get("author") or None, list(e["perms"]), len(e["installs"]), None, None, None, "fleet",
-                 {"extension_id": ext_id, "version": e["row"].get("version"),
+                 {"extension_id": ext_id, "unpacked": ext_id.startswith("unpacked:"), "version": e["row"].get("version"),
                   "from_webstore": e["row"].get("from_webstore"), "installed_on": sorted(e["installs"]),
                   "optional_permissions": _split(e["row"].get("optional_permissions"))})
             for ext_id, e in found.items()]

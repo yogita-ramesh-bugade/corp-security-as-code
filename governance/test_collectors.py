@@ -58,7 +58,11 @@ def fake_get(url, params=None, headers=None, timeout=None):
 ROWS = {1: [{"os_user": "ivan", "name": "uBlock Origin", "identifier": "cjpalhdlnbpafiamejdnhcphjbkeiagm",
              "version": "1.6", "author": "Raymond Hill", "permissions": "storage, tabs, webRequest", "from_webstore": "1"},
             {"os_user": "ivan", "name": "Free VPN Pro", "identifier": "zzzbadextension00000000000000000",
-             "version": "3.1", "author": "", "permissions": "<all_urls>, cookies, webRequest", "from_webstore": "0"}],
+             "version": "3.1", "author": "", "permissions": "<all_urls>, cookies, webRequest", "from_webstore": "0"},
+            {"os_user": "ivan", "name": "Coupon Finder Pro", "identifier": "", "version": "0.0.1", "author": "",
+             "permissions": "cookies, tabs", "from_webstore": "0"},
+            {"os_user": "ivan", "name": "Another Unpacked", "identifier": "", "version": "1", "author": "",
+             "permissions": "storage", "from_webstore": "0"}],
         2: [{"os_user": "bob", "name": "uBlock Origin", "identifier": "cjpalhdlnbpafiamejdnhcphjbkeiagm",
              "version": "1.6", "author": "Raymond Hill", "permissions": "storage, tabs", "from_webstore": "1"}]}
 
@@ -91,6 +95,9 @@ def test_extensions_merge_across_hosts_and_skip_offline():
     assert items["uBlock Origin"].users == 2 and items["uBlock Origin"].publisher == "Raymond Hill"
     assert "<all_urls>" in items["Free VPN Pro"].scopes and items["Free VPN Pro"].publisher is None
     assert f.skipped == ["fleet-ubuntu-lab (offline)"]
+    coupon = items["Coupon Finder Pro"]  # two unpacked extensions stay two items
+    assert coupon.details["unpacked"] and coupon.id == "browser_extension:chrome:unpacked:Coupon Finder Pro"
+    assert "Another Unpacked" in items and not items["uBlock Origin"].details["unpacked"]
 
 
 def test_fleet_admins_exclude_observers():

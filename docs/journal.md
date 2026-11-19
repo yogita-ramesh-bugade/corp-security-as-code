@@ -620,3 +620,23 @@ Step 2.2: step-ca device certificates.
   3. The collector now calls `POST /api/v1/fleet/queries/<id>/run` with the online host IDs, all in one call.
 - **Check:** The first full run collected oauth_grant 8, chat_app 10, admin_role 6 (Keycloak 3 + Fleet 3) and internal_agent 305, for 329 items. [browser_extension count after fix2 and the Chrome/Edge test extensions: not confirmed yet.] 6 collector tests pass, and so does CI.
 - **Learned:** Shadow access lives in many places, including consent grants, webhooks, personal tokens, extensions and agents nobody owns. Putting it all in one record shape is what makes it possible to score it later. Least privilege sometimes means a stricter design: a saved, approved query instead of any SQL. Lab seed scripts should use users that actually exist in each system.
+
+---
+
+## 2026-11-19 — Project 4, Step 4.2: Score risk with explanations
+
+- **Design:** `governance/risk.yaml` holds every number, and `python -m governance.score` adds them up into a 0–100 score per item, writing `governance/out/scored.jsonl`. Each point comes with a plain-words reason, and the reasons always add up to the score (a cap shows as its own minus line).
+  - **Scopes:** each scope has points and a reason, for example `mail.read: [20, "can read all of the user's email"]`. Scope points are capped at 50, so 30 small permissions can't outrank "reads everyone's email".
+  - **Factors:** unverified publisher (+15, or +25 when nobody knows who made it), many users (+10/15/20), no owner (+15), owner or creator left the company (+15), not used in 90 days (+10). Agents also get: not reviewed in a year, sensitive data, acting with nobody approving. Chat apps also get: sends data outside Lumen.
+  - **Levels:** critical ≥80, high ≥60, medium ≥30.
+  - `--explain <name>` prints the full breakdown, and `--type oauth_grant` shows the top list for one kind of item.
+- **Broke (3):**
+  1. The first weights marked 86 of 321 items critical. Agents were counted twice, once for the OAuth scope (`mail.send`) and again for the matching tool (`email_send`).
+  2. Internal webhooks, slash commands and tokens showed "publisher unknown", which is noise.
+  3. The Fleet saved query `governance-browser-extensions` had disappeared, so the extensions source failed again. Newer Fleet also calls queries "reports" (`fleetctl get reports`).
+- **Fixed (3):**
+  1. A tool that needs an OAuth scope now scores 0 because the scope already counted that power. I also lowered the scope cap to 50 and raised the level cut-offs. That brought critical down to 28 (~9%), mostly synthetic agents with shell, email or files access and no owner.
+  2. The Mattermost collector now sets publisher `internal` for things created inside Lumen, and a separate `external_destination` factor catches the Meeting notes bot sending to `notes-ai.example`.
+  3. Re-applied `governance/lab/fleet-query.yml`. [extensions count after re-apply: not confirmed]
+- **Check:** 16 tests pass. I also made deliberate code changes to see whether the tests catch them: removing the cap line, always marking items stale, treating outside URLs as internal, or flipping the publisher check each made a test fail. Not sorting the reasons got through at first, so I made that test stricter. On my test copy of the lab inventory, the OAuth order was Free PDF Converter 88 (critical), AI Notes Assistant 85, DirectorySync Admin 73, MailMerge Pro 65, CloudBackup Plus 58, then MeetSync/TeamPulse 30 and QuickSign Docs 27. finance-report-agent scored 94 and Meeting notes bot 60 (high). [scores on my real inventory: not confirmed]
+- **Learned:** A score is only useful if someone can argue with it line by line, so each reason sits next to its points, and the weights live in a YAML file a reviewer can change in a PR. The first version of the weights was wrong: when a quarter of everything is "critical", the score doesn't help anyone decide where to start. Counting each power once (scope, not scope plus tool) matters more than the exact numbers.
