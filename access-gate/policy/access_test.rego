@@ -213,3 +213,32 @@ test_break_glass_overrides_travel_with_alert if {
 test_back_home_admin_allowed_again if {
 	access.allow with input as req("admin-console", ivan, mac(healthy, {}))
 }
+
+# ---- Exceptions: posture waivers (Step 3.4) --------------------------------------------
+
+waiver(serial, check, expires) := [{"id": "EXC-0007", "serial": serial, "check": check, "expires_at": expires}]
+
+# now = 1800000000 s = 2027-01-15T08:00:00Z
+test_active_waiver_lets_device_through_with_warning if {
+	d := access.decision with input as req("admin-console", ivan, mac(firewall_off, {"firewall_on": now - (100 * hour)}))
+		with data.waivers as waiver("ZR2JVG236J", "firewall_on", "2027-01-20T00:00:00Z")
+	d.allow
+	d.waived == {"firewall_on"}
+	some w in d.warnings
+	contains(w, "EXC-0007")
+}
+
+test_expired_waiver_counts_again if {
+	not access.allow with input as req("admin-console", ivan, mac(firewall_off, {"firewall_on": now - (100 * hour)}))
+		with data.waivers as waiver("ZR2JVG236J", "firewall_on", "2027-01-01T00:00:00Z")
+}
+
+test_waiver_is_for_one_device_only if {
+	not access.allow with input as req("admin-console", ivan, mac(firewall_off, {"firewall_on": now - (100 * hour)}))
+		with data.waivers as waiver("OTHER-SERIAL", "firewall_on", "2027-01-20T00:00:00Z")
+}
+
+test_waiver_is_for_one_check_only if {
+	not access.allow with input as req("admin-console", ivan, mac(firewall_off, {"firewall_on": now - (100 * hour)}))
+		with data.waivers as waiver("ZR2JVG236J", "os_current", "2027-01-20T00:00:00Z")
+}

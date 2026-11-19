@@ -4,6 +4,9 @@
 # Secrets (never in Git):
 #   ~/jml-secrets/hr.env      HR_ADMIN_KEY, HR_WEBHOOK_SECRET
 #   ~/jml-secrets/engine.env  KC_CLIENT_SECRET (+ optional FLEET_URL, FLEET_API_TOKEN)
+#   ~/jml-secrets/exceptions.env  GITHUB_TOKEN, GITHUB_REPO, BOT_SECRET, SECURITY_APPROVERS,
+#                                 MM_BOT_TOKEN, MM_SLASH_TOKEN (added by exceptions/setup_mattermost.sh)
+# Chat:        http://chat.lumen.test:8065       Exception dashboard: http://localhost:8200/dashboard
 services:
   hr:
     build: ./hr
@@ -34,6 +37,42 @@ services:
       - engine-data:/data
     restart: unless-stopped
 
+  # Company chat (Step 3.4). The preview image bundles its own database: fine for a lab.
+  mattermost:
+    image: mattermost/mattermost-preview:latest # after the first pull, pin the version: docker image inspect
+    platform: linux/amd64 # only built for Intel; Docker Desktop runs it via Rosetta
+    environment:
+      MM_SERVICESETTINGS_SITEURL: http://chat.lumen.test:8065
+      MM_SERVICESETTINGS_ENABLELOCALMODE: "true" # lets setup_mattermost.sh run mmctl inside the container
+      MM_SERVICESETTINGS_ENABLEUSERACCESSTOKENS: "true"
+      MM_SERVICESETTINGS_ENABLECOMMANDS: "true"
+      MM_SERVICESETTINGS_ALLOWEDUNTRUSTEDINTERNALCONNECTIONS: "exceptions" # may call the bot on the Docker network
+    ports:
+      - "8065:8065" # the VMs open chat too (blocked Mac -> request)
+    volumes:
+      - mattermost-data:/mm/mattermost-data
+    restart: unless-stopped
+
+  # Exception bot (Step 3.4)
+  exceptions:
+    build: ../exceptions
+    env_file: ${HOME}/jml-secrets/exceptions.env
+    environment:
+      MM_URL: http://mattermost:8065
+      MM_PUBLIC_URL: http://chat.lumen.test:8065
+      HR_URL: http://hr:8100
+      BOT_URL: http://exceptions:8200
+      DEPLOY_DIR: /deploy # the main-only clone Moroz reads
+      WAIVER_FILE: /waivers/waivers.json # the file OPA reads
+      TICK_SECONDS: "60"
+    volumes:
+      - ${HOME}/lab-deploy:/deploy
+      - ${HOME}/lab-data/opa:/waivers
+      - exceptions-data:/data
+    ports:
+      - "8200:8200" # /request (from Santa's block page on the VMs) and /dashboard
+    restart: unless-stopped
+
   # Shows raw webhooks (Step 3.1). Start only when needed: docker compose --profile debug up -d
   request-logger:
     build: ./hr
@@ -44,3 +83,5 @@ services:
 volumes:
   hr-data:
   engine-data:
+  mattermost-data:
+  exceptions-data:

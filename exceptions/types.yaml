@@ -1,0 +1,42 @@
+# Exception types the bot accepts (Project 3, Step 3.4). Change through a pull request.
+#
+# approver: manager  = the requester's manager in HR (low risk)
+#           security = anyone in SECURITY_APPROVERS (high risk)
+# Nobody can approve their own request; if the manager can't be found, security approves.
+# apply:    santa_rule = PR adding a time-limited Santa allow rule for that Mac
+#           opa_waiver = time-limited entry in the waiver data OPA reads (posture gate)
+#           ticket     = recorded + IT ticket (no automation in the lab)
+
+types:
+  allow_binary:
+    label: "Allow a blocked app (Santa)"
+    risk: low
+    approver: manager
+    max_days: 30
+    apply: santa_rule
+    target_help: "SHA-256 of the blocked file (from the block page)"
+  posture_waiver:
+    label: "Posture waiver (one health check)"
+    risk: low
+    approver: manager
+    max_days: 14
+    apply: opa_waiver
+    target_help: "Which check: disk_encrypted, os_current, firewall_on or santa_lockdown"
+  local_admin:
+    label: "Temporary local admin rights"
+    risk: high
+    approver: security
+    max_days: 7
+    apply: ticket
+    target_help: "What you need admin rights for"
+
+# Choices in the form. "10 minutes" exists for demos.
+durations:
+  - {label: "10 minutes (demo)", minutes: 10}
+  - {label: "1 day", minutes: 1440}
+  - {label: "3 days", minutes: 4320}
+  - {label: "7 days", minutes: 10080}
+  - {label: "14 days", minutes: 20160}
+  - {label: "30 days", minutes: 43200}
+
+posture_checks: [disk_encrypted, os_current, firewall_on, santa_lockdown]

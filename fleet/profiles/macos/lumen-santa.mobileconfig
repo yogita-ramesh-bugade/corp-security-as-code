@@ -14,7 +14,7 @@
 			<key>EventDetailText</key>
 			<string>Request access</string>
 			<key>EventDetailURL</key>
-			<string>https://github.com/yogita-ramesh-bugade/corp-security-as-code/blob/main/docs/request-access.md?sha=%file_sha%&amp;machine=%machine_id%&amp;user=%username%</string>
+			<string>http://exceptions.lumen.test:8200/request?sha=%file_sha%&amp;machine=%machine_id%&amp;user=%username%</string>
 			<key>ModeNotificationLockdown</key>
 			<string>Santa is in Lockdown mode: only approved apps can run.</string>
 			<key>ModeNotificationMonitor</key>
