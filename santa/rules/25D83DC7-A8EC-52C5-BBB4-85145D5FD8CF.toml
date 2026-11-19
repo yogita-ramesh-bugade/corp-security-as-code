@@ -35,3 +35,10 @@ policy = "ALLOWLIST"
 identifier = "T4SK8ZXCXG"
 custom_msg = "Mac Admins Open Source (Nudge)"
 
+# exception EXC-0001 | requester omar@lumenai.test | approver maya@lumenai.test | expires 2026-11-19T04:14:23Z
+[[rules]]
+rule_type = "BINARY"
+policy = "ALLOWLIST"
+identifier = "9b5c4842bac3f870b523c5fdf50ea5d89b689f45285cb34efc03116fffbba3d2"
+custom_msg = "Allowed by exception EXC-0001 until 2026-11-19T04:14:23Z"
+# end EXC-0001
