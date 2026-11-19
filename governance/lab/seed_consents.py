@@ -18,9 +18,9 @@ import httpx
 
 PLAN = {  # who approves what (alice and bob fall for the risky ones, as real people do)
     "alice": ["meetsync", "mailmerge-pro", "free-pdf-converter", "ai-notes-assistant"],
-    "bob": ["meetsync", "teampulse", "ai-notes-assistant", "free-pdf-converter"],
+    "bob": ["meetsync", "teampulse", "ai-notes-assistant", "free-pdf-converter", "quicknotes-ai"],
     "ivan": ["directorysync-admin", "cloudbackup-plus"],
-    "tara": ["quicksign-docs", "ai-notes-assistant", "meetsync"],
+    "tara": ["quicksign-docs", "ai-notes-assistant", "meetsync", "quicknotes-ai"],
 }
 SCOPES = {
     "meetsync": "calendar.read", "teampulse": "", "quicksign-docs": "files.read",
@@ -28,6 +28,7 @@ SCOPES = {
     "ai-notes-assistant": "mail.read calendar.read files.read offline_access",
     "free-pdf-converter": "files.readwrite mail.read offline_access",
     "directorysync-admin": "admin.directory offline_access",
+    "quicknotes-ai": "files.read calendar.read",
 }
 REDIRECT = "http://localhost:9/callback"
 

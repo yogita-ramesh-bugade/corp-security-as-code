@@ -47,15 +47,17 @@ def collect_oauth_grants(kc: Keycloak) -> list[Item]:
     items = []
     for client_id, g in grants.items():
         c = clients.get(client_id, {})
-        desc = c.get("description") or ""
-        publisher = desc.split("Publisher:", 1)[1].strip() if "Publisher:" in desc else None
+        # Description: first line "Publisher: <name>", then the app's own text (written by the publisher).
+        first, _, about = (c.get("description") or "").partition("\n")
+        publisher = first.split("Publisher:", 1)[1].strip() if first.startswith("Publisher:") else None
         items.append(Item(
             item_type="oauth_grant", id=f"oauth_grant:keycloak:{client_id}", name=c.get("name") or client_id,
             publisher=publisher, scopes=list(g["scopes"]), users=len(g["users"]),
             first_seen=ms_to_iso(min(x for x in g["first"] if x) if any(g["first"]) else None),
             last_used=ms_to_iso(max(x for x in g["last"] if x) if any(g["last"]) else None),
             owner=None,  # a third-party app consented to by employees has no internal owner by default
-            source="keycloak", details={"client_id": client_id, "consented_by": sorted(g["users"])}))
+            source="keycloak", details={"client_id": client_id, "consented_by": sorted(g["users"]),
+                                         "description": about.strip()}))
     return items
 
 

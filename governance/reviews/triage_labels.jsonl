@@ -1,0 +1,1 @@
+{"agreed": true, "at": "2026-11-19T08:35:11Z", "backend": "ollama:llama3.1", "confidence": 0.8, "human": "deny", "id": "oauth_grant:keycloak:quicknotes-ai", "injection": true, "item_type": "oauth_grant", "model_decision": "deny", "name": "QuickNotes AI", "recommendation": "deny", "reviewer": "lumenadmin", "score": 49}
