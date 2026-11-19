@@ -1,0 +1,155 @@
+# Risk scoring rules for the SaaS and agent inventory (Project 4, Step 4.2).
+#
+# Every item gets: points for what it can do (scopes), plus points for risk factors around it
+# (who made it, who owns it, how many people it touches, whether anyone still uses it).
+# The total is capped at 100. Each point added is written down with a reason, so a reviewer
+# can see exactly why an item scored what it did, and argue with a single line here.
+#
+#   python -m governance.score                 # score the inventory, print the top 15
+#   python -m governance.score --explain free-pdf-converter
+#
+# Change a number here, re-run, and the scores change. Nothing is hidden in the code.
+
+levels:            # score >= value  ->  level (checked from the top)
+  critical: 80
+  high: 60
+  medium: 30
+  low: 0
+
+# ---------------------------------------------------------------- what it can do
+# scope (exact name or a pattern with *)  ->  [points, plain-words reason]
+# The first matching line wins, so put specific lines above general ones.
+# Scope points are added up, then capped at scope_cap, so one item with 30 small scopes
+# can't outrank an item that can read everyone's email.
+scope_cap: 50
+default_scope_points: [2, "other permission"]
+scopes:
+  # OAuth scopes (Keycloak consents, agents' OAuth scopes)
+  admin.directory:        [35, "can read and change the company directory"]
+  mail.read:              [20, "can read all of the user's email"]
+  mail.send:              [15, "can send email as the user"]
+  files.readwrite:        [20, "can read, change and delete the user's files"]
+  files.read:             [12, "can read all of the user's files"]
+  calendar.read:          [5, "can see the user's calendar"]
+  offline_access:         [8, "keeps access after the user signs out (refresh token)"]
+  repo:                   [20, "can push code to repositories"]
+  workflow:               [15, "can change CI workflows (and reach CI secrets)"]
+  repo.read:              [8, "can read source code"]
+  db.read:                [12, "can query a database"]
+  crm.read:               [10, "can read customer records"]
+  chat.read:              [8, "can read chat messages"]
+  chat.write:             [4, "can post chat messages"]
+  tickets.write:          [5, "can change support tickets"]
+  tickets.read:           [5, "can read support tickets"]
+  openid:                 [0, "sign-in only"]
+  profile:                [0, "sign-in only"]
+  email:                  [0, "sign-in only"]
+
+  # Admin roles (Keycloak, Fleet)
+  "group:break-glass":                   [30, "emergency full access"]
+  "group:it-admins":                     [25, "IT admin group"]
+  "realm-management:realm-admin":        [40, "full control of the identity provider"]
+  "realm-management:impersonation":      [30, "can sign in as any user"]
+  "realm-management:manage-users":       [30, "can create, change and disable any user"]
+  "realm-management:manage-*":           [25, "can change identity provider settings"]
+  "realm-management:create-client":      [15, "can register new apps in the identity provider"]
+  "fleet:admin":                         [35, "full control of every managed laptop"]
+  "fleet:maintainer":                    [25, "can run scripts and queries on every laptop"]
+  "fleet:gitops":                        [25, "can change laptop policy and software via GitOps"]
+
+  # Browser extension permissions
+  "<all_urls>":           [25, "can read and change every website the user opens"]
+  "*://*/*":              [25, "can read and change every website the user opens"]
+  "http*://*/*":          [20, "can read and change most websites"]
+  debugger:               [20, "can control the browser through the debugger"]
+  nativeMessaging:        [15, "can talk to programs installed on the laptop"]
+  cookies:                [15, "can read sign-in cookies"]
+  management:             [15, "can turn other extensions on and off"]
+  webRequestBlocking:     [10, "can change web traffic"]
+  webRequest:             [10, "can watch web traffic"]
+  history:                [10, "can read browsing history"]
+  clipboardRead:          [10, "can read the clipboard"]
+  tabs:                   [5, "can see open tabs and their addresses"]
+  downloads:              [5, "can manage downloads"]
+  storage:                [0, "local storage only"]
+
+  # Chat apps (Mattermost)
+  "act_as:*":                   [20, "personal token: can do anything its user can"]
+  "oauth:act_as_user":          [20, "OAuth app: acts as each user who approves it"]
+  "trusted:no_consent_screen":  [15, "trusted app: users are never asked to approve it"]
+  "read_messages:team-wide*":   [30, "reads matching messages in every channel and forwards them"]
+  "read_messages:*":            [20, "reads one channel's messages and forwards them"]
+  send_to_url:                  [10, "sends data to a web address"]
+  receive_command_text:         [3, "receives what users type in a slash command"]
+  "post:any_channel":           [10, "can post into any channel"]
+  "post:*":                     [3, "can post into one channel"]
+  "bot:read_channels_it_is_in": [8, "reads channels it is added to"]
+  "bot:post":                   [4, "can post messages"]
+
+  # Agent tools and MCP servers. Tools that need an OAuth scope (email_send needs mail.send,
+  # repo_push needs repo, ...) score 0 here, because the scope already counted that power once.
+  "tool:shell_exec":      [25, "can run commands"]
+  "tool:web_fetch":       [8, "reads web pages (prompt-injection entry point)"]
+  "tool:email_read":      [5, "reads email (prompt-injection entry point)"]
+  "tool:*":               [0, "covered by its OAuth scope, or harmless"]
+  "mcp:*":                [2, "connected MCP server"]
+
+# ---------------------------------------------------------------- risk factors
+# Each factor: points, which item types it applies to, and its settings.
+factors:
+  unverified_publisher:
+    points: 15           # a named vendor security hasn't reviewed
+    unknown_points: 25   # nobody even knows who made it
+    applies_to: [oauth_grant, chat_app, browser_extension]
+    # Vendors security has reviewed. Anything else (or an unknown publisher) gets the points.
+    verified_publishers: ["MeetSync Inc.", "QuickSign Ltd.", "Raymond Hill", "Google", "Microsoft Corporation",
+                          "1Password", "internal"]
+
+  many_users:          # the most points from the highest tier reached
+    applies_to: [oauth_grant, chat_app, browser_extension]
+    tiers:
+      - {min: 3, points: 10}
+      - {min: 25, points: 15}
+      - {min: 100, points: 20}
+
+  no_owner:
+    points: 15
+    applies_to: [oauth_grant, chat_app, browser_extension, admin_role, internal_agent]
+
+  external_destination:  # chat apps that send data to a web address outside Lumen
+    points: 20
+    applies_to: [chat_app]
+    internal_hosts: ["*.lumen.test", "*.lumenai.test", "exceptions", "localhost"]
+
+  owner_left:          # owner or creator is a former employee (Project 3 leavers)
+    points: 15
+    applies_to: [chat_app, admin_role, internal_agent]
+    former_employees: ["dana@lumenai.test", "priya@lumenai.test", "lee@lumenai.test"]
+
+  unused_90_days:      # only when the source tells us when it was last used
+    points: 10
+    days: 90
+    applies_to: [oauth_grant, chat_app, browser_extension, admin_role, internal_agent]
+
+  not_reviewed:        # agents: last security review is older than this
+    points: 10
+    days: 365
+    applies_to: [internal_agent]
+
+  sensitive_data:      # agents: what data it touches (added up, capped)
+    applies_to: [internal_agent]
+    cap: 20
+    data:
+      customer_pii: 15
+      payroll_summary: 15
+      financials: 10
+      ci_secrets_indirect: 10
+      customer_contacts: 8
+      source_code: 5
+      chat_history: 5
+      datasets: 3
+
+  acts_without_human:  # agents that can send, push or change things with nobody approving
+    points: 10
+    applies_to: [internal_agent]
+    acting_tools: [email_send, repo_push, chat_post, drive_write, ticket_write, shell_exec, spreadsheet_write]
