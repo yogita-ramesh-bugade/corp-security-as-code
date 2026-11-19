@@ -1,0 +1,12 @@
+name: code-review-agent
+description: Comments on pull requests and can push small fixes.
+owner: omar@lumenai.test
+team: engineering
+model: claude-opus (hosted API)
+tools: [repo_read, pr_comment, repo_push]
+mcp_servers: [github-mcp]
+oauth_scopes: [repo, workflow]
+data: [source_code, ci_secrets_indirect]
+human_in_the_loop: true
+created: 2026-07-11
+last_review: 2026-09-30

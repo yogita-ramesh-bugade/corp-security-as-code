@@ -1,0 +1,12 @@
+name: sales-email-drafter
+description: Writes and sends follow-up emails after sales calls.
+owner: bob@lumenai.test
+team: sales
+model: gpt-style hosted model
+tools: [crm_read, email_send]
+mcp_servers: [crm-mcp, mail-mcp]
+oauth_scopes: [mail.send, mail.read, crm.read]
+data: [customer_contacts, deal_notes]
+human_in_the_loop: false        # sends without a person checking
+created: 2026-05-20
+last_review: 2026-05-20

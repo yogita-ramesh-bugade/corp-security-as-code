@@ -1,0 +1,12 @@
+name: finance-report-agent
+description: Builds the monthly spend report from the finance drive and emails it to leadership.
+owner: null                      # creator left the company; nobody took it over
+team: finance
+model: llama-3.1-70b (self-hosted)
+tools: [drive_read, spreadsheet_write, email_send]
+mcp_servers: [gdrive-mcp, mail-mcp]
+oauth_scopes: [files.readwrite, mail.send]
+data: [financials, payroll_summary]
+human_in_the_loop: false
+created: 2025-11-03
+last_review: 2025-11-03
