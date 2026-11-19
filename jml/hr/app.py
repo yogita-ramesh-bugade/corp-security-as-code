@@ -31,7 +31,7 @@ from typing import Literal, Optional
 
 import httpx
 from fastapi import Depends, FastAPI, Header, HTTPException
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field, field_validator, model_validator
 
 from signing import sign
 
@@ -91,6 +91,13 @@ class Hire(BaseModel):
     manager_email: Optional[str] = None
     employment_type: EmploymentType = "full_time"
     start_date: date
+    end_date: Optional[date] = None  # contract end; required for contractors
+
+    @model_validator(mode="after")
+    def _contract_end(self):
+        if self.employment_type == "contractor" and self.end_date is None:
+            raise ValueError("contractors need an end_date")
+        return self
 
     @field_validator("email", "manager_email")
     @classmethod
@@ -212,7 +219,8 @@ def hire(h: Hire):
         n = CONN.execute("SELECT COUNT(*) FROM employees").fetchone()[0] + 1
         emp = {"id": f"E{n:04d}", "name": h.name, "email": h.email, "department": h.department,
                "title": h.title, "manager_email": h.manager_email, "employment_type": h.employment_type,
-               "status": "active", "start_date": h.start_date.isoformat(), "end_date": None}
+               "status": "active", "start_date": h.start_date.isoformat(),
+               "end_date": h.end_date.isoformat() if h.end_date else None}
         CONN.execute("INSERT INTO employees VALUES (:id, :name, :email, :department, :title, :manager_email, "
                      ":employment_type, :status, :start_date, :end_date)", emp)
         event = emit(CONN, "employee.hired", emp, rehire=False)
@@ -227,6 +235,10 @@ def transfer(emp_id: str, t: Transfer):
         if before["status"] != "active":
             raise HTTPException(409, "only active employees can be transferred")
         updates = {k: v for k, v in t.model_dump(exclude={"effective_date"}).items() if v is not None}
+        if updates.get("employment_type") == "contractor":
+            raise HTTPException(400, "converting to contractor needs a new hire record with an end_date")
+        if updates.get("employment_type") == "full_time" and before["end_date"]:
+            updates["end_date"] = None  # contractor converted to full-time: no contract end any more
         changes = {k: {"from": before[k], "to": v} for k, v in updates.items() if before[k] != v}
         if not changes:
             raise HTTPException(400, "nothing changes")

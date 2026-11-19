@@ -1,0 +1,9 @@
+# Keycloak accounts that are allowed to exist WITHOUT an HR record.
+# The nightly run flags every other account with no active employee behind it as an orphan.
+# Each entry needs a reason; review this list quarterly.
+accounts:
+  - alice   # lab test user (Terraform, Project 2)
+  - bob     # lab test user
+  - ivan    # lab test user, owns the Mac VM in Fleet
+  - tara    # lab test user (travel mode demo)
+  - erin    # lab break-glass test user

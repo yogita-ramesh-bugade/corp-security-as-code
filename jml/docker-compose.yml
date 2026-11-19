@@ -1,26 +1,46 @@
 # Lumen AI lab - joiner/mover/leaver (Project 3)
 # Start:  docker compose up -d --build        (from jml/)
 # HR API: http://localhost:8100/docs           (writes need the X-HR-Admin-Key header)
-# Secrets: ~/jml-secrets/hr.env  (HR_ADMIN_KEY, HR_WEBHOOK_SECRET) - never in Git
+# Secrets (never in Git):
+#   ~/jml-secrets/hr.env      HR_ADMIN_KEY, HR_WEBHOOK_SECRET
+#   ~/jml-secrets/engine.env  KC_CLIENT_SECRET (+ optional FLEET_URL, FLEET_API_TOKEN)
 services:
   hr:
     build: ./hr
     env_file: ${HOME}/jml-secrets/hr.env
     environment:
       HR_DB: /data/hr.sqlite
-      HR_WEBHOOK_URL: http://request-logger:8199/webhook # Step 3.2 points this at the JML engine
+      HR_WEBHOOK_URL: http://engine:8110/webhook
     ports:
       - "127.0.0.1:8100:8100" # only reachable from this Mac
     volumes:
       - hr-data:/data
     restart: unless-stopped
 
-  # Shows every webhook HR sends and checks its signature (stand-in for the engine).
+  engine:
+    build:
+      context: .
+      dockerfile: engine/Dockerfile
+    env_file:
+      - ${HOME}/jml-secrets/hr.env # HR_WEBHOOK_SECRET, to verify HR's signatures
+      - ${HOME}/jml-secrets/engine.env
+    environment:
+      HR_URL: http://hr:8100
+      KC_URL: http://keycloak.lumen.test:8081
+      DATA_DIR: /data # engine.sqlite, audit.jsonl, chat.json, tickets.jsonl
+    extra_hosts:
+      - "keycloak.lumen.test:host-gateway"
+    volumes:
+      - engine-data:/data
+    restart: unless-stopped
+
+  # Shows raw webhooks (Step 3.1). Start only when needed: docker compose --profile debug up -d
   request-logger:
     build: ./hr
     command: ["python", "-u", "request_logger.py"]
     env_file: ${HOME}/jml-secrets/hr.env
-    restart: unless-stopped
+    profiles: ["debug"]
 
 volumes:
   hr-data:
+  engine-data:
