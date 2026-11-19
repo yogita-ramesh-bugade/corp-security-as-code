@@ -604,3 +604,19 @@ Step 2.2: step-ca device certificates.
 - **Learned:** Exceptions are security debt: quick to grant is fine only if the end date enforces itself. Putting them through PRs gives the same review trail as any other config. When a check says "match", confirm both sides are actually non-empty. Logging fingerprints instead of secrets lets you debug token problems without leaking anything.
 
 **Project 3 complete:** mock HR with signed webhooks, birthright rules as code, the JML engine (leaver in about 1 s), and an exception bot with automatic expiry.
+
+---
+
+## 2026-11-19 — Project 4, Step 4.1: Collect the inventory
+
+- **Design:** One `Item` record for five kinds of access: OAuth grants, chat apps, browser extensions, admin roles and internal AI agents. Each kind has its own collector, and `python -m governance.collect` writes them all to a single `governance/out/inventory.jsonl`. Keycloak got 8 fake third-party apps with consent screens (mail, files, calendar, directory scopes), and the test users approved 13 grants. Every collector uses a read-only account: the Keycloak `governance-collector` service account and a Fleet **observer**. Mattermost has no read-only admin role, so it uses an admin token kept outside the repo. The agent registry has 5 hand-written agents plus 300 synthetic AI-built apps (seed 42), including some with no owner and some built by people who left.
+- **Broke (3):**
+  1. `seed_chat.sh` made a token for `bob`, but bob doesn't exist in Mattermost. The chat users came from Project 3 (omar, maya, secops).
+  2. `observer_plus` is a paid Fleet Premium role, so `fleetctl user create` failed with "missing or invalid license".
+  3. The extensions query got `405 Method Not Allowed`, because I used the wrong Fleet API address.
+- **Fixed (3):**
+  1. The token goes to omar, and the script is updated.
+  2. Switched to the free **observer** role. An observer can't run any SQL it likes, only a saved query marked `observer_can_run` (`governance/lab/fleet-query.yml`). That's stricter than the original plan.
+  3. The collector now calls `POST /api/v1/fleet/queries/<id>/run` with the online host IDs, all in one call.
+- **Check:** The first full run collected oauth_grant 8, chat_app 10, admin_role 6 (Keycloak 3 + Fleet 3) and internal_agent 305, for 329 items. [browser_extension count after fix2 and the Chrome/Edge test extensions: not confirmed yet.] 6 collector tests pass, and so does CI.
+- **Learned:** Shadow access lives in many places, including consent grants, webhooks, personal tokens, extensions and agents nobody owns. Putting it all in one record shape is what makes it possible to score it later. Least privilege sometimes means a stricter design: a saved, approved query instead of any SQL. Lab seed scripts should use users that actually exist in each system.
