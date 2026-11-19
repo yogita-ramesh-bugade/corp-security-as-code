@@ -51,23 +51,23 @@ def collect_chat_apps(mm: Mattermost) -> list[Item]:
                           {"kind": "oauth_app", "callback_urls": a.get("callback_urls", [])}))
     for h in mm.maybe("/hooks/incoming"):
         items.append(Item("chat_app", f"chat_app:mattermost:incoming:{h['id']}", h.get("display_name") or "incoming webhook",
-                          None, ["post:" + h.get("channel_id", "?")] + (["post:any_channel"] if not h.get("channel_locked") else []),
+                          "internal", ["post:" + h.get("channel_id", "?")] + (["post:any_channel"] if not h.get("channel_locked") else []),
                           0, ms_to_iso(h.get("create_at")), None, who(h.get("user_id")), "mattermost",
                           {"kind": "incoming_webhook", "description": h.get("description", "")}))
     for h in mm.maybe("/hooks/outgoing"):
         items.append(Item("chat_app", f"chat_app:mattermost:outgoing:{h['id']}", h.get("display_name") or "outgoing webhook",
-                          None, ["read_messages:" + (h.get("channel_id") or "team-wide trigger words"), "send_to_url"],
+                          "internal", ["read_messages:" + (h.get("channel_id") or "team-wide trigger words"), "send_to_url"],
                           0, ms_to_iso(h.get("create_at")), None, who(h.get("creator_id")), "mattermost",
                           {"kind": "outgoing_webhook", "callback_urls": h.get("callback_urls", []),
                            "trigger_words": h.get("trigger_words", [])}))
     for team in mm.get("/teams"):
         for c in mm.maybe("/commands", team_id=team["id"], custom_only="true"):
-            items.append(Item("chat_app", f"chat_app:mattermost:command:{c['id']}", f"/{c['trigger']}", None,
+            items.append(Item("chat_app", f"chat_app:mattermost:command:{c['id']}", f"/{c['trigger']}", "internal",
                               ["receive_command_text", "send_to_url"], 0, ms_to_iso(c.get("create_at")), None,
                               who(c.get("creator_id")), "mattermost", {"kind": "slash_command", "url": c.get("url")}))
     for t in mm.maybe("/users/tokens"):
         items.append(Item("chat_app", f"chat_app:mattermost:token:{t['id']}",
-                          f"token '{t.get('description', '')}' of {who(t.get('user_id'))}", None,
+                          f"token '{t.get('description', '')}' of {who(t.get('user_id'))}", "internal",
                           ["act_as:" + str(who(t.get("user_id")))], 1, None, None, who(t.get("user_id")), "mattermost",
                           {"kind": "personal_access_token", "active": t.get("is_active", True)}))
     return items
