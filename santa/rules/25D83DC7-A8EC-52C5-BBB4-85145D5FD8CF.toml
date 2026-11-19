@@ -42,3 +42,11 @@ rule_type = "BINARY"
 policy = "REMOVE"
 identifier = "9b5c4842bac3f870b523c5fdf50ea5d89b689f45285cb34efc03116fffbba3d2"
 # end revoked EXC-0001
+
+# exception EXC-0002 | requester omar@lumenai.test | approver maya@lumenai.test | expires 2026-11-19T04:28:26Z
+[[rules]]
+rule_type = "BINARY"
+policy = "ALLOWLIST"
+identifier = "9b5c4842bac3f870b523c5fdf50ea5d89b689f45285cb34efc03116fffbba3d2"
+custom_msg = "Allowed by exception EXC-0002 until 2026-11-19T04:28:26Z"
+# end EXC-0002
