@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: query
+spec:
+  name: governance-browser-extensions
+  description: Browser extensions with permissions, for the SaaS/agent inventory (Project 4). Read-only.
+  query: SELECT u.username AS os_user, ce.name, ce.identifier, ce.version, ce.author, ce.permissions, ce.optional_permissions, ce.from_webstore, ce.browser_type FROM users u CROSS JOIN chrome_extensions
+    ce USING (uid);
+  observer_can_run: true

@@ -1,0 +1,13 @@
+# One file per internal app or AI agent. Change through a pull request.
+name: support-copilot
+description: Drafts replies to customer support tickets for agents to review.
+owner: maya@lumenai.test
+team: engineering
+model: claude-sonnet (hosted API)
+tools: [ticket_read, ticket_draft_reply, kb_search]
+mcp_servers: [helpdesk-mcp]
+oauth_scopes: [tickets.read, tickets.write]
+data: [customer_pii, support_tickets]
+human_in_the_loop: true
+created: 2026-03-02
+last_review: 2026-10-14

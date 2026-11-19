@@ -156,3 +156,79 @@ output "jml_engine_client_secret" {
   value     = keycloak_openid_client.jml_engine.client_secret
   sensitive = true
 }
+
+# --- Fake third-party apps for SaaS governance (Project 4, Step 4.1) -----------------
+# Fictional vendors asking for scopes from harmless (profile) to dangerous (mail, files, admin).
+# Users consent to them with governance/lab/seed_consents.py; the collector reads the consents.
+locals {
+  third_party_scopes = {
+    "mail.read"       = "Read your email"
+    "mail.send"       = "Send email as you"
+    "files.read"      = "Read your files"
+    "files.readwrite" = "Read, change and delete your files"
+    "calendar.read"   = "Read your calendar"
+    "admin.directory" = "Manage users and groups in the company directory"
+  }
+  third_party_apps = {
+    "meetsync"            = { name = "MeetSync", publisher = "MeetSync Inc.", scopes = ["calendar.read"] }
+    "teampulse"           = { name = "TeamPulse Analytics", publisher = "Pulse Labs", scopes = [] }
+    "quicksign-docs"      = { name = "QuickSign Docs", publisher = "QuickSign Ltd.", scopes = ["files.read"] }
+    "mailmerge-pro"       = { name = "MailMerge Pro", publisher = "MergeWorks", scopes = ["mail.read", "mail.send"] }
+    "cloudbackup-plus"    = { name = "CloudBackup Plus", publisher = "CB Software", scopes = ["files.readwrite", "offline_access"] }
+    "ai-notes-assistant"  = { name = "AI Notes Assistant", publisher = "NoteGenie AI", scopes = ["mail.read", "calendar.read", "files.read", "offline_access"] }
+    "free-pdf-converter"  = { name = "Free PDF Converter", publisher = "unknown (pdf-tools-free.example)", scopes = ["files.readwrite", "mail.read", "offline_access"] }
+    "directorysync-admin" = { name = "DirectorySync Admin", publisher = "SyncCorp", scopes = ["admin.directory", "offline_access"] }
+  }
+}
+
+resource "keycloak_openid_client_scope" "third_party" {
+  for_each               = local.third_party_scopes
+  realm_id               = keycloak_realm.lumen.id
+  name                   = each.key
+  description            = each.value
+  consent_screen_text    = each.value
+  include_in_token_scope = true
+}
+
+resource "keycloak_openid_client" "third_party" {
+  for_each              = local.third_party_apps
+  realm_id              = keycloak_realm.lumen.id
+  client_id             = each.key
+  name                  = each.value.name
+  description           = "Publisher: ${each.value.publisher}"
+  access_type           = "CONFIDENTIAL"
+  standard_flow_enabled = true
+  consent_required      = true # users see "this app wants to..." and must click Yes
+  valid_redirect_uris   = ["http://localhost:9/callback"]
+}
+
+resource "keycloak_openid_client_optional_scopes" "third_party" {
+  for_each        = local.third_party_apps
+  realm_id        = keycloak_realm.lumen.id
+  client_id       = keycloak_openid_client.third_party[each.key].id
+  optional_scopes = each.value.scopes
+  depends_on      = [keycloak_openid_client_scope.third_party]
+}
+
+# --- Read-only service account for the governance collector --------------------------
+resource "keycloak_openid_client" "governance_collector" {
+  realm_id                 = keycloak_realm.lumen.id
+  client_id                = "governance-collector"
+  name                     = "Governance inventory collector (read-only)"
+  access_type              = "CONFIDENTIAL"
+  standard_flow_enabled    = false
+  service_accounts_enabled = true
+}
+
+resource "keycloak_openid_client_service_account_role" "governance_collector" {
+  for_each                = toset(["view-users", "view-clients", "view-realm", "query-users", "query-groups", "query-clients"])
+  realm_id                = keycloak_realm.lumen.id
+  service_account_user_id = keycloak_openid_client.governance_collector.service_account_user_id
+  client_id               = data.keycloak_openid_client.realm_management.id
+  role                    = each.key
+}
+
+output "governance_collector_secret" {
+  value     = keycloak_openid_client.governance_collector.client_secret
+  sensitive = true
+}

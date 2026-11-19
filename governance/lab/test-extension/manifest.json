@@ -1,0 +1,8 @@
+{
+  "manifest_version": 3,
+  "name": "Coupon Finder Pro (Lumen TEST)",
+  "version": "0.0.1",
+  "description": "Harmless lab test extension. It contains no code and does nothing; it only ASKS for broad permissions, so the inventory has something risky to find.",
+  "permissions": ["cookies", "tabs", "history", "webRequest", "storage"],
+  "host_permissions": ["<all_urls>"]
+}
