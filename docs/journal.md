@@ -666,3 +666,23 @@ Step 2.2: step-ca device certificates.
   3. Reset it with `mmctl user change-password` and saved it in my password manager.
 - **Check:** 41 tests pass. I also made deliberate code changes to see whether the tests catch them: removing the approve-to-escalate guard, the tag cleaning, the @-mention block, the reviewer check or the signature check each made a test fail. Policy decided 48.9% of 333 items, a human decided 3, and 167 are queued. QuickNotes AI (score 49): the scanner flagged it, and Llama 3.1 said **deny (0.9)**, "the item's text contains instructions aimed at the reviewer". [Mattermost card with recommendation and buttons, my Deny click, and the label line: not confirmed]
 - **Learned:** The naive prompt (no data block, no rules) also said deny, so Llama 3.1 resisted this particular injection without help. One sample and one model prove nothing either way, which is why the defense doesn't rely on the model at all: a code guard checks its answer, and a person makes the decision. Text an outsider wrote has to be treated as hostile in every place it shows up, including the chat card, where it could @-mention everyone or hide a link. A model that recommends and a person who decides gives me labeled data for free, and that's what I'll use to measure the model next.
+
+---
+
+## 2026-11-19 — Project 4, Step 4.5: Evaluation (in progress)
+
+- **Design:** Measure the triage model against my own labels before trusting it with anything.
+  - `governance/eval/RUBRIC.md`: my review rubric (deny / approve / escalate rules, with tie-breakers), committed **before** any labeling. Each label records the rubric's fingerprint.
+  - `build_set.py` froze 200 items from the review queue, because that's all the model ever sees: 6 admin roles, 40 browser extensions, 40 chat apps, 74 agents and 40 OAuth grants. 117 are synthetic, so every type has enough examples.
+  - 21 injection cases: 20 written plus QuickNotes AI. They cover direct orders, fake pre-approval, fake JSON, fake closing tags, a fake publisher, Spanish, base64, spaced-out letters, HTML comments, fake scan results, fake "trusted context" and rubric-gaming.
+  - `label.py` shows one card at a time, never the model's answer, and saves after every label.
+  - `run_eval.py` reports, per type: agreement, false approves out of my denials (with a 95% upper bound), escalation rate, false denies, and injection cases fooled before and after the code guard. It derives handoff rules from those numbers. Model answers are cached and re-asked when the prompt changes.
+  - `docs/rfc/llm-triage.md` is the skeleton RFC.
+- **Broke (2):**
+  1. I ran `run_eval` after 1 label to test the pipeline. That was fine as a smoke test, but running it while still labeling would show me the model's answers and could bias the rest of my labels.
+  2. The Fleet saved query disappeared a third time, so collect failed on extensions.
+- **Fixed (2):**
+  1. Rule: no `run_eval` until labeling is finished.
+  2. Not needed for this step, because the eval set has 40 synthetic extensions. [cause still open: probably Fleet GitOps]
+- **Check:** 49 tests pass. The pipeline works end to end: 1 labeled item, Llama answered (deny), and `report.md` was written. Labeling: **3/200 done**. [results: pending]
+- **Learned:** Labeling 200 items by hand is slow, and that's the real cost of an honest evaluation. It's also why it can't be handed to another model: then the answer key would be AI. If I label fewer, the RFC has to say so, and the upper bounds get wider. A smaller honest sample beats a bigger made-up one. The regex scanner caught only 7 of 20 injection styles in my test copy. I'm leaving it as is, because tuning it to the eval set would be cheating on my own test.
