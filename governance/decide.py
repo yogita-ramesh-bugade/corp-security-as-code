@@ -123,6 +123,18 @@ def coverage(decided: list[dict]) -> dict:
             "policy_pct": round(100 * by_policy / total, 1) if total else 0.0}
 
 
+def record_review(path, item: dict, decision: str, reason: str, reviewer: str, now: datetime, risk_rules: dict) -> dict:
+    """Append one human decision. Used by the CLI and by the Mattermost buttons (Step 4.4)."""
+    if decision not in ("approve", "deny"):
+        raise ValueError(decision)
+    rec = {"id": item["id"], "name": item["name"], "decision": decision, "reason": reason, "reviewer": reviewer,
+           "at": now.strftime("%Y-%m-%dT%H:%M:%SZ"), "signature": signature(item, risk_rules)}
+    Path(path).parent.mkdir(parents=True, exist_ok=True)
+    with open(path, "a") as f:
+        f.write(json.dumps(rec, sort_keys=True) + "\n")
+    return rec
+
+
 def suggest(reviews: dict, items_by_id: dict, risk_rules: dict, after: int = SUGGEST_AFTER) -> list[dict]:
     """Group human calls by (decision, item type, publisher status). 3+ of the same -> a draft rule."""
     groups = defaultdict(list)
@@ -190,11 +202,7 @@ def main(argv=None) -> int:
         if len(a.args) != 3 or a.args[1] not in ("approve", "deny"):
             raise SystemExit('usage: review <name or id> approve|deny "reason"')
         it = _find(scored, a.args[0])
-        rec = {"id": it["id"], "name": it["name"], "decision": a.args[1], "reason": a.args[2], "reviewer": a.by,
-               "at": now.strftime("%Y-%m-%dT%H:%M:%SZ"), "signature": signature(it, risk_rules)}
-        Path(a.reviews).parent.mkdir(parents=True, exist_ok=True)
-        with open(a.reviews, "a") as f:
-            f.write(json.dumps(rec, sort_keys=True) + "\n")
+        record_review(a.reviews, it, a.args[1], a.args[2], a.by, now, risk_rules)
         print(f"recorded: {a.by} {a.args[1]}d {it['name']}")
         same = [d for d in suggest(load_reviews(a.reviews), by_id, risk_rules)
                 if d["decision"] == a.args[1] and it["name"] in d["_based_on"]]

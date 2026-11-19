@@ -46,7 +46,7 @@ services:
       MM_SERVICESETTINGS_ENABLELOCALMODE: "true" # lets setup_mattermost.sh run mmctl inside the container
       MM_SERVICESETTINGS_ENABLEUSERACCESSTOKENS: "true"
       MM_SERVICESETTINGS_ENABLECOMMANDS: "true"
-      MM_SERVICESETTINGS_ALLOWEDUNTRUSTEDINTERNALCONNECTIONS: "exceptions" # may call the bot on the Docker network
+      MM_SERVICESETTINGS_ALLOWEDUNTRUSTEDINTERNALCONNECTIONS: "exceptions host.docker.internal" # may call the bot on the Docker network
     ports:
       - "8065:8065" # the VMs open chat too (blocked Mac -> request)
     volumes:
