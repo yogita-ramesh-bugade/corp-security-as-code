@@ -214,6 +214,19 @@ resource "keycloak_openid_client_optional_scopes" "third_party" {
   depends_on      = [keycloak_openid_client_scope.third_party]
 }
 
+# --- Event logging for the SIEM (Project 4, Step 4.6) -----------------------------------
+# User events (logins, consents) and admin events (who changed what, with the change itself),
+# kept 7 days in Keycloak; the shipper copies them to ~/lab-data/logs for Filebeat.
+resource "keycloak_realm_events" "lumen" {
+  realm_id                     = keycloak_realm.lumen.id
+  events_enabled               = true
+  events_expiration            = 604800
+  admin_events_enabled         = true
+  admin_events_details_enabled = true
+  enabled_event_types          = [] # all event types
+  events_listeners             = ["jboss-logging"]
+}
+
 # --- Read-only service account for the governance collector --------------------------
 resource "keycloak_openid_client" "governance_collector" {
   realm_id                 = keycloak_realm.lumen.id
@@ -225,7 +238,8 @@ resource "keycloak_openid_client" "governance_collector" {
 }
 
 resource "keycloak_openid_client_service_account_role" "governance_collector" {
-  for_each                = toset(["view-users", "view-clients", "view-realm", "query-users", "query-groups", "query-clients"])
+  # view-events: the detection shipper reads login/consent/admin events (Step 4.6)
+  for_each                = toset(["view-users", "view-clients", "view-realm", "view-events", "query-users", "query-groups", "query-clients"])
   realm_id                = keycloak_realm.lumen.id
   service_account_user_id = keycloak_openid_client.governance_collector.service_account_user_id
   client_id               = data.keycloak_openid_client.realm_management.id

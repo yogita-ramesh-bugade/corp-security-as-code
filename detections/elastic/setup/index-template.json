@@ -1,0 +1,19 @@
+{
+  "index_patterns": ["lumen-logs-*"],
+  "priority": 500,
+  "template": {
+    "settings": {"number_of_replicas": 0},
+    "mappings": {
+      "dynamic_templates": [
+        {"strings_as_keyword": {"match_mapping_type": "string", "mapping": {"type": "keyword", "ignore_above": 4096}}}
+      ],
+      "properties": {
+        "@timestamp": {"type": "date"},
+        "message": {"type": "text"},
+        "keycloak": {"properties": {"client": {"properties": {
+          "age_hours": {"type": "float"}, "high_risk": {"type": "boolean"}}}}},
+        "lumen": {"properties": {"change_window": {"type": "boolean"}}}
+      }
+    }
+  }
+}

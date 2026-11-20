@@ -1,0 +1,26 @@
+title: Break-glass account used
+id: 54a1999e-525e-4677-8255-0547579d252a
+status: experimental
+description: |
+  Any use of an emergency (break-glass) account: the posture gate let a break-glass member in, or
+  a break-glass member signed in to Keycloak. These accounts exist for emergencies only, so every
+  use is reviewed.
+author: Yogita Bugade
+date: 2026-11-19
+tags:
+  - attack.privilege_escalation
+  - attack.t1078
+logsource:
+  product: lumen
+  category: break_glass
+detection:
+  gate_alert:
+    Kind: alert
+    AlertType: break_glass_access
+  keycloak_login:
+    EventType: LOGIN
+    UserGroups: break-glass
+  condition: gate_alert or keycloak_login
+falsepositives:
+  - Scheduled break-glass tests (announce them first)
+level: high

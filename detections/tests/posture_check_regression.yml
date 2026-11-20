@@ -1,0 +1,21 @@
+fire:
+  - "@timestamp": "2026-11-19T15:10:00.000Z"
+    event: {dataset: lumen.fleet, action: posture_check_changed, kind: state}
+    host: {name: fleet-macos-lab, serial: Z1AB2CD3EF}
+    lumen: {posture: {check: santa_lockdown, previous: pass, current: fail}}
+quiet:
+  # the fix: fail -> pass
+  - "@timestamp": "2026-11-19T15:20:00.000Z"
+    event: {dataset: lumen.fleet, action: posture_check_changed, kind: state}
+    host: {name: fleet-macos-lab}
+    lumen: {posture: {check: santa_lockdown, previous: fail, current: pass}}
+  # a check this rule doesn't watch
+  - "@timestamp": "2026-11-19T15:20:00.000Z"
+    event: {dataset: lumen.fleet, action: posture_check_changed, kind: state}
+    host: {name: fleet-macos-lab}
+    lumen: {posture: {check: os_current, previous: pass, current: fail}}
+  # first sighting of a laptop that was already failing
+  - "@timestamp": "2026-11-19T15:20:00.000Z"
+    event: {dataset: lumen.fleet, action: posture_check_observed, kind: state}
+    host: {name: fleet-windows-lab}
+    lumen: {posture: {check: disk_encrypted, previous: null, current: fail}}

@@ -1,0 +1,123 @@
+# Elasticsearch + Kibana + Filebeat for the lab SIEM (Project 4, Step 4.6).
+# Based on Elastic's Docker Compose example (security on: passwords and TLS), cut to one node,
+# plus Filebeat. Every secret comes from an env file outside the repo:
+#
+#   docker compose --env-file ~/jml-secrets/elastic.env up -d
+#
+# ~/jml-secrets/elastic.env holds STACK_VERSION, ELASTIC_PASSWORD, KIBANA_PASSWORD,
+# FILEBEAT_PASSWORD, KIBANA_ENCRYPTION_KEY, LAB_LOGS (see the Step 4.6 notes).
+# Kibana: http://localhost:5601 (user elastic). Only reachable from this Mac (127.0.0.1).
+name: elastic
+
+services:
+  # One-off: makes a CA and certificates, sets the kibana_system password, creates the
+  # Filebeat user (can only write lumen-logs-*), and the index template.
+  setup:
+    image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
+    user: "0"
+    volumes:
+      - certs:/usr/share/elasticsearch/config/certs
+      - ./setup:/setup:ro
+    environment:
+      ELASTIC_PASSWORD: ${ELASTIC_PASSWORD}
+      KIBANA_PASSWORD: ${KIBANA_PASSWORD}
+      FILEBEAT_PASSWORD: ${FILEBEAT_PASSWORD}
+    command: ["bash", "/setup/setup.sh"]
+    healthcheck:
+      test: ["CMD-SHELL", "[ -f config/certs/es01/es01.crt ]"]
+      interval: 2s
+      retries: 120
+
+  es01:
+    image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
+    depends_on:
+      setup: {condition: service_healthy}
+    volumes:
+      - certs:/usr/share/elasticsearch/config/certs
+      - esdata:/usr/share/elasticsearch/data
+    ports:
+      - "127.0.0.1:9200:9200"
+    environment:
+      node.name: es01
+      cluster.name: lumen-lab
+      discovery.type: single-node
+      ELASTIC_PASSWORD: ${ELASTIC_PASSWORD}
+      bootstrap.memory_lock: "true"
+      xpack.security.enabled: "true"
+      xpack.security.http.ssl.enabled: "true"
+      xpack.security.http.ssl.key: certs/es01/es01.key
+      xpack.security.http.ssl.certificate: certs/es01/es01.crt
+      xpack.security.http.ssl.certificate_authorities: certs/ca/ca.crt
+      xpack.security.transport.ssl.enabled: "true"
+      xpack.security.transport.ssl.key: certs/es01/es01.key
+      xpack.security.transport.ssl.certificate: certs/es01/es01.crt
+      xpack.security.transport.ssl.certificate_authorities: certs/ca/ca.crt
+      xpack.security.transport.ssl.verification_mode: certificate
+      xpack.license.self_generated.type: basic
+      xpack.ml.enabled: "false" # machine learning isn't used here and needs a lot of memory
+      ES_JAVA_OPTS: "-Xms1g -Xmx1g"
+    mem_limit: 3g
+    ulimits:
+      memlock: {soft: -1, hard: -1}
+    healthcheck:
+      test: ["CMD-SHELL", "curl -s --cacert config/certs/ca/ca.crt https://localhost:9200 | grep -q 'missing authentication credentials'"]
+      interval: 10s
+      retries: 60
+    restart: unless-stopped
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:${STACK_VERSION}
+    depends_on:
+      es01: {condition: service_healthy}
+    volumes:
+      - certs:/usr/share/kibana/config/certs
+      - kibanadata:/usr/share/kibana/data
+    ports:
+      - "127.0.0.1:5601:5601"
+    environment:
+      SERVERNAME: kibana
+      ELASTICSEARCH_HOSTS: https://es01:9200
+      ELASTICSEARCH_USERNAME: kibana_system
+      ELASTICSEARCH_PASSWORD: ${KIBANA_PASSWORD}
+      ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES: config/certs/ca/ca.crt
+      # Detection rules and alerts need these keys (32+ characters)
+      XPACK_SECURITY_ENCRYPTIONKEY: ${KIBANA_ENCRYPTION_KEY}
+      XPACK_ENCRYPTEDSAVEDOBJECTS_ENCRYPTIONKEY: ${KIBANA_ENCRYPTION_KEY}
+      XPACK_REPORTING_ENCRYPTIONKEY: ${KIBANA_ENCRYPTION_KEY}
+    mem_limit: 1g
+    healthcheck:
+      test: ["CMD-SHELL", "curl -s -I http://localhost:5601 | grep -q 'HTTP/1.1 302 Found'"]
+      interval: 10s
+      retries: 60
+    restart: unless-stopped
+
+  # Tails the lab's JSON logs: shipper output (Keycloak, Fleet, Mattermost), the posture gate's
+  # decisions and alerts, and the JML audit log (both read straight from their Docker volumes).
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:${STACK_VERSION}
+    user: root # to read the other projects' volumes
+    command: ["filebeat", "-e", "--strict.perms=false"]
+    depends_on:
+      es01: {condition: service_healthy}
+    environment:
+      FILEBEAT_PASSWORD: ${FILEBEAT_PASSWORD}
+    volumes:
+      - ./filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+      - certs:/certs:ro
+      - filebeatdata:/usr/share/filebeat/data
+      - ${LAB_LOGS}:/logs/lab:ro
+      - gate-data:/logs/gate:ro
+      - engine-data:/logs/jml:ro
+    restart: unless-stopped
+
+volumes:
+  certs:
+  esdata:
+  kibanadata:
+  filebeatdata:
+  gate-data:
+    external: true
+    name: ${GATE_VOLUME:-pomerium_gate-data}
+  engine-data:
+    external: true
+    name: ${JML_VOLUME:-jml_engine-data}

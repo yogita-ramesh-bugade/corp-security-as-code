@@ -1,0 +1,27 @@
+title: Device security check went from pass to fail
+id: f3b62102-5e2b-4037-957c-8a637ae734b2
+status: experimental
+description: |
+  Santa lockdown or disk encryption was passing on a laptop and is now failing. Someone may have
+  switched off protection (or malware did). The shipper compares each Fleet policy result with
+  the previous one and logs the change.
+author: Yogita Bugade
+date: 2026-11-19
+tags:
+  - attack.defense_evasion
+  - attack.t1562.001
+logsource:
+  product: lumen
+  service: fleet
+detection:
+  selection:
+    EventType: posture_check_changed
+    Check:
+      - santa_lockdown
+      - disk_encrypted
+    PreviousResult: pass
+    Result: fail
+  condition: selection
+falsepositives:
+  - IT switching Santa to monitor mode for a short, approved test (see exceptions dashboard)
+level: medium

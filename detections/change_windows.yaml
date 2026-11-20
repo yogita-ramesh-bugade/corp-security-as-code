@@ -1,0 +1,8 @@
+# Agreed windows for planned access changes (Project 4, Step 4.6).
+# The shippers mark every admin_role_granted event with lumen.change_window: true/false using
+# this file, and the Sigma rule admin_role_outside_change_window alerts on false.
+timezone: America/New_York
+windows:
+  - days: [Tue, Thu]
+    start: "14:00"
+    end: "17:00"

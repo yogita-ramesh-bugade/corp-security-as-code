@@ -1,0 +1,33 @@
+title: OAuth consent to a newly registered high-risk app
+id: d9bb1ef3-4328-410e-9ada-9b58288ce157
+status: experimental
+description: |
+  A user approved a third-party app that was registered in Keycloak less than 72 hours ago and
+  asks for high-risk access (mail, writing files, the directory). New apps with broad scopes are
+  how consent phishing starts. The shipper adds the client's age and risk from Keycloak.
+  Keycloak records a consent given during sign-in as a LOGIN event with
+  details.consent = consent_granted (checked in the lab); GRANT_CONSENT is kept for other flows.
+references:
+  - docs/rfc/llm-triage.md
+author: Yogita Bugade
+date: 2026-11-19
+tags:
+  - attack.initial_access
+  - attack.t1566
+  - attack.t1528
+logsource:
+  product: lumen
+  service: keycloak
+detection:
+  consent_at_login:
+    EventType: LOGIN
+    Consent: consent_granted
+  consent_event:
+    EventType: GRANT_CONSENT
+  risky_new_app:
+    ClientHighRisk: true
+    ClientAgeHours|lt: 72
+  condition: (consent_at_login or consent_event) and risky_new_app
+falsepositives:
+  - A newly approved vendor rolled out to its first users (check the vendor review ticket)
+level: high

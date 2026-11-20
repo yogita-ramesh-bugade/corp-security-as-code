@@ -1,0 +1,5 @@
+pySigma==1.5.1
+pySigma-backend-elasticsearch==2.1.1
+sigma-cli==3.1.0
+PyYAML==6.0.3
+httpx==0.28.1
