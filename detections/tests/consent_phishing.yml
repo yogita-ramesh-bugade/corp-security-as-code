@@ -1,0 +1,545 @@
+# Correlation test: 'fire' as a batch must trigger the rule, 'quiet' as a batch must not.
+# fire: 10 people approve the same new app within 30 minutes (what scripts/simulate_consent_phishing.py does).
+# quiet: 6 people over 12 hours; 10 sign-ins that reuse an earlier consent; 10 people approving an old app.
+fire:
+- '@timestamp': '2026-11-19T15:00:00.000Z'
+  event:
+    dataset: lumen.keycloak
+    action: LOGIN
+    outcome: success
+  user:
+    name: sim-user-01
+  keycloak:
+    client:
+      id: sim-phish-202611191500
+      high_risk: true
+      age_hours: 0.1
+    details:
+      consent: consent_granted
+      username: sim-user-01
+- '@timestamp': '2026-11-19T15:03:00.000Z'
+  event:
+    dataset: lumen.keycloak
+    action: LOGIN
+    outcome: success
+  user:
+    name: sim-user-02
+  keycloak:
+    client:
+      id: sim-phish-202611191500
+      high_risk: true
+      age_hours: 0.1
+    details:
+      consent: consent_granted
+      username: sim-user-02
+- '@timestamp': '2026-11-19T15:06:00.000Z'
+  event:
+    dataset: lumen.keycloak
+    action: LOGIN
+    outcome: success
+  user:
+    name: sim-user-03
+  keycloak:
+    client:
+      id: sim-phish-202611191500
+      high_risk: true
+      age_hours: 0.1
+    details:
+      consent: consent_granted
+      username: sim-user-03
+- '@timestamp': '2026-11-19T15:09:00.000Z'
+  event:
+    dataset: lumen.keycloak
+    action: LOGIN
+    outcome: success
+  user:
+    name: sim-user-04
+  keycloak:
+    client:
+      id: sim-phish-202611191500
+      high_risk: true
+      age_hours: 0.1
+    details:
+      consent: consent_granted
+      username: sim-user-04
+- '@timestamp': '2026-11-19T15:12:00.000Z'
+  event:
+    dataset: lumen.keycloak
+    action: LOGIN
+    outcome: success
+  user:
+    name: sim-user-05
+  keycloak:
+    client:
+      id: sim-phish-202611191500
+      high_risk: true
+      age_hours: 0.1
+    details:
+      consent: consent_granted
+      username: sim-user-05
+- '@timestamp': '2026-11-19T15:15:00.000Z'
+  event:
+    dataset: lumen.keycloak
+    action: LOGIN
+    outcome: success
+  user:
+    name: sim-user-06
+  keycloak:
+    client:
+      id: sim-phish-202611191500
+      high_risk: true
+      age_hours: 0.1
+    details:
+      consent: consent_granted
+      username: sim-user-06
+- '@timestamp': '2026-11-19T15:18:00.000Z'
+  event:
+    dataset: lumen.keycloak
+    action: LOGIN
+    outcome: success
+  user:
+    name: sim-user-07
+  keycloak:
+    client:
+      id: sim-phish-202611191500
+      high_risk: true
+      age_hours: 0.1
+    details:
+      consent: consent_granted
+      username: sim-user-07
+- '@timestamp': '2026-11-19T15:21:00.000Z'
+  event:
+    dataset: lumen.keycloak
+    action: LOGIN
+    outcome: success
+  user:
+    name: sim-user-08
+  keycloak:
+    client:
+      id: sim-phish-202611191500
+      high_risk: true
+      age_hours: 0.1
+    details:
+      consent: consent_granted
+      username: sim-user-08
+- '@timestamp': '2026-11-19T15:24:00.000Z'
+  event:
+    dataset: lumen.keycloak
+    action: LOGIN
+    outcome: success
+  user:
+    name: sim-user-09
+  keycloak:
+    client:
+      id: sim-phish-202611191500
+      high_risk: true
+      age_hours: 0.1
+    details:
+      consent: consent_granted
+      username: sim-user-09
+- '@timestamp': '2026-11-19T15:27:00.000Z'
+  event:
+    dataset: lumen.keycloak
+    action: LOGIN
+    outcome: success
+  user:
+    name: sim-user-10
+  keycloak:
+    client:
+      id: sim-phish-202611191500
+      high_risk: true
+      age_hours: 0.1
+    details:
+      consent: consent_granted
+      username: sim-user-10
+quiet:
+- '@timestamp': '2026-11-19T09:00:00.000Z'
+  event:
+    dataset: lumen.keycloak
+    action: LOGIN
+    outcome: success
+  user:
+    name: sim-user-01
+  keycloak:
+    client:
+      id: sim-phish-202611191500
+      high_risk: true
+      age_hours: 0.1
+    details:
+      consent: consent_granted
+      username: sim-user-01
+- '@timestamp': '2026-11-19T11:00:00.000Z'
+  event:
+    dataset: lumen.keycloak
+    action: LOGIN
+    outcome: success
+  user:
+    name: sim-user-02
+  keycloak:
+    client:
+      id: sim-phish-202611191500
+      high_risk: true
+      age_hours: 0.1
+    details:
+      consent: consent_granted
+      username: sim-user-02
+- '@timestamp': '2026-11-19T13:00:00.000Z'
+  event:
+    dataset: lumen.keycloak
+    action: LOGIN
+    outcome: success
+  user:
+    name: sim-user-03
+  keycloak:
+    client:
+      id: sim-phish-202611191500
+      high_risk: true
+      age_hours: 0.1
+    details:
+      consent: consent_granted
+      username: sim-user-03
+- '@timestamp': '2026-11-19T15:00:00.000Z'
+  event:
+    dataset: lumen.keycloak
+    action: LOGIN
+    outcome: success
+  user:
+    name: sim-user-04
+  keycloak:
+    client:
+      id: sim-phish-202611191500
+      high_risk: true
+      age_hours: 0.1
+    details:
+      consent: consent_granted
+      username: sim-user-04
+- '@timestamp': '2026-11-19T17:00:00.000Z'
+  event:
+    dataset: lumen.keycloak
+    action: LOGIN
+    outcome: success
+  user:
+    name: sim-user-05
+  keycloak:
+    client:
+      id: sim-phish-202611191500
+      high_risk: true
+      age_hours: 0.1
+    details:
+      consent: consent_granted
+      username: sim-user-05
+- '@timestamp': '2026-11-19T19:00:00.000Z'
+  event:
+    dataset: lumen.keycloak
+    action: LOGIN
+    outcome: success
+  user:
+    name: sim-user-06
+  keycloak:
+    client:
+      id: sim-phish-202611191500
+      high_risk: true
+      age_hours: 0.1
+    details:
+      consent: consent_granted
+      username: sim-user-06
+- '@timestamp': '2026-11-19T15:00:00.000Z'
+  event:
+    dataset: lumen.keycloak
+    action: LOGIN
+    outcome: success
+  user:
+    name: sim-user-01
+  keycloak:
+    client:
+      id: sim-phish-202611191500
+      high_risk: true
+      age_hours: 0.1
+    details:
+      consent: persisted_consent
+      username: sim-user-01
+- '@timestamp': '2026-11-19T15:01:00.000Z'
+  event:
+    dataset: lumen.keycloak
+    action: LOGIN
+    outcome: success
+  user:
+    name: sim-user-02
+  keycloak:
+    client:
+      id: sim-phish-202611191500
+      high_risk: true
+      age_hours: 0.1
+    details:
+      consent: persisted_consent
+      username: sim-user-02
+- '@timestamp': '2026-11-19T15:02:00.000Z'
+  event:
+    dataset: lumen.keycloak
+    action: LOGIN
+    outcome: success
+  user:
+    name: sim-user-03
+  keycloak:
+    client:
+      id: sim-phish-202611191500
+      high_risk: true
+      age_hours: 0.1
+    details:
+      consent: persisted_consent
+      username: sim-user-03
+- '@timestamp': '2026-11-19T15:03:00.000Z'
+  event:
+    dataset: lumen.keycloak
+    action: LOGIN
+    outcome: success
+  user:
+    name: sim-user-04
+  keycloak:
+    client:
+      id: sim-phish-202611191500
+      high_risk: true
+      age_hours: 0.1
+    details:
+      consent: persisted_consent
+      username: sim-user-04
+- '@timestamp': '2026-11-19T15:04:00.000Z'
+  event:
+    dataset: lumen.keycloak
+    action: LOGIN
+    outcome: success
+  user:
+    name: sim-user-05
+  keycloak:
+    client:
+      id: sim-phish-202611191500
+      high_risk: true
+      age_hours: 0.1
+    details:
+      consent: persisted_consent
+      username: sim-user-05
+- '@timestamp': '2026-11-19T15:05:00.000Z'
+  event:
+    dataset: lumen.keycloak
+    action: LOGIN
+    outcome: success
+  user:
+    name: sim-user-06
+  keycloak:
+    client:
+      id: sim-phish-202611191500
+      high_risk: true
+      age_hours: 0.1
+    details:
+      consent: persisted_consent
+      username: sim-user-06
+- '@timestamp': '2026-11-19T15:06:00.000Z'
+  event:
+    dataset: lumen.keycloak
+    action: LOGIN
+    outcome: success
+  user:
+    name: sim-user-07
+  keycloak:
+    client:
+      id: sim-phish-202611191500
+      high_risk: true
+      age_hours: 0.1
+    details:
+      consent: persisted_consent
+      username: sim-user-07
+- '@timestamp': '2026-11-19T15:07:00.000Z'
+  event:
+    dataset: lumen.keycloak
+    action: LOGIN
+    outcome: success
+  user:
+    name: sim-user-08
+  keycloak:
+    client:
+      id: sim-phish-202611191500
+      high_risk: true
+      age_hours: 0.1
+    details:
+      consent: persisted_consent
+      username: sim-user-08
+- '@timestamp': '2026-11-19T15:08:00.000Z'
+  event:
+    dataset: lumen.keycloak
+    action: LOGIN
+    outcome: success
+  user:
+    name: sim-user-09
+  keycloak:
+    client:
+      id: sim-phish-202611191500
+      high_risk: true
+      age_hours: 0.1
+    details:
+      consent: persisted_consent
+      username: sim-user-09
+- '@timestamp': '2026-11-19T15:09:00.000Z'
+  event:
+    dataset: lumen.keycloak
+    action: LOGIN
+    outcome: success
+  user:
+    name: sim-user-10
+  keycloak:
+    client:
+      id: sim-phish-202611191500
+      high_risk: true
+      age_hours: 0.1
+    details:
+      consent: persisted_consent
+      username: sim-user-10
+- '@timestamp': '2026-11-19T15:00:00.000Z'
+  event:
+    dataset: lumen.keycloak
+    action: LOGIN
+    outcome: success
+  user:
+    name: sim-user-01
+  keycloak:
+    client:
+      id: mailmerge-pro
+      high_risk: true
+      age_hours: 2100
+    details:
+      consent: consent_granted
+      username: sim-user-01
+- '@timestamp': '2026-11-19T15:01:00.000Z'
+  event:
+    dataset: lumen.keycloak
+    action: LOGIN
+    outcome: success
+  user:
+    name: sim-user-02
+  keycloak:
+    client:
+      id: mailmerge-pro
+      high_risk: true
+      age_hours: 2100
+    details:
+      consent: consent_granted
+      username: sim-user-02
+- '@timestamp': '2026-11-19T15:02:00.000Z'
+  event:
+    dataset: lumen.keycloak
+    action: LOGIN
+    outcome: success
+  user:
+    name: sim-user-03
+  keycloak:
+    client:
+      id: mailmerge-pro
+      high_risk: true
+      age_hours: 2100
+    details:
+      consent: consent_granted
+      username: sim-user-03
+- '@timestamp': '2026-11-19T15:03:00.000Z'
+  event:
+    dataset: lumen.keycloak
+    action: LOGIN
+    outcome: success
+  user:
+    name: sim-user-04
+  keycloak:
+    client:
+      id: mailmerge-pro
+      high_risk: true
+      age_hours: 2100
+    details:
+      consent: consent_granted
+      username: sim-user-04
+- '@timestamp': '2026-11-19T15:04:00.000Z'
+  event:
+    dataset: lumen.keycloak
+    action: LOGIN
+    outcome: success
+  user:
+    name: sim-user-05
+  keycloak:
+    client:
+      id: mailmerge-pro
+      high_risk: true
+      age_hours: 2100
+    details:
+      consent: consent_granted
+      username: sim-user-05
+- '@timestamp': '2026-11-19T15:05:00.000Z'
+  event:
+    dataset: lumen.keycloak
+    action: LOGIN
+    outcome: success
+  user:
+    name: sim-user-06
+  keycloak:
+    client:
+      id: mailmerge-pro
+      high_risk: true
+      age_hours: 2100
+    details:
+      consent: consent_granted
+      username: sim-user-06
+- '@timestamp': '2026-11-19T15:06:00.000Z'
+  event:
+    dataset: lumen.keycloak
+    action: LOGIN
+    outcome: success
+  user:
+    name: sim-user-07
+  keycloak:
+    client:
+      id: mailmerge-pro
+      high_risk: true
+      age_hours: 2100
+    details:
+      consent: consent_granted
+      username: sim-user-07
+- '@timestamp': '2026-11-19T15:07:00.000Z'
+  event:
+    dataset: lumen.keycloak
+    action: LOGIN
+    outcome: success
+  user:
+    name: sim-user-08
+  keycloak:
+    client:
+      id: mailmerge-pro
+      high_risk: true
+      age_hours: 2100
+    details:
+      consent: consent_granted
+      username: sim-user-08
+- '@timestamp': '2026-11-19T15:08:00.000Z'
+  event:
+    dataset: lumen.keycloak
+    action: LOGIN
+    outcome: success
+  user:
+    name: sim-user-09
+  keycloak:
+    client:
+      id: mailmerge-pro
+      high_risk: true
+      age_hours: 2100
+    details:
+      consent: consent_granted
+      username: sim-user-09
+- '@timestamp': '2026-11-19T15:09:00.000Z'
+  event:
+    dataset: lumen.keycloak
+    action: LOGIN
+    outcome: success
+  user:
+    name: sim-user-10
+  keycloak:
+    client:
+      id: mailmerge-pro
+      high_risk: true
+      age_hours: 2100
+    details:
+      consent: consent_granted
+      username: sim-user-10

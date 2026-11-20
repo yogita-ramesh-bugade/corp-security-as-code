@@ -1,0 +1,25 @@
+title: Admin role granted outside a change window
+id: 826ddbd0-6de8-43f8-b494-62be29295678
+status: experimental
+description: |
+  Someone was given admin rights (Keycloak it-admins/break-glass group or realm-management
+  manage roles, Fleet admin/maintainer/gitops, Mattermost system admin) outside the agreed change
+  windows in detections/change_windows.yaml. Planned access changes happen in windows; one at
+  2 a.m. on a Sunday deserves a look.
+author: Yogita Bugade
+date: 2026-11-19
+tags:
+  - attack.persistence
+  - attack.privilege_escalation
+  - attack.t1098
+logsource:
+  product: lumen
+  category: admin_change
+detection:
+  selection:
+    EventType: admin_role_granted
+    InChangeWindow: false
+  condition: selection
+falsepositives:
+  - Emergency access granted during an incident (should have an incident ticket)
+level: high

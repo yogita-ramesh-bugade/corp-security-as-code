@@ -39,9 +39,10 @@ def form_action(page: str, form_id: str) -> str | None:
     return html.unescape(m.group(1)) if m else None
 
 
-def consent(kc: str, user: str, password: str, client: str, session: httpx.Client) -> str:
+def consent(kc: str, user: str, password: str, client: str, session: httpx.Client, scope: str | None = None) -> str:
+    scope = SCOPES[client] if scope is None else scope
     q = urlencode({"client_id": client, "response_type": "code", "redirect_uri": REDIRECT,
-                   "scope": f"openid profile email {SCOPES[client]}".strip(), "state": "lab"})
+                   "scope": f"openid profile email {scope}".strip(), "state": "lab"})
     r = session.get(f"{kc}/realms/lumen/protocol/openid-connect/auth?{q}")
     if r.status_code == 200 and (action := form_action(r.text, "kc-form-login")):
         r = session.post(action, data={"username": user, "password": password, "credentialId": ""})

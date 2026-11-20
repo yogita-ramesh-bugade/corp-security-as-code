@@ -1,0 +1,16 @@
+fire:
+  # Sunday 02:13 New York time
+  - "@timestamp": "2026-11-22T07:13:00.000Z"
+    event: {dataset: lumen.keycloak, action: admin_role_granted, category: [iam]}
+    user: {name: admin, target: {name: tara}}
+    lumen: {admin: {system: keycloak, role: "group:it-admins"}, change_window: false}
+quiet:
+  # Tuesday 15:00 New York time, inside the window
+  - "@timestamp": "2026-11-24T20:00:00.000Z"
+    event: {dataset: lumen.fleet, action: admin_role_granted, category: [iam]}
+    user: {name: admin@lumenai.test, target: {name: ivan@lumenai.test}}
+    lumen: {admin: {system: fleet, role: "fleet:maintainer"}, change_window: true}
+  # someone added to a normal group at night
+  - "@timestamp": "2026-11-22T07:13:00.000Z"
+    event: {dataset: lumen.keycloak, action: admin_group_membership_create}
+    user: {name: service-account-jml-engine}

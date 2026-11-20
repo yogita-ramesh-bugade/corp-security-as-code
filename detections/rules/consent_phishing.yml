@@ -1,0 +1,49 @@
+title: Consent to a newly registered app
+id: dd9e0ee0-493f-4177-937f-dc08f1babb35
+name: keycloak_consent_to_new_client
+status: experimental
+description: |
+  Base rule for the consent-phishing correlation below. Any consent to an app registered in the
+  last 72 hours (a LOGIN with details.consent = consent_granted, or a GRANT_CONSENT event).
+author: Yogita Bugade
+date: 2026-11-19
+logsource:
+  product: lumen
+  service: keycloak
+detection:
+  consent_at_login:
+    EventType: LOGIN
+    Consent: consent_granted
+  consent_event:
+    EventType: GRANT_CONSENT
+  new_app:
+    ClientAgeHours|lt: 72
+  condition: (consent_at_login or consent_event) and new_app
+level: low
+---
+title: Many users approving the same new app within an hour (consent phishing)
+id: a9556a5f-d1ad-4554-b47e-22f694fb9ab6
+status: experimental
+description: |
+  Five or more different people approved the same newly registered app within one hour. Real
+  rollouts of a new tool are announced and reviewed first; a sudden wave of consents usually
+  means a phishing email is working.
+author: Yogita Bugade
+date: 2026-11-19
+tags:
+  - attack.initial_access
+  - attack.t1566.002
+  - attack.t1528
+correlation:
+  type: value_count
+  rules:
+    - keycloak_consent_to_new_client
+  group-by:
+    - ClientId
+  timespan: 1h
+  condition:
+    field: UserName
+    gte: 5
+falsepositives:
+  - A planned rollout of a new tool (should come with a vendor review and an announcement)
+level: critical

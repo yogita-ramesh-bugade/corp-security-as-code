@@ -1,0 +1,95 @@
+# Keycloak logs a consent given during sign-in as LOGIN with details.consent: consent_granted.
+# fire: that (and a GRANT_CONSENT event) for a 3-minute-old app asking for mail/files.
+# quiet: an old app, a new low-risk app, an app with no known age, and a later sign-in
+# to the risky app that reuses the earlier consent (persisted_consent).
+fire:
+- '@timestamp': '2026-11-19T15:02:11.000Z'
+  event:
+    dataset: lumen.keycloak
+    action: LOGIN
+    outcome: success
+  user:
+    name: bob
+  keycloak:
+    client:
+      id: sim-phish-202611191500
+      high_risk: true
+      age_hours: 0.05
+    details:
+      consent: consent_granted
+      username: bob
+- '@timestamp': '2026-11-19T15:02:11.000Z'
+  event:
+    dataset: lumen.keycloak
+    action: GRANT_CONSENT
+    outcome: success
+  user:
+    name: bob
+  keycloak:
+    client:
+      id: sim-phish-202611191500
+      high_risk: true
+      age_hours: 0.05
+    details:
+      consent: null
+      username: bob
+quiet:
+- '@timestamp': '2026-11-19T15:02:11.000Z'
+  event:
+    dataset: lumen.keycloak
+    action: LOGIN
+    outcome: success
+  user:
+    name: bob
+  keycloak:
+    client:
+      id: mailmerge-pro
+      high_risk: true
+      age_hours: 2100.0
+    details:
+      consent: consent_granted
+      username: bob
+- '@timestamp': '2026-11-19T15:02:11.000Z'
+  event:
+    dataset: lumen.keycloak
+    action: LOGIN
+    outcome: success
+  user:
+    name: bob
+  keycloak:
+    client:
+      id: new-calendar-app
+      high_risk: false
+      age_hours: 1.0
+    details:
+      consent: consent_granted
+      username: bob
+- '@timestamp': '2026-11-19T15:02:11.000Z'
+  event:
+    dataset: lumen.keycloak
+    action: LOGIN
+    outcome: success
+  user:
+    name: alice
+  keycloak:
+    client:
+      id: free-pdf-converter
+      high_risk: true
+    details:
+      consent: consent_granted
+      username: alice
+- '@timestamp': '2026-11-19T15:05:00.000Z'
+  event:
+    dataset: lumen.keycloak
+    action: LOGIN
+    outcome: success
+  user:
+    name: bob
+  keycloak:
+    client:
+      id: sim-phish-202611191500
+      high_risk: true
+      age_hours: 0.1
+    details:
+      consent: persisted_consent
+      username: bob

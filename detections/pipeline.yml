@@ -1,0 +1,56 @@
+# pySigma processing pipeline: maps the generic field names used in detections/rules/ onto the
+# field names our shippers and Filebeat actually write into Elasticsearch (index lumen-logs-*).
+#   sigma convert -t lucene -p detections/pipeline.yml detections/rules/
+# Rules say WHAT to look for; this file says WHERE each field lives in our logs. When a log
+# format changes, only this file changes.
+name: Lumen lab logs
+priority: 100
+transformations:
+  # Each log source lives under its own event.dataset value.
+  - id: keycloak_dataset
+    type: add_condition
+    conditions: {event.dataset: lumen.keycloak}
+    rule_conditions: [{type: logsource, product: lumen, service: keycloak}]
+  - id: fleet_dataset
+    type: add_condition
+    conditions: {event.dataset: lumen.fleet}
+    rule_conditions: [{type: logsource, product: lumen, service: fleet}]
+  - id: gate_dataset
+    type: add_condition
+    conditions: {event.dataset: lumen.gate}
+    rule_conditions: [{type: logsource, product: lumen, service: gate}]
+  - id: mattermost_dataset
+    type: add_condition
+    conditions: {event.dataset: lumen.mattermost}
+    rule_conditions: [{type: logsource, product: lumen, service: mattermost}]
+  - id: jml_dataset
+    type: add_condition
+    conditions: {event.dataset: lumen.jml}
+    rule_conditions: [{type: logsource, product: lumen, service: jml}]
+  # category: admin_change and break_glass span several systems: no dataset filter.
+
+  - id: lumen_fields
+    type: field_name_mapping
+    mapping:
+      EventType: event.action
+      Outcome: event.outcome
+      UserName: user.name
+      TargetUser: user.target.name
+      SourceIp: source.ip
+      ClientId: keycloak.client.id
+      ClientAgeHours: keycloak.client.age_hours
+      ClientHighRisk: keycloak.client.high_risk
+      ClientPublisher: keycloak.client.publisher
+      Consent: keycloak.details.consent
+      UserGroups: keycloak.user.groups
+      HostName: host.name
+      Check: lumen.posture.check
+      PreviousResult: lumen.posture.previous
+      Result: lumen.posture.current
+      System: lumen.admin.system
+      Role: lumen.admin.role
+      InChangeWindow: lumen.change_window
+      Kind: gate.kind
+      AlertType: gate.type
+      GateUser: gate.user
+      GateApp: gate.app

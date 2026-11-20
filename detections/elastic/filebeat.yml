@@ -1,0 +1,48 @@
+# Filebeat for the lab SIEM (Project 4, Step 4.6). Writes to lumen-logs-YYYY.MM.DD as the
+# lumen_filebeat user, which can only add documents to lumen-logs-*.
+filebeat.inputs:
+  # Shipper output: already normalized (@timestamp, event.*, user.*, ...)
+  - type: filestream
+    id: lumen-shippers
+    paths: ["/logs/lab/*.jsonl"]
+    parsers:
+      - ndjson: {target: "", overwrite_keys: true, add_error_key: true}
+
+  # Posture gate: decisions and alerts (break-glass)
+  - type: filestream
+    id: lumen-gate
+    paths: ["/logs/gate/decisions.jsonl", "/logs/gate/alerts.jsonl"]
+    parsers:
+      - ndjson: {target: "gate", add_error_key: true}
+    processors:
+      - timestamp: {field: gate.time, layouts: ["2006-01-02T15:04:05Z"], test: ["2026-11-19T15:30:00Z"]}
+      - add_fields: {target: event, fields: {dataset: lumen.gate}}
+      - copy_fields: {fields: [{from: gate.kind, to: event.action}], fail_on_error: false, ignore_missing: true}
+
+  # JML engine: tamper-evident audit log
+  - type: filestream
+    id: lumen-jml
+    paths: ["/logs/jml/audit.jsonl"]
+    parsers:
+      - ndjson: {target: "jml", add_error_key: true}
+    processors:
+      - timestamp: {field: jml.time, layouts: ["2006-01-02T15:04:05Z"], test: ["2026-11-19T15:30:00Z"]}
+      - add_fields: {target: event, fields: {dataset: lumen.jml}}
+      - copy_fields: {fields: [{from: jml.action, to: event.action}], fail_on_error: false, ignore_missing: true}
+
+# Keep our own host.* fields (Fleet events) instead of Filebeat's container name.
+publisher_pipeline.disable_host: true
+
+output.elasticsearch:
+  hosts: ["https://es01:9200"]
+  username: lumen_filebeat
+  password: "${FILEBEAT_PASSWORD}"
+  ssl.certificate_authorities: ["/certs/ca/ca.crt"]
+  index: "lumen-logs-%{+yyyy.MM.dd}"
+
+# The index template is created by setup.sh (all text fields as keyword).
+setup.template.enabled: false
+setup.template.name: "lumen-logs"
+setup.template.pattern: "lumen-logs-*"
+setup.ilm.enabled: false
+logging.level: info
