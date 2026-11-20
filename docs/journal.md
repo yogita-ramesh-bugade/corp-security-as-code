@@ -686,3 +686,40 @@ Step 2.2: step-ca device certificates.
   2. Not needed for this step, because the eval set has 40 synthetic extensions. [cause still open: probably Fleet GitOps]
 - **Check:** 49 tests pass. The pipeline works end to end: 1 labeled item, Llama answered (deny), and `report.md` was written. Labeling: **3/200 done**. [results: pending]
 - **Learned:** Labeling 200 items by hand is slow, and that's the real cost of an honest evaluation. It's also why it can't be handed to another model: then the answer key would be AI. If I label fewer, the RFC has to say so, and the upper bounds get wider. A smaller honest sample beats a bigger made-up one. The regex scanner caught only 7 of 20 injection styles in my test copy. I'm leaving it as is, because tuning it to the eval set would be cheating on my own test.
+
+---
+
+## 2026-11-19 — Project 4, Step 4.6: Detections in Elastic
+
+- **Design:** A lab SIEM, from logs to alerts.
+  - **Elastic stack:** Elasticsearch, Kibana and Filebeat 9.2.6 in Docker, based on Elastic's compose example with security on (TLS, passwords). A one-off setup container creates a Filebeat user that can only add documents to `lumen-logs-*`, plus an index template that maps text fields as keyword. All secrets live in `~/jml-secrets/elastic.env`, outside the repo.
+  - **Shippers** (`detections/shippers/`) poll Keycloak user and admin events (turned on with `keycloak_realm_events` in Terraform), Fleet policies and activities, and Mattermost audits, and write normalized JSON lines.
+    - They add what a detection needs but the raw event lacks: the app's age (from its CREATE admin event) and whether it has risky scopes, the user's groups, pass→fail flips per laptop and check, and whether an admin grant fell inside the change window (`change_windows.yaml`).
+    - Filebeat also reads the posture gate's decisions and alerts and the JML audit log straight from their Docker volumes.
+  - **Rules:** 5 Sigma rules and a pySigma field-mapping `pipeline.yml`:
+    - consent to a new high-risk app
+    - consent phishing (a Sigma correlation: 5+ users approving the same new app within 1 hour)
+    - Santa lockdown / disk encryption flipping pass→fail
+    - an admin role granted outside a change window
+    - break-glass use
+  - **Deploy:** pySigma's Lucene backend can't convert correlation rules, so `deploy.py` converts the base rule and builds a Kibana threshold rule (cardinality of user.name ≥ 5 per client, over 60 minutes). ES|QL converts the whole folder, and its output is printed for comparison.
+  - **Tests:** every rule has fire and quiet samples in `detections/tests/`, checked in CI with a small Sigma evaluator that uses the same pipeline. CI also feeds raw Keycloak, Fleet and Mattermost events through the shippers, checks that the rules fire on the output, and runs a sigma-cli conversion.
+  - `scripts/simulate_consent_phishing.py` registers a new risky app and makes 10 test users consent. It only touches `sim-*` objects.
+- **Broke (7):**
+  1. I pinned PyYAML 6.0.2, but pySigma 1.5.1 needs 6.0.3 or newer.
+  2. Elasticsearch was killed for memory 361 times (exit 137): Docker had only 4 GB and 17 containers.
+  3. Kibana returned "not available with the current configuration" while Elasticsearch was down.
+  4. The elastic password didn't work, twice. Variables I had sourced earlier in the shell overrode `--env-file`, so Elasticsearch was set up with the old password.
+  5. After Docker restarted, every lab port answered "connection reset" / `000`, even though the containers showed "Up".
+  6. My "start all exited containers" command also started old, unrelated containers (minikube and others).
+  7. **The consent rules never fired.** I had written them for a `GRANT_CONSENT` event. My lab logs showed that Keycloak records a consent during sign-in as `LOGIN` with `details.consent: consent_granted`.
+- **Fixed (7):**
+  1. Pinned PyYAML 6.0.3 in both requirement files.
+  2. Raised Docker's memory, turned off Elasticsearch machine learning, and set mem_limit to 3g.
+  3. Waited until Elasticsearch was healthy. `deploy.py` now prints Kibana's actual error message.
+  4. Ran `unset` on the variables, `down -v`, generated new passwords (they had also been visible in a screenshot), started again, and checked with curl before using the browser. Rule: never source `elastic.env` in the tab that runs `docker compose`.
+  5. Restarted the lab containers.
+  6. Stopped the unrelated containers again.
+  7. Both consent rules now match `LOGIN` + `consent_granted` (and `GRANT_CONSENT` for other flows). I added a quiet sample for a sign-in that reuses an earlier consent (`persisted_consent`) and a `Consent` mapping in the pipeline.
+- **Check:** 15 detection tests pass. I also made deliberate changes to see whether the tests catch them: changing the threshold, a field mapping, the change window, the time window, or the consent condition each made a test fail. A "baseline" step that the tests showed did nothing was removed. Elasticsearch, Kibana and Filebeat are healthy, Elasticsearch holds 343 documents, and the 5 rules are enabled and running every minute with "Succeeded". The simulation gave 10/10 consents. [Kibana alerts after the rule fix (consent phishing, critical, plus about 10 risky-consent alerts) within 5 minutes: not confirmed]
+- **Learned:** A rule that's never been tested against real logs is a guess. Mine passed every unit test and still couldn't fire, because my samples copied my assumption instead of what Keycloak really writes. The fix was to check the raw events first and then write samples from them. Most of the work in detection engineering is plumbing: memory, ports, passwords, field names. The enrichment (app age, risky scopes, change window) is what makes a simple rule useful, so it belongs in the pipeline, not in each rule.
