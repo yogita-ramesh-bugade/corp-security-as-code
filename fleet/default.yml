@@ -254,3 +254,10 @@ policies:
     description: Santa must be enforcing (Lockdown), not just watching (Monitor).
     resolution: Santa's mode is set centrally by the sync server. Contact IT.
 reports:
+  - name: governance-browser-extensions
+    description: Browser extensions with permissions, for the SaaS/agent inventory (Project 4). Read-only.
+    query: SELECT u.username AS os_user, ce.name, ce.identifier, ce.version, ce.author, ce.permissions, ce.optional_permissions, ce.from_webstore, ce.browser_type FROM users u CROSS JOIN chrome_extensions ce USING (uid);
+    interval: 0
+    observer_can_run: true
+    automations_enabled: false
+    platform: ''
